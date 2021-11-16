@@ -6,14 +6,13 @@ Joseph Fourier\footnote{The creator of the Fourier transform, and whose importan
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{figures/sine-wave-form.png}
+	\includegraphics[width=0.5\textwidth]{figures/sine-wave-form.png}
 	\caption{A basic sine wave}
 	\label{fig:basic-sine-wave}
 \end{figure}
 
-
 \subsection{Sine Waves}
-The first of the basic period waves is the sine wave. The sine wave is a signal with only one frequency, and is based on the trigonometric sine function. On the unit circle, the trigonometric sine function of a phase angle $\theta$ is defined as the ratio of the length of the opposite side and the hypotenuse of a right triangle. [DIAGRAM OF UNIT CIRCLE] The unit circle, with a radius of 1, results in the sine function $sin\theta$ being equal to the y-value in Cartesian coordinates, where the hypotenuse of the right triangle that is formed meets the circle. [SHOW DIAGRAM OF THIS] A trigonometric sine wave can then be used to synthesize a sine wave audio signal. So, instead of calculating the sine function for a single value $x$, to create the sine wave signal the sine function is performed on a time vector $t = \{t_1, t_2, \dots, t_n\}$, with units in seconds. $sin(t) = \{sin(t_1), sin(t_2), \dots, sin(t_n)\}$. This gives us what we see in figure \ref	{fig:unit-circle}. The table below summarizes these transformations.
+The first of the basic period waves is the sine wave. The sine wave is a signal with only one frequency, and is based on the trigonometric sine function. On the unit circle, the trigonometric sine function of a phase angle $\theta$ is defined as the ratio of the length of the opposite side and the hypotenuse of a right triangle. The unit circle, with a radius of 1, results in the sine function $sin\theta$ being equal to the y-value in Cartesian coordinates, where the hypotenuse of the right triangle that is formed meets the circle, like in figure \ref{fig:unit-circle}. A trigonometric sine wave can then be used to synthesize a sine wave audio signal. So, instead of calculating the sine function for a single value $x$, to create the sine wave signal the sine function is performed on a time vector $t = \{t_1, t_2, \dots, t_n\}$, with units in seconds. $sin(t) = \{sin(t_1), sin(t_2), \dots, sin(t_n)\}$. This gives us what we see in figure \ref{fig:unit-circle}. The table below summarizes these transformations.
 
 \begin{figure}
 	\centering
@@ -35,7 +34,15 @@ The first of the basic period waves is the sine wave. The sine wave is a signal 
 The resulting sine wave signal can then be written as $x[t] = A \cdot sin(2 \cdot \pi \cdot f \cdot t + \theta$. $f$ is the frequency scalar, $t$ is the time vector of samples, and $\theta$ is the phase offset, between $[0, 2\pi]$.
 
 \subsection{Square Waves}
-The second of the periodic waves, the square wave, is a signal which oscillates between a singular positive value, and a single negative value \cite{Tarr_2019}. [INSERT DIAGRAM OF SQUARE WAVE]. An approximation of a square wave can be creating by combining multiple individual harmonics, or sine functions. This method of forming an audio signal is known as \textit{additive synthesis}, in which a new timbre is created by adding together sine waves. As a square wave is the summation of the odd-numbered harmonics, the following equation can be used \cite{Tarr_2019}.
+The second of the periodic waves, the square wave, is a signal which oscillates between a singular positive value, and a single negative value \cite{Tarr_2019}. As seen in figure \ref{fig:square-wave}, the waveform itself is only ever positive or negative 1. An approximation of a square wave can be creating by combining multiple individual harmonics, or sine functions. This method of forming an audio signal is known as \textit{additive synthesis}, in which a new timbre is created by adding together sine waves. As a square wave is the summation of the odd-numbered harmonics, the following equation can be used \cite{Tarr_2019}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/square-wave.png}
+  \caption{A basic square wave}
+  \label{fig:square-wave}
+\end{figure}
+
 
 \begin{align}
     \textrm{Let } x &= 2 \cdot \pi \cdot f \cdot t \\
@@ -47,7 +54,15 @@ The second of the periodic waves, the square wave, is a signal which oscillates 
 Thus, the value \textit{M} is the harmonic with the highest frequency. This is calculated to be the number of odd harmonics less than the Nyquist frequency of $\frac{F_S}{2}$, rounded down to the nearest whole number. [INSERT DEF OF NYQUIST FREQ]
 
 \subsection{Sawtooth Waves}
-A Sawtooth wave is a signal with an amplitude which changes linearly between a minimum value, and a maximum value. [DIAGRAM SAWTOOTH HERE] Sawtooth waves are also created through additive synthesis, combining multiple sine functions together to create it. We have a similar equation to the one for square waves. 
+A Sawtooth wave is a signal with an amplitude which changes linearly between a minimum value, and a maximum value, as in figure \ref{fig:basic-sawtooth-wave}. Sawtooth waves are also created through additive synthesis, combining multiple sine functions together to create it. We have a similar equation to the one for square waves. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/sawtooth-wave.png}
+  \caption{A basic sawtooth wave}
+  \label{fig:basic-sawtooth-wave}
+\end{figure}
+
 
 \begin{align}
     \textrm{Let } x &= 2 \cdot \pi \cdot f \cdot t \\
@@ -92,13 +107,20 @@ The Fourier transform converts the time information to a magnitude and phase com
 Digital data, and so digital audio, has no relation to the first two methods. Sine and cosine waves in audio are defined from negative to positive infinity. So, by imagining a sine or cosine wave as simply one repetition of a series of a periodic sinusoidal, the criteria for a Discrete Fourier Transform is met \cite{Zjalic_2021}. Thus, it is the only transform that is applicable to digital audio signal processing, as it is both discrete and periodic.
 
 \subsection{Discrete Fourier Transform}
-The Discrete Fourier Transform (or DFT) takes the audio samples in the time domain as an input, and outputs two frequency domain outputs: $\frac{N}{2} + 1$ points. These outputs represent the amplitude of the sine and cosine waves, with \textit{N} the number of samples in the input, giving us the equation below \cite{Gold_Morgan_Ellis_2011}. This equation is of a finite duration sequence x(n)
-with $0 \leq n \leq N + 1$.
+The Discrete Fourier Transform (or DFT) takes the audio samples in the time domain as an input, and outputs two frequency domain outputs: $\frac{N}{2} + 1$ points. These outputs represent the amplitude of the sine and cosine waves, with \textit{N} the number of samples in the input, giving us equation \ref{eq:dft-equation} below \cite{Gold_Morgan_Ellis_2011}. This equation is of a finite duration sequence x(n)
+with $0 \leq n \leq N + 1$ \cite{Broughton_Bryan_2008}.
 
 \begin{equation}\label{eq:dft-equation}
-    X[k] = \sum_{k=0}^{N+1}x[n]e^{-j (\frac{2\pi}{N})kn}
+    X[k] = \sum_{k=0}^{N-1}x[n]e^{-j (\frac{2\pi}{N})kn}
 \end{equation}
 
 The Discrete Fourier Transform represents the vector $x[n]$ as a combination of harmonically-related sinusoidals. 
 
+\subsection{Inverse Fourier Transform}
+We can take the same concept found in the Discrete Fourier Transform, and apply it to its inverse. With the Inverse Fourier Transform, audio samples in the frequency domain and taken as input, and samples in the time domain are output. As seen in equation \ref{eq:inverse-fourier-transform-equation}, the equations for the Discrete Fourier Transform (DFT) and the Inverse Discrete Fourier Transform (IDFT) are similar. 
+\begin{equation}\label{eq:inverse-fourier-transform-equation}
+	x[n] = \frac{1}{N}\sum_{k=0}^{N-1}X[k]e^{-j(\frac{2\pi}{N})kn}
+\end{equation}
+
 \section{Audio Manipulations}
+As previously mentioned, modular synthesis involves sending an audio signal through several patches in a linear form. These patches then make changes to the audio signal, modifying the input into a different-sounding output. To do this, we start with a digital audio wave, or a sine wave function.
