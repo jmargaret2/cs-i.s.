@@ -123,4 +123,16 @@ We can take the same concept found in the Discrete Fourier Transform, and apply 
 \end{equation}
 
 \section{Audio Manipulations}
-As previously mentioned, modular synthesis involves sending an audio signal through several patches in a linear form. These patches then make changes to the audio signal, modifying the input into a different-sounding output. To do this, we start with a digital audio wave, or a sine wave function.
+As previously mentioned, modular synthesis involves sending an audio signal through several patches in a linear form. These patches then make changes to the audio signal, modifying the input into a different-sounding output. To do this, we start with a digital audio wave, or a sine wave function. As seen in figure \ref{fig:basic-sine-wave}, there are several aspects of a sine function. There is the period of the wave, which dictates how many cycles the wave goes through, and is notated by the first peak and trough of the wave itself. We can use the period of a sine wave to find its frequency, which is how many periods the wave cycles through. The more periods that occur during a certain segment of time, the higher the wave's frequency. Sine wave functions are typically depicted in the time frequency, as previously mentioned. The x-scale of figure \ref{fig:sine-wave-period-amplitude} represented the audio signal itself, with the y-axis plotting the wave's amplitude, along with its peaks and troughs. With modular synthesis, we are able to change the period, and thus also the frequency, of the wave. By changing the period of the wave, and the wave's frequency too, we change the pitch of the resulting sound. With a higher frequency, we get a higher sound.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/sine-wave-period-amplitude.png}
+	\caption{A basic sine wave, with period demarcated in blue, and amplitude in purple}
+	\label{fig:sine-wave-period-amplitude}
+\end{figure}
+
+We can also change the amplitude of a wave, which depicts how high or low the wave itself sounds. The amplitude of an audio wave, which when notated in the time domain, will give us the volume of the output sound. The larger the distance between the center line of the wave and the peak or trough, the higher the output volume sounds, as in figure \ref{fig:sine-wave-period-amplitude}. 
+
+These two manipulations will be the basis of the modules for this project, as they are extremely common in many virtual analog modular synthesizers. 
