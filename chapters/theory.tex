@@ -1,8 +1,10 @@
 %!TEX root = ../username.tex
 \chapter[Theory]{Theory}\label{theory}
 
-\section{Waveforms}
+\section{Waveforms}\label{waveforms}
 Joseph Fourier\footnote{The creator of the Fourier transform, and whose importance is expanded upon later in the chapter.} proved that all sounds are composed of individual sine waves, or other wave types. There are five basic waveform types: the sine wave, square wave, saw tooth wave, triangle wave, and pulse wave \cite{Winer_2018}. Each of these waves are periodic waves, repeating in a pattern of motion known as a cycle, and the period is the time length.
+
+The speed with which the wave rises and falls is its frequency. If the frequency is too low (less than 20 cycles per second), you won’t hear anything except for maybe some clicking noises. If the frequency is too high, again you won’t hear anything. The range of human hearing is generally stated as being from 20 cycles per second (20 Hertz, abbreviated Hz) at the low end to 20,000 cycles per second (20 kiloHertz, abbreviated kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
 
 \begin{figure}
 	\centering
@@ -104,7 +106,7 @@ The Fourier transform converts the time information to a magnitude and phase com
     \item Discrete Fourier Transform: applies to discrete signals which are also periodic
 \end{enumerate}
 
-Digital data, and so digital audio, has no relation to the first two methods. Sine and cosine waves in audio are defined from negative to positive infinity. So, by imagining a sine or cosine wave as simply one repetition of a series of a periodic sinusoidal, the criteria for a Discrete Fourier Transform is met \cite{Zjalic_2021}. Thus, it is the only transform that is applicable to digital audio signal processing, as it is both discrete and periodic.
+Digital data, and so digital audio, has no relation to the first two methods. Sine and cosine waves in audio are defined from negative to positive infinity, but it is impossible to be able to define these signals continuously. Instead, we must obtain the discrete values of these waves at each specific time point, inferring the information between these points. So, by imagining a sine or cosine wave as simply one repetition of a series of a periodic sinusoidal, the criteria for a Discrete Fourier Transform is met \cite{Zjalic_2021}. Thus, it is the only transform that is applicable to digital audio signal processing, as it is both discrete and periodic.
 
 \subsection{Discrete Fourier Transform}
 The Discrete Fourier Transform (or DFT) takes the audio samples in the time domain as an input, and outputs two frequency domain outputs: $\frac{N}{2} + 1$ points. These outputs represent the amplitude of the sine and cosine waves, with \textit{N} the number of samples in the input, giving us equation \ref{eq:dft-equation} below \cite{Gold_Morgan_Ellis_2011}. This equation is of a finite duration sequence x(n)
