@@ -30,3 +30,26 @@
 %		\setmonofont[Scale=.95,Fractions=On]{Prestige Elite Std Bold}
 \fi
 \usepackage{dirtytalk}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{listing}
+\lstset{
+	language=c,
+	basicstyle=\footnotesize,
+	commentstyle=\color{teal},
+	stringstyle=\ttfamily, % typewriter type for strings
+	showstringspaces=false,
+	keywordstyle=\color{blue},
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+	morekeywords={var, play, SynthDef, SinOsc, Sine, Saw, add},
+	frame=single,
+	backgroundcolor=\color{white},
+  	numbers=left,
+  	stepnumber=1,    
+  	firstnumber=1,
+  	numberfirstline=true,
+  	tabsize=4
+}
