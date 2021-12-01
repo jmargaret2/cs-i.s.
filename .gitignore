@@ -31,3 +31,5 @@
 *.gz
 
 username.pdf
+username.synctex.gz
+*.texpadtmp
