@@ -1,5 +1,75 @@
-\section[SuperCollider: A Domain-Specific Language]{SuperCollider: A Domain-Specific Language}\label{supercollider}
+\section[SuperCollider: A Domain-Specific Language]{SuperCollider: A Domain-Specific Language}\label{chapter:supercollider}
 
 SuperCollider is a domain-specific programming language (DSL) and environment created in 1996 by James McCartney. A domain-specific language is a programming language with a higher level of abstraction, and optimized to solve a specific class of problems. It will use the concepts from the specific field it is built and designed for. A domain-specific language will differ from a ''normal'' programming language in that it is usually less complex than a general-purpose language such as Java. Most often, these are built to be used by non-developers who are familiar with and experts in the domain that the DSL addresses.\footnote{More information can be found in JetBrains' article about DSLs  \url{https://www.jetbrains.com/mps/concepts/domain-specific-languages}} It was built for real-time audio synthesis and algorithmic composition\footnote{This project does not focus on algorithmic composition, which put most simply is a method of composing music using an algorithm or multiple algorithms.}. Since 1996, SuperCollider has evolved into an environment that is actively used and developed upon by both scientists and artists working with sound. In 2002, it was released as open-source software under the GNU General Public License.
 
-The SuperCollider environment itself is made up of two parts: the server \textit{scsynth} and the client \textit{sclang} \cite{McCartney_2002}. The two parts complete complementary tasks, with the \texttt{scsynth} server performing sound synthesis, and the \texttt{sclang} client writes, compiles, and executes programs which define and control sound synthesis. The SuperCollider application itself is unable to perform sound synthesis, sending commands to the \texttt{scsynth} server. The server responds to requests from the client to synthesize and produce sounds \cite{McCartney_2021}. 
+The SuperCollider environment itself is made up of two parts: the server \textit{scsynth} and the client \textit{sclang} \cite{McCartney_2002}. scsynth is a real-time audio server which forms the core of the SuperCollider platform \cite{McCartney_2021}. It performs the sound synthesis portion of the environment. As the SuperCollider application itself is is unable to perform sound synthesis, it will send the commands for synthesis to the scsynth server. 
+
+scsynth renders audio, and works similarly to an analog modular synthesizer, where the audio output of a chain of various modules can be routed into another module. Audio in scsynth is created through graphs called Synth Definitions(SynthDefs)\cite{McCartney_2002}, which are definitions of synths, but also able to do anything audio-related within SuperCollider. Before exploring SynthDefs, we first must understand Unit Generators. In SuperCollider, Unit Generators (UGens), in listing \ref{lst:sine-wave-ug}, are the key building blocks for digital synthesis. Just like black boxes in coding, UGens contain complex calculations, and move them into a simple black box which outputs the synth builders. These are modular, and so the output of one UGen can serve as the input for another. 
+
+\begin{listing}
+	\begin{lstlisting}
+		// This is a simple sine wave unit generator
+		{SinOsc.ar(440, 0, 1)}.play;
+	\end{lstlisting}
+	\caption{A simple sine wave unit generator}
+	\label{lst:sine-wave-ug}
+\end{listing}
+
+A SynthDef is a pre-compiled graph of UGens. To turn a Unit Generator into a SynthDef, we start with a simple synth, and place it into a UGen. As in listing \ref{lst:simple-synth-wrap-UGen}, we begin with a simple synth, this time a sawtooth wave. Then, we give a name, \\mysaw to the function which will call the UGen. The sawtooth wave is wrapped in a UGen called \say{Out}. We then create a Synth, or a child (instantiation) of a SynthDef, which can be controlled by referencing it with a variable, as in listing \ref{lst:instantiate-synthedef}\cite{McCartney_2021}.
+
+\begin{listing}
+	\begin{lstlisting}
+		// This is a simple synth, a sawtooth wave
+		{Saw.ar(440)}.play
+		
+		// This will become this synth definition
+		SynthDef(\mysaw, {
+			Out.ar(0, Saw.ar(440)));
+		}).add;
+	\end{lstlisting}
+	\caption{A simple synth, wrapped into a UGen}
+	\label{lst:simple-synth-wrap-UGen}
+\end{listing}
+
+\begin{listing}
+	\begin{lstlisting}
+		// We create a synth using the \\mysaw function, and place it into variable 'a'
+		a = Synth(\mysaw);
+		
+		// We create a second synth with \mysaw, and place it into variable 'b'
+		b = Synth(\mysaw);
+		
+		a.free;
+		b.free; // frees both synths a and b, to free the resources associated with them before the program closes
+	\end{lstlisting}
+	\caption{Instantiating a SynthDef to create a Synth}
+	\label{lst:instantiate-synthedef}
+\end{listing}
+
+sclang, the client, is an interpreted programming language. It controls scsynth using Open Sound Control (OSC)\footnote{Like MIDI, OSC is a communication protocol used for audio.}. It is a dynamically typed, garbage-collected, single-inheritance object-oriented and functional language\cite{Wilson_Cottle_Collins_2016}. With syntax similar to the C programming language, for a developer the architecture of the language strikes the balance between the needs of realtime computations and the flexibility and simplicity of an abstract language. With the similarity between sclang and languages such as Lisp and the C language family, the semicolon and brackets are important to running a SuperCollider program. Brackets in SuperCollider help create a scope within the program for the interpreter. So, as in listing \ref{lst:basic-sc-code}, the following will not run at once, unless each individual line is highlighted then set to run.
+
+\begin{listing}
+	\begin{lstlisting}
+		var freq = 440;
+		var amp = 0.5;
+		
+		{SinOsc.ar(freq, 0, amp)}.play;
+	\end{lstlisting}
+	\caption{A basic example of SuperCollider code}
+	\label{lst:basic-sc-code}
+\end{listing}
+
+
+Brackets make a program's compilation and runtime much easier to handle. When we run code that is inside brackets, the code will be run all at once, as in listing \ref{lst:good-sc-code}. 
+
+\begin{listing}
+	\begin{lstlisting}
+		(
+			var freq = 440;
+			var amp = 0.5;
+			{SinOsc.ar(freq, 0, amp)}.play;
+		)
+	\end{lstlisting}
+	\caption{Using brackets in SuperCollider}
+	\label{lst:good-sc-code}	
+\end{listing}
