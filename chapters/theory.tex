@@ -13,7 +13,7 @@ The speed with which the wave rises and falls is its frequency. If the frequency
 	\label{fig:basic-sine-wave}
 \end{figure}
 
-\subsection{Sine Waves}
+\subsection{Sine Waves}\label{subsection:sine-waves}
 The first of the basic period waves is the sine wave. The sine wave is a signal with only one frequency, and is based on the trigonometric sine function. On the unit circle, the trigonometric sine function of a phase angle $\theta$ is defined as the ratio of the length of the opposite side and the hypotenuse of a right triangle. The unit circle, with a radius of 1, results in the sine function $sin\theta$ being equal to the y-value in Cartesian coordinates, where the hypotenuse of the right triangle that is formed meets the circle, like in figure \ref{fig:unit-circle}. A trigonometric sine wave can then be used to synthesize a sine wave audio signal. So, instead of calculating the sine function for a single value $x$, to create the sine wave signal the sine function is performed on a time vector $t = \{t_1, t_2, \dots, t_n\}$, with units in seconds. $sin(t) = \{sin(t_1), sin(t_2), \dots, sin(t_n)\}$. This gives us what we see in figure \ref{fig:unit-circle}. The table below summarizes these transformations.
 
 \begin{figure}
@@ -125,8 +125,7 @@ We can take the same concept found in the Discrete Fourier Transform, and apply 
 \end{equation}
 
 \section{Audio Manipulations}
-As previously mentioned, modular synthesis involves sending an audio signal through several patches in a linear form. These patches then make changes to the audio signal, modifying the input into a different-sounding output. To do this, we start with a digital audio wave, or a sine wave function. As seen in figure \ref{fig:basic-sine-wave}, there are several aspects of a sine function. There is the period of the wave, which dictates how many cycles the wave goes through, and is notated by the first peak and trough of the wave itself. We can use the period of a sine wave to find its frequency, which is how many periods the wave cycles through. The more periods that occur during a certain segment of time, the higher the wave's frequency. Sine wave functions are typically depicted in the time frequency, as previously mentioned. The x-scale of figure \ref{fig:sine-wave-period-amplitude} represented the audio signal itself, with the y-axis plotting the wave's amplitude, along with its peaks and troughs. With modular synthesis, we are able to change the period, and thus also the frequency, of the wave. By changing the period of the wave, and the wave's frequency too, we change the pitch of the resulting sound. With a higher frequency, we get a higher sound.
-
+As previously mentioned in section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}:
 
 \begin{figure}
 	\centering
@@ -135,6 +134,58 @@ As previously mentioned, modular synthesis involves sending an audio signal thro
 	\label{fig:sine-wave-period-amplitude}
 \end{figure}
 
-We can also change the amplitude of a wave, which depicts how high or low the wave itself sounds. The amplitude of an audio wave, which when notated in the time domain, will give us the volume of the output sound. The larger the distance between the center line of the wave and the peak or trough, the higher the output volume sounds, as in figure \ref{fig:sine-wave-period-amplitude}. 
+\begin{equation}\label{eq:full-sine-wave-equation}
+	y(t) = A \sin(2\pi ft + \varphi) = A\sin(\omega t + \varphi)
+\end{equation}
 
-These two manipulations will be the basis of the modules for this project, as they are extremely common in many virtual analog modular synthesizers. 
+with variables $A$, $f$, $\omega$, $\varphi$. $A$ is the wave's amplitude, which determines the peak deviation from zero. $f$ is the temporal frequency. $w = 2\pi f$ and is the angular frequency, and $\varphi$ is the wave's phase, which specifies (in radians) where in its cycle the wave's oscillation is at time $t = 0$ \cite{Kirk_Hunt_2013}. When $\varphi$ is not equal to zero, the wave itself will appear to be shifted by the value equal to $\varphi / \omega$, which is known as a wave's \say{phase shift}. A negative value will represent a delay in sound, while a positive value will represent an advance in the heard sound.
+
+Thus, there are three primary options when manipulating audio (or a simple waveform); amplitude, frequency, and phase can all be modified at various points to affect the audio output. The first, amplitude, will determine the volume of the wave's sound. The larger the distance between zero and the wave's peak, the higher the human ear will perceive the sound to be\cite{Zjalic_2021}. In figure \ref{fig:sine-wave-period-amplitude}, amplitude is colored purple, and we see it has a value of 1 (the default value of amplitude of a sine wave from the unit circle), as $A$ does in equation \ref{eq:full-sine-wave-equation}. By changing the value of $A$ to either $\frac{1}{2}$, or $2$, the peak of the wave will change accordingly, becoming larger or smaller depending on the set value of $A$. This change is reflected in the sound we can hear, as like in figure \ref{fig:half-sized-sine-wave} and equation \ref{eq:half-sized-sine-wave}, the volume of this sine wave is halved.
+
+\begin{equation}\label{eq:half-sized-sine-wave}
+	y(t) = \frac{1}{2} \sin(\omega t + \varphi)
+\end{equation}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{figures/half-sized-sine-wave.png}
+	\caption{A sine wave, with an amplitude of $\frac{1}{2}$}
+	\label{fig:half-sized-sine-wave}
+\end{figure}
+
+The second option commonly used to manipulate audio is to change an audio signal or wave's temporal frequency. For sound and audio manipulations, the temporal frequency component determines a sound's \say{color}, or \say{timbre}. It is the property of a waveform which determines the output sound's pitch. The high-end of audible frequencies for the human ear is around 20,000 Hz (20 kHz), though this reduces with age. The generally accepted range of human hearing ranges from 20 Hz to 20 kHz, with frequencies below 20 Hz felt more than heard\cite{Rosen_Howell_2011}. This range is further broken down in table \ref{tbl:frequency-table-of-human-hearing-general}. Thus, with equation \ref{eq:full-sine-wave-equation}, we change the value of $f$, which will alter the frequency of the wave, and then also alter the perceived pitch. With an increase in temporal frequency, there will also be an increase in angular frequency $\omega$, which increases the rate of change of the sine wave. With the period of the sine wave in figure \ref{fig:sine-wave-period-amplitude} marked blue, it is this blue section that will increase with an increase in $\omega$. As $\omega$ increases, there are more repetitions of the sine wave's phase, so the audio output's pitch will increase.
+
+\begin{table}
+	\begin{tabular}{|p{20em} | p{25em}|}
+		\hline
+		General Frequency Range & Description of Range \\ 
+		\hline
+		<20Hz - 60Hz & The lowest threshold of human hearing. This includes many frequencies that are felt and not heard, and provides the \say{rumble} feeling in music. This range gives much of music its power, and is typically known as \say{sub-bass}. \\
+		\hline
+		60Hz - 250Hz & This range determines the amount of \say{warmth} and how full the sound is perceived to be. The notes fundamental to rhythm lives in this range, and too much sound in this frequency range will result in the overall sound being \say{boomy}, or muddy-sounding and messy. It is otherwise known as the the \say{bass} frequency. \\
+		\hline
+		250Hz - 500Hz & The lower harmonics of many instruments are in this range. It is generally known as the \say{lower midrange} of frequencies, and can introduce listening fatigue and a telephone-quality to the sound if this range is emphasized too much. \\
+		\hline
+		500Hz - 2 kHz & This range is considered the middle of the midrange. It gives many instruments prominence in a mix, and determines how audible one instrument or vocalist is in comparison to another. If this range is emphasized, audio output may sound tinny and small, which could lead to listening and ear fatigue, as the human ear is sensitive to the human voice, and the frequencies it covers. \\
+		\hline
+		2 kHz - 4 kHz & The \say{upper midrange} is responsible for much of the attack sounds on percussive and rhythmic instruments. This range may add presence to the mix if boosted, but if it is emphasized too much, it may mask some speech recognition sounds. Listening fatigue may also set in if this range is emphasized too much, as the slightest boost in this range will result in a noticeable change in the sound's timbre. \\
+		\hline
+		4 kHz - 6 kHz & This range is known as the \say{presence} range. It defines a sound's clarity and the definition of voices and instruments that are present. If this range is boosted, instruments and voices may sound physically closer to the listener, and vice versa, with reducing this range causing instruments and voices to sound further away. However, if this range is emphasized too much, a harsh, irritating sound may occur. \\
+		\hline
+		6 kHz - 20 kHz & This range controls the \say{brilliance} and clarity of sounds within the mix. Instead of pitches, this range is composed entirely of harmonics, and brings \say{sparkle} to the sound. This range also may easily cause ear fatigue, as an over-emphasis can increase the hiss heard, and produce sibilance, or an unpleasant tonal harnshness which can happen with consonant syllables (most noticeably: S, T, and Z), especially on vocals. \\
+		\hline
+	\end{tabular}
+\caption[A description of the human hearing range]{Descriptions of general frequencies ranges within the range of human hearing}
+\label{tbl:frequency-table-of-human-hearing-general}\cite{Suits_1998}\cite{Zjalic_2021}
+\end{table}
+
+Finally, a modification to a wave's phase will determine if the audio signal output is on-time, delayed, or early. The numeric value of $\varphi$ depends on the start of the wave's period. Similar to the changes made to amplitude and frequency, by modifying the value of $\varphi$, we change the phase of the waveform. This will be most noticeable with multiple harmonics or simple waveforms stacked on top of each other, in which each signal will have a phase at a slightly different time, as in figure \ref{fig:sine-wave-phase-shift}. The period of the blue sine wave has a length of $\frac{\pi}{2}$, but otherwise is a normal unit circle sine wave. The red sine wave is phase shifted, with a $\varphi$ value of positive 2, which shifts the wave negative, causing the output audio to sound early in comparison to the blue wave. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/sine-wave-phase-shift.png}
+	\caption{The phase shift in a sine wave}
+	\label{fig:sine-wave-phase-shift}
+\end{figure}
+
+These three changes to an audio waveform will be the basis for the modules created in this project, in which some combination of modifications made to the audio signal will produce the desired changes. 
