@@ -46,7 +46,7 @@ System messages are much harder to understand than channel messages, and so will
 
 \subsection[Constructing MIDI Messages]{Constructing MIDI Messages}\label{section:midi-messages}
 
-MIDI messages are composed of bytes, a fundamental computation building block which consists of eight binary digits, either zero or one. Zeroes will be a \say{data byte} and ones are \say{status bytes}, with each MIDI message starting with a status byte, as seen in table \ref{tbl:typical-midi-byte}. This will determine the type of message that is sent (as they are normally channel messages) between note on, note off, pitch bend, or another type of message.
+MIDI messages are composed of bytes, a fundamental computation building block which consists of eight binary digits, either zero or one. Zeroes will be a \say{data byte} and ones are \say{status bytes}. The most significant bit (MSB, or the leftmost binary bit within a MIDI message) is used to identity the byte type. The MSB of a status byte is a 1, while the MSB of a data byte will be 0, as in table \ref{tbl:typical-midi-byte}. A status byte determines the type of MIDI function that will be performed, and encodes channel data, allowing the instruction to be received by a device that is set to respond to the selected channel. A data byte is used to associate a certain value to the event that is given by the accompanying status byte. This will determine the type of message that is sent (as they are normally channel messages) between note on, note off, pitch bend, or another type of message.
 
 \begin{table}
 	\centering
@@ -59,6 +59,121 @@ MIDI messages are composed of bytes, a fundamental computation building block wh
 	\label{tbl:typical-midi-byte}
 \end{table}
 
-After the top bit of one in a status byte, which begins a MIDI message, the next three bits, or digits, are the bits which actively determine the type of message it is, of which there are eight possible combinations\footnote{000, 001, 010, 100, 101, 110, 111}. The last four bits of a MIDI message determine which channel the message is delivered through, with 16 combinations for each of the 16 channels.
+After the top bit/MSB of one in a status byte, which begins a MIDI message, the next three bits, or digits, are the bits which actively determine the type of message it is, of which there are eight possible combinations\footnote{000, 001, 010, 100, 101, 110, 111}. The last four bits of a MIDI message determine which channel the message is delivered through, with 16 combinations for each of the 16 channels.
 
-In a data byte, the first bit will be a zero. These data bytes will carry data that belongs to a certain message type. For example, with a \say{note on} MIDI message, as previously discussed there are three values associated: channel, pitch, and velocity. The channel value will be encoded as part of a status byte, while pitch and velocity will be stored in their own data byte\cite{Kirk_Hunt_2013}. Within a note on message, the first data byte will always refer to the pitch, while the second will refer to the velocity, keeping in the established order of a note on MIDI message. The remaining seven bits of a data byte will be used to store the rest of the data. With seven bits, there are up to 128 combinations, ranging from 0 to 127, leading to how many MIDI values are coded to be between 0 and 127\cite{Huber_2012}.
+\subsubsection{Note On Messages}
+
+The note on message indicates the beginning of a MIDI note. Typically, one note on message is generated each time a note is triggered on a MIDI devices, such as a keyboard, controller, or other MIDI instrument\footnote{This includes, pressing down a key, hitting a MIDI drum pad, or playing a MIDI sequence.} A note on message will contain three bytes of information: the MIDI channel number, the pitch number, and the attack velocity value. As in table \ref{tbl:byte-structure-note-on}, the first byte specifies that this MIDI message is a note on message, and the MIDI channel that this message will go through. The second byte determines the specific note, of the possible 128 notes number 0-127, which will be sounded by the MIDI instrument. The third and final byte of a note on message is the note's velocity, also ranged from 0-127. This will denote the loudness of the sounding note, increasing in volume the higher this value goes. For MIDI instruments which do no interpret the entire 128-numbered range of velocity values, we will instead see an attack velocity value of 64 used, regardless of how loud or soft the note itself may be played. (This value of 64 gives the note a dynamic/loudness of \textit{mezzo forte}, or moderately loud.) Additionally, a note on message with an attack velocity of 0 will generally be equivalent to a note off message, discussed in the next section. In a note on message with an attack velocity value of 0, the MIDI receiver will generally silence the currently-sounding note, by playing it with a velocity (or volume) value of 0\cite{Huber_2012}.
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|}
+	\hline
+		Channel number (0-15) & Note number (0-127) & Attack velocity (0-127) \\
+		\hline
+		(1001 CCCC) & (0NNN NNNN) & (0VVV VVVV) \\
+	\hline
+	\end{tabular}
+	\caption{The structure of a note on MIDI message}
+	\label{tbl:byte-structure-note-on}
+\end{table}
+
+\subsubsection{Note Off Messages}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|}
+	\hline
+		Channel number (0-15) & Note number (0-127) & Release velocity (0-127) \\
+		\hline
+		(1001 CCCC) & (0NNN NNNN) & (0VVV VVVV) \\
+	\hline
+	\end{tabular}
+	\caption{The structure of a note off MIDI message}
+	\label{tbl:byte-structure-note-off}
+\end{table}
+
+A note off message is similar to that of a note on message, except that it is a command used to stop playing a MIDI note. A MIDI note on message will play until a corresponding note off message for that note is received by the MIDI receiver. So, a musical composition can, in its most basic form, be written as various MIDI note on and note off messages. There are also three bytes in a MIDI note off message (refer to table \ref{tbl:byte-structure-note-off}), except that the third byte instead is a release velocity value. This value, also ranging from 0-127, will indicate the velocity in which a key or controller is released. A lower value indicates that the key was released slowly, and a higher value shows the key was released quickly. For MIDI devices which are able to respond to receiving a release velocity value, these are able to be programmed to vary the note's speed of decay, reducing the note's decay time as the release velocity value increases\cite{Kirk_Hunt_2013}. 
+
+\subsubsection{Pressure/Aftertouch Messages}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|}
+	\hline
+		Channel number (0-15) & Note number (0-127) & Release velocity (0-127) \\
+		\hline
+		(1000 CCCC) & (0NNN NNNN) & (0VVV VVVV) \\
+	\hline
+	\end{tabular}
+	\caption{The structure of an aftertouch MIDI message}
+	\label{tbl:byte-structure-aftertouch}
+\end{table}
+
+Pressure messages, also known as \say{Aftertouch} messages, happen after a key is pressed, and the user decides to press down on the key harder. For compatible MIDI devices, aftertouch can generally be assigned to parameters which include vibrato, volume, filter cutoff, and pitch. As defined by MIDI, and the byte structure of an aftertouch message in table \ref{tbl:byte-structure-aftertouch}, there are two types of aftertouch messages: channel pressure messages and polyphonic key pressure messages\cite{Huber_2012}.
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|}
+	\hline
+		Channel number (0-15) & Note number (0-127) & Pressure value (0-127) \\
+		\hline
+		(1101 CCCC) & (0NNN NNNN) & (0VVV VVVV) \\
+	\hline
+	\end{tabular}
+	\caption{The structure of a channel pressure MIDI message}
+	\label{tbl:byte-structure-channel-pressure-messages}
+\end{table}
+
+Channel pressure messages are messages commonly transmitted by instruments which only respond to a singular overall pressure, regardless of the total number of keys played. These messages also contain three bytes of information: the MIDI channel number, the note number, and pressure value, as in table \ref{tbl:byte-structure-channel-pressure-messages}\cite{Huber_2012}. 
+
+Polyphonic key pressure messages are similar to channel pressure messages, but respond to the pressure changes that are applied to the individual keys of a MIDI keyboard. A MIDI device compatible with this type of MIDI message is able to respond or transmit the individual key pressure messages of each key that is pressed down. How a MIDI device compatible with polyphonic key pressure messages will vary, but typically contain bindings for performance parameters which include vibrato, volume, timbre, and pitch\cite{McGuire_2014}. 
+
+\subsubsection{Program Change Messages}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|}
+	\hline
+		Channel number (0-15) & Program ID number (0-127) \\
+		\hline
+		(1100 CCCC) & (0PPP PPPP) \\
+	\hline
+	\end{tabular}
+	\caption{The structure of a program change message}
+	\label{tbl:byte-structure-program-change}
+\end{table}
+
+Program Change messages are used to change the active program or preset number of a MIDI device. This preset number is a user- or factory-defined number to select a specific sound patch or system setup, to alter the output sound. With this message, up to 128 presets (in accordance to the established 0-127 numbered range available in MIDI) can be selected as a preset\cite{Huber_2012}. Commonly used to switch between presets on a digitally controlled mixing console, change loaded sounds, and more, this message consists of two bytes of information: the MIDI channel number, and the program ID number (0-127), like in table \ref{tbl:byte-structure-program-change}
+
+
+\subsubsection{Pitch Bend Messages}
+
+The pitch wheel is a common module found on most electronic keyboards and MIDI keyboards. The sensitivity of a pitch bend message refers to the responsiveness level (in semitones) of a pitch bend wheel or other pitch bend controller. This message is encoded in two bytes\cite{McGuire_2014}, and yields a total of 16,384 distinct semitone steps to pitch bend. Thus, the range of this message extends from its bottom end of 08192 to +8192, with 0 at the center serving as the instrument's true unaltered pitch\cite{Huber_2012}. This gives the physical pitch bend wheel values between 0 and 127, with 64 as the middle true pitch, as possible value ranges.
+
+\subsubsection{Control Change Messages}
+
+The control change type of MIDI messages are typically referred to as performance controllers, as they are capable of communicating with the many knobs and sliders on MIDI controllers. These messages relate the real-time control over these performance parameters. There are three main types of control change messages:
+
+\begin{enumerate}
+	\item continuous controllers: controllers which relay a full range (0-127) of variable control settings
+	\item switch controllers: controllers which have an \say{off} and \say{on} state, with no intermediate settings
+	\item channel mode message controllers: controllers which range from the controller numbers 120 and 127, used to set the note's sounding status, the instrument reset, the local control's on/off, all notes off message, and the MIDI mode status of a device
+\end{enumerate}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|}
+	\hline
+		Channel number (0-15) & Controller ID number (0-127) & Corresponding controller value (0-127) \\
+		\hline
+		(1011 CCCC) & (0CCC CCCC) & (0VVV VVVV) \\
+	\hline
+	\end{tabular}
+	\caption{The structure of a program change message}
+	\label{tbl:byte-structure-control-change-message}
+\end{table}
+
+One control change message will be transmitted whenever the corresponding controllers are varied in real time \cite{Huber_2012}, and consist of three bytes: the MIDI channel number, controller ID number (0-127), and the corresponding controller value (0-127), as in table \ref{tbl:byte-structure-control-change-message}. The second byte of a control change message, which dictates the controller ID number, is used to specify which of the device's program or performance parameters are to be referenced. 
+
+The third byte of the control change message, the controller value, describes the controller itself's actual data value. This is used to specify the position, depth, and/or level of a particular parameter\cite{Huber_2012}.
