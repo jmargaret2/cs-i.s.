@@ -2,7 +2,7 @@
 \chapter[Theory]{Theory}\label{chapter:theory}
 
 \section{Waveforms}\label{section:waveforms}
-Joseph Fourier\footnote{The creator of the Fourier transform, and whose importance is expanded upon later in the chapter.} proved that all sounds are composed of individual sine waves, or other wave types. There are five basic waveform types: the sine wave, square wave, saw tooth wave, triangle wave, and pulse wave \cite{Winer_2018}. Each of these waves are periodic waves, repeating in a pattern of motion known as a cycle, and the period is the time length.
+Joseph Fourier proved that all sounds are composed of individual sine waves, or other wave types. There are five basic waveform types: the sine wave, square wave, saw tooth wave, triangle wave, and pulse wave \cite{Winer_2018} (pulse wave or pulse train is a kind of non-sinusoidal waveform that includes square waves (duty cycle of 50\%) and similarly periodic but asymmetrical waves (duty cycles other than 50\%)) . Each of these waves are periodic waves, repeating in a pattern of motion known as a cycle, and the period is the time length. %TODO: use other sources to briefly explain the importance of Joseph Fourier & why he's mentioned -> could to this by stating he will be expanded upon in the DSP section
 
 The speed with which the wave rises and falls is its frequency. If the frequency is too low (less than 20 cycles per second), you won’t hear anything except for maybe some clicking noises. If the frequency is too high, again you won’t hear anything. The range of human hearing is generally stated as being from 20 cycles per second (20 Hertz, abbreviated Hz) at the low end to 20,000 cycles per second (20 kiloHertz, abbreviated kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
 
@@ -14,7 +14,7 @@ The speed with which the wave rises and falls is its frequency. If the frequency
 \end{figure}
 
 \subsection{Sine Waves}\label{subsection:sine-waves}
-The first of the basic period waves is the sine wave. The sine wave is a signal with only one frequency, and is based on the trigonometric sine function. On the unit circle, the trigonometric sine function of a phase angle $\theta$ is defined as the ratio of the length of the opposite side and the hypotenuse of a right triangle. The unit circle, with a radius of 1, results in the sine function $sin\theta$ being equal to the y-value in Cartesian coordinates, where the hypotenuse of the right triangle that is formed meets the circle, like in figure \ref{fig:unit-circle}. A trigonometric sine wave can then be used to synthesize a sine wave audio signal. So, instead of calculating the sine function for a single value $x$, to create the sine wave signal the sine function is performed on a time vector $t = \{t_1, t_2, \dots, t_n\}$, with units in seconds. $sin(t) = \{sin(t_1), sin(t_2), \dots, sin(t_n)\}$. This gives us what we see in figure \ref{fig:unit-circle}. The table below summarizes these transformations.
+The first of the basic period waves is the sine wave. The sine wave is a signal with only one frequency, and is based on the trigonometric sine function. On the unit circle, the trigonometric sine function of a phase angle $\theta$ is defined as the ratio of the length of the opposite side and the hypotenuse of a right triangle. The unit circle, with a radius of 1, results in the sine function $sin\theta$ being equal to the y-value in Cartesian coordinates, where the hypotenuse of the right triangle that is formed meets the circle, like in figure \ref{fig:unit-circle}. A trigonometric sine wave can then be used to synthesize a sine wave audio signal. So, instead of calculating the sine function for a single value $x$, to create the sine wave signal the sine function is performed on a time vector $t = \{t_1, t_2, \dots, t_n\}$, with units in seconds. $sin(t) = \{sin(t_1), sin(t_2), \dots, sin(t_n)\}$. This gives us what we see in figure \ref{fig:unit-circle}. The table \ref{tbl:sin-characteristics} summarizes these transformations.
 
 \begin{figure}
 	\centering
@@ -31,8 +31,9 @@ The first of the basic period waves is the sine wave. The sine wave is a signal 
         $sin(2\pi \cdot f \cdot t)$ & $\frac{f \textrm{ cycles}}{1 \textrm{ second}}$\\
         $sin(2\pi \cdot f \cdot t + \varphi)$ & Phase offset, $\varphi \varepsilon$ $[0, 2\pi]$\\
         $A \cdot sin(2\pi \cdot f \cdot t + \varphi)$ & Amplitude, \textit{A}
-    \end{tabular}
+    \end{tabular}\label{tbl:sin-characteristics}
 \end{center}
+%TODO: one formula block for each equation, unless I need to refer to a certain part of it
 The resulting sine wave signal can then be written as $x[t] = A \cdot sin(2 \cdot \pi \cdot f \cdot t + \theta$. $f$ is the frequency scalar, $t$ is the time vector of samples, and $\theta$ is the phase offset, between $[0, 2\pi]$.
 
 \subsection{Square Waves}
@@ -81,9 +82,9 @@ Digital signals are studied in one of four domains: time domain, spatial domain,
 
 \subsection{Time Domain}
 
-Audio is most commonly represented as a waveform, most commonly as the sine wave, with time plotted against the wave's amplitude. The x-axis will represent the discrete audio signal, and is normalized to represent the hours, minutes, or seconds. Normalization is the process of transposing a data set to a specific reference value, by dividing the output value by a given constant \cite{Zjalic_2021}. In audio, the most common type of normalization will be applied to a common audio waveform, to produce a signal that is normalized between the values of 1 and -1. 1 thus becomes the reference value for positive values, and -1 for negative values. To normalize audio, the following formula is applied to an audio signal: sample value $\times$ $\frac{1}{\textrm{reference value }}$. Audio normalization is useful for audio analysis, in that it allows for comparisons to be made between signals, regardless of their magnitude and sample rate \footnote{[INSERT DEF OF SAMPLE RATES]}. The y-axis then represents the magnitude of each audio sample, in which the decibels (or another magnitude unit) are a bipolar normalized value, between a positive and negative value. 
+Audio is most commonly represented as a waveform, most commonly as the sine wave, with time plotted against the wave's amplitude. The x-axis will represent the discrete audio signal, and is normalized to represent the hours, minutes, or seconds. Normalization is the process of transposing a data set to a specific reference value, by dividing the output value by a given constant \cite{Zjalic_2021}. In audio, the most common type of normalization will be applied to a common audio waveform, to produce a signal that is normalized between the values of 1 and -1. 1 thus becomes the reference value for positive values, and -1 for negative values. To normalize audio, the following formula is applied to an audio signal: sample value $\times$ $\frac{1}{\textrm{reference value }}$. Audio normalization is useful for audio analysis, in that it allows for comparisons to be made between signals, regardless of their magnitude and sample rate. The y-axis then represents the magnitude of each audio sample, in which the decibels (or another magnitude unit) are a bipolar normalized value, between a positive and negative value. 
 
-To transform the time representation from samples to seconds, the sample rate must first be known. From there, it is simple to transpose \cite{Zjalic_2021}. For example, we assume that for the 44100 samples we have that the sample rate is also 44100 Hz [INSERT DEF OF HZ IF NOT IN ALREADY]. So, $44100 / 441100 = 1$ second, in that we divide the number of samples by the sample rate, to obtain a time representation in seconds. Another example may showcase this better. Assume we have 2646000 samples, and a sample rate of 44100 Hz. Then, we have $2646000/44100 = 60$ seconds.
+To transform the time representation from samples to seconds, the sample rate must first be known. From there, it is simple to transpose \cite{Zjalic_2021}. For example, we assume that for the 44100 samples we have that the sample rate is also 44100 Hz. So, $44100 / 441100 = 1$ second, in that we divide the number of samples by the sample rate, to obtain a time representation in seconds. Another example may showcase this better. Assume we have 2646000 samples, and a sample rate of 44100 Hz. Then, we have $2646000/44100 = 60$ seconds.
 
 \subsection{Frequency Domain}
 The physical concept of frequency is relatively simple: it is the number of occurrences per unit of time in a given phenomenon \cite{Gabrielli_2020}. In audio, this becomes the number of repetitions, or cycles, of a sine wave. This type of frequency is known as the \textit{temporal frequency}, and will be denoted with the letter \textit{f}. For acoustic audio signals, we will be describing frequency in Hertz (H).\footnote{The reciprocal of the temporal frequency is known as the period, denoted as capital \textit{T}. This is defined as the time required to completed one full cycle at any given frequency, otherwise known as $T = \frac{1}{\textit{f}}$.} In digital signal processing, we instead will be using angular frequency (radians per second, denoted with $\omega$), which measures the angular displacement per unit of time. Thus, we have the following relation between temporal frequency, angular frequency, and period \cite{Gabrielli_2020}.
@@ -94,35 +95,7 @@ The physical concept of frequency is relatively simple: it is the number of occu
 
 To convert a signal into the frequency domain, and to obtain its frequency components, the Fourier Transform can be used\footnote{The Inverse Fourier Transform can be used to go from the frequency domain to the time domain.}. Transforms like these are common in audio signal processing. These are mathematical operations which allow you to observe a signal from a different perspective\footnote{The result of a transform on an audio signal can be seen in figure 2.9 of Gabrielli.}.
 
-\section{The Fourier Transform}
-Joseph Fourier (1768-1830) stated that all sounds could be represented by one or more sine waves of various frequencies, amplitudes, durations, and phases. Any sound could then be broken down into its component parts, and analyzed with Fourier analysis \cite{Winer_2018}. 
-
-The Fourier transform converts the time information to a magnitude and phase component of each frequency. With the Fourier transform, Fourier stated that any signal \textit{x} of time length \textit{t} can be broken down into the sine and cosine waves of which it is composed \cite{Zjalic_2021}, each having \textit{t} cycles. Thus, based on the properties of the specific audio signal, the Fourier Transform can be broken into four methods:
-
-\begin{enumerate}
-    \item Fourier Transform: applies to continuous signals which are aperiodic (without periodic repetitions)
-    \item Fourier Series: applies to continuous, periodic signals
-    \item Discrete Time Fourier Transform: applies to discrete signals\footnote{A signal which is defined at discrete points between positive and negative values} which are also aperiodic
-    \item Discrete Fourier Transform: applies to discrete signals which are also periodic
-\end{enumerate}
-
-Digital data, and so digital audio, has no relation to the first two methods. Sine and cosine waves in audio are defined from negative to positive infinity, but it is impossible to be able to define these signals continuously. Instead, we must obtain the discrete values of these waves at each specific time point, inferring the information between these points. So, by imagining a sine or cosine wave as simply one repetition of a series of a periodic sinusoidal, the criteria for a Discrete Fourier Transform is met \cite{Zjalic_2021}. Thus, it is the only transform that is applicable to digital audio signal processing, as it is both discrete and periodic.
-
-\subsection{Discrete Fourier Transform}
-The Discrete Fourier Transform (or DFT) takes the audio samples in the time domain as an input, and outputs two frequency domain outputs: $\frac{N}{2} + 1$ points. These outputs represent the amplitude of the sine and cosine waves, with \textit{N} the number of samples in the input, giving us equation \ref{eq:dft-equation} below \cite{Gold_Morgan_Ellis_2011}. This equation is of a finite duration sequence x(n)
-with $0 \leq n \leq N + 1$ \cite{Broughton_Bryan_2008}.
-
-\begin{equation}\label{eq:dft-equation}
-    X[k] = \sum_{k=0}^{N-1}x[n]e^{-j (\frac{2\pi}{N})kn}
-\end{equation}
-
-The Discrete Fourier Transform represents the vector $x[n]$ as a combination of harmonically-related sinusoidals. 
-
-\subsection{Inverse Fourier Transform}
-We can take the same concept found in the Discrete Fourier Transform, and apply it to its inverse. With the Inverse Fourier Transform, audio samples in the frequency domain and taken as input, and samples in the time domain are output. As seen in equation \ref{eq:inverse-fourier-transform-equation}, the equations for the Discrete Fourier Transform (DFT) and the Inverse Discrete Fourier Transform (IDFT) are similar. 
-\begin{equation}\label{eq:inverse-fourier-transform-equation}
-	x[n] = \frac{1}{N}\sum_{k=0}^{N-1}X[k]e^{-j(\frac{2\pi}{N})kn}
-\end{equation}
+\section{Digital Signal Processing (DSP)}
 
 \section{Audio Manipulations}
 As previously mentioned in section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}:
