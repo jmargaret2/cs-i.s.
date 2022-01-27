@@ -2,9 +2,9 @@
 \chapter[Theory]{Theory}\label{chapter:theory}
 
 \section{Waveforms}\label{section:waveforms}
-Joseph Fourier proved that all sounds are composed of individual sine waves, or other wave types. There are five basic waveform types: the sine wave, square wave, saw tooth wave, triangle wave, and pulse wave \cite{Winer_2018} (pulse wave or pulse train is a kind of non-sinusoidal waveform that includes square waves (duty cycle of 50\%) and similarly periodic but asymmetrical waves (duty cycles other than 50\%)) . Each of these waves are periodic waves, repeating in a pattern of motion known as a cycle, and the period is the time length. %TODO: use other sources to briefly explain the importance of Joseph Fourier & why he's mentioned -> could to this by stating he will be expanded upon in the DSP section
+According to Joseph Fourier, the creator of the Fourier Transform, any periodic signal or sound can be reduced into their individual sine waves, or other waveform types \cite{Broughton_Bryan_2008}. There are five basic waveform types: a sine wave, square wave, sawtooth wave, triangle wave, and pulse wave \cite{Winer_2018}. The pulse wave is a special type of waveform, as it is a non-sinusoidal waveform which includes square waves within it, and is similarly periodic to square waves, but also asymmetrical. The other waveform types are also periodic waves, as they repeat in a pattern of motion known as a cycle, and the period is the time length.
 
-The speed with which the wave rises and falls is its frequency. If the frequency is too low (less than 20 cycles per second), you won’t hear anything except for maybe some clicking noises. If the frequency is too high, again you won’t hear anything. The range of human hearing is generally stated as being from 20 cycles per second (20 Hertz, abbreviated Hz) at the low end to 20,000 cycles per second (20 kiloHertz, abbreviated kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
+The speed with which each wave rises and falls is its frequency. If the frequency is too low (less than 20 cycles per second, or 20 Hertz, abbreviated as Hz), little to no noise will be audible by the human ear. If the frequency is too high (generally above 20,000 cycles per second, or 20 kiloHertz, abbreviated kHz), again, few noises besides high-pitched and shrill noises will be audible. The range of human hearing is generally stated as being from 20 cycles per second, with 20 Hertz at the low end to 20,000 cycles per second (20 kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
 
 \begin{figure}
 	\centering
@@ -14,7 +14,19 @@ The speed with which the wave rises and falls is its frequency. If the frequency
 \end{figure}
 
 \subsection{Sine Waves}\label{subsection:sine-waves}
-The first of the basic period waves is the sine wave. The sine wave is a signal with only one frequency, and is based on the trigonometric sine function. On the unit circle, the trigonometric sine function of a phase angle $\theta$ is defined as the ratio of the length of the opposite side and the hypotenuse of a right triangle. The unit circle, with a radius of 1, results in the sine function $sin\theta$ being equal to the y-value in Cartesian coordinates, where the hypotenuse of the right triangle that is formed meets the circle, like in figure \ref{fig:unit-circle}. A trigonometric sine wave can then be used to synthesize a sine wave audio signal. So, instead of calculating the sine function for a single value $x$, to create the sine wave signal the sine function is performed on a time vector $t = \{t_1, t_2, \dots, t_n\}$, with units in seconds. $sin(t) = \{sin(t_1), sin(t_2), \dots, sin(t_n)\}$. This gives us what we see in figure \ref{fig:unit-circle}. The table \ref{tbl:sin-characteristics} summarizes these transformations.
+The first of the basic periodic waves is the sine wave, and is the most common type of periodic wave. The sine wave is a signal with only one frequency, and represents the unidimensional motion for any signal with a phase angle that rotates at a constant rate. It is also based on the trigonometric sine function. On the unit circle, the trigonometric sine function of a phase angle $\theta$ is defined as the ratio of the length of the opposite side and the hypotenuse of a right triangle. The unit circle, with a radius of 1, results in the sine function $sin\theta$ being equal to the y-value in Cartesian coordinates, where the hypotenuse of the right triangle that is formed meets the circle, like in Figure \ref{fig:unit-circle}. We can then use this trigonometric sine wave to synthesize a sine wave audio signal. As sine wave is a continuous periodic wave, in which the wave continues to sound until stopped, we must use the sine wave function on the unit circle continuously. Thus, we use the sine function continuously around the unit circle, going counterclockwise. We notice that in the correlation between Figures \ref{fig:basic-sine-wave} and \ref{fig:unit-circle} moving counterclockwise through the unit circle results in the appropriate rise and fall of the sine wave. $\frac{\pi}{2}$ is the highest y-value within the Cartesian plane, and so denotes a peak in the sine wave, while $\frac{3\pi}{2}$ is the lowest, denoting a trough.
+
+\begin{equation}
+	y = Asin(B(x + C)) + D
+	\label{eq:sine-wave-equation}
+\end{equation}
+
+Like with the other periodic waves, sine waves have three important properties: frequency, amplitude, and phase. From the generic function for a sine wave as in Equation \ref{eq:sine-wave-equation}, we are able to compute the various properties. First, \textit{A} is the sine wave's amplitude. This is defined as the height from the center line of the wave to its peak or trough. For our unit sine wave, this value will be 1. Second is the variable \textit{B}, which helps to define the period of the wave, or the distance between one peak and the next, or one trough and the next. With Equation \ref{eq:sine-wave-period}, we see the period is equivalent to taking the total circumference of the unit circle, and dividing it by \textit{B}. Third, the phase shift of a sine wave is denoted by \textit{C}. If the expression is $(x + C)$, then the phase of the sine wave will shift to the left, as the x-value of the wave becomes negative \textit{C}. Otherwise, if the expression is $(x - C)$, then the wave will shift right, with a positive x-value as \textit{C}. Finally, the variable \textit{D} is equivalent to the vertical shift of the wave. This notates the distance that the wave will shift vertically from its unit circle position.
+
+\begin{equation}
+	\frac{2\pi}{B}
+	\label{eq:sine-wave-period}
+\end{equation}
 
 \begin{figure}
 	\centering
@@ -23,21 +35,35 @@ The first of the basic period waves is the sine wave. The sine wave is a signal 
 	\label{fig:unit-circle}
 \end{figure}
 
-\begin{center}
-    \begin{tabular}{c c}
-        Function Input & Output Characteristics \\
-        $sin(t)$ & $\frac{1 \textrm{ cycle}}{2\pi \textrm{ seconds}}$\\
-        $sin(2\pi \cdot t)$ & $\frac{1 \textrm{ cycle}}{1 \textrm{ second}}$\\
-        $sin(2\pi \cdot f \cdot t)$ & $\frac{f \textrm{ cycles}}{1 \textrm{ second}}$\\
-        $sin(2\pi \cdot f \cdot t + \varphi)$ & Phase offset, $\varphi \varepsilon$ $[0, 2\pi]$\\
-        $A \cdot sin(2\pi \cdot f \cdot t + \varphi)$ & Amplitude, \textit{A}
-    \end{tabular}\label{tbl:sin-characteristics}
-\end{center}
-%TODO: one formula block for each equation, unless I need to refer to a certain part of it
-The resulting sine wave signal can then be written as $x[t] = A \cdot sin(2 \cdot \pi \cdot f \cdot t + \theta$. $f$ is the frequency scalar, $t$ is the time vector of samples, and $\theta$ is the phase offset, between $[0, 2\pi]$.
-
 \subsection{Square Waves}
-The second of the periodic waves, the square wave, is a signal which oscillates between a singular positive value, and a single negative value \cite{Tarr_2019}. As seen in figure \ref{fig:square-wave}, the waveform itself is only ever positive or negative 1. An approximation of a square wave can be creating by combining multiple individual harmonics, or sine functions. This method of forming an audio signal is known as \textit{additive synthesis}, in which a new timbre is created by adding together sine waves. As a square wave is the summation of the odd-numbered harmonics, the following equation can be used \cite{Tarr_2019}.
+The square wave is the second of the periodic waveforms, and is a wave in which the frequency oscillates between a single fixed minimum and maximum value \cite{Tarr_2019}. Within the unit circle definition of the square wave, the maximum frequency is positive or negative one, as in Figure \ref{fig:square-wave}. This unit square wave details the ideal square wave, in which the change between minimum and maximum frequency happen instantaneously. An approximation of square waves may be created through the combination of multiple individual harmonics (sine functions). This method of creating an audio signal is known as \textit{additive synthesis}, in which a new timbre or sound is create by adding together periodic waveforms, usually sine waves \cite{Tarr_2019}. 
+
+The square wave is a certain type of pulse wave (discussed separately in section \ref{subsection:pulse-wave}) which allows for a frequency to sound at fixed amplitudes for an arbitrary duration. At its simplest, a square wave can be defined as a sign function of a sinusoidal. A sign function, or a signum function, as in Figure \ref{fig:sign-function}, is an odd mathematical function which extracts the sign of a real number, expressed as $sgn$. Of a real number $x$, it is a piecewise function, defined as in Equation \ref{eq:sgn-function}.
+
+\begin{equation}
+	sgn (x): \begin{cases}
+		-1 & \textrm{if } x < 0, \\
+		0 & \textrm{if } x = 0, \\
+		1 & \textrm{if } x > 0
+	\end{cases}
+	\label{eq:sgn-function}
+\end{equation}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{sign-function.png}
+  \caption{A sign function}
+  \label{fig:sign-function}
+\end{figure}
+
+Thus, we have a square wave equal to Equation \ref{eq:square-wave-function}. The function $x(t)$ will equal 1 when the sinusoidal is positive, -1 when negative, and 0 at the discrete values where the sinusoidal is equivalent to 0.
+
+\begin{align}
+	x(t) = sgn(sin(\frac{2\pi\textrm{t}}{T}) &
+	= sgn(sin2\pi ft)
+	\label{eq:square-wave-function}
+\end{align} %TODO: write out periodic function to compare with sawtooth
+
 
 \begin{figure}
   \centering
@@ -46,18 +72,20 @@ The second of the periodic waves, the square wave, is a signal which oscillates 
   \label{fig:square-wave}
 \end{figure}
 
-
-\begin{align}
-    \textrm{Let } x &= 2 \cdot \pi \cdot f \cdot t \\
-    M &= \bigg \lfloor \frac{F_s}{2 \cdot f} \bigg \rfloor \\
-    \textrm{square}(x) &= \frac{4}{\pi}(sin(x) + \frac{1}{3}sin(3 \cdot x) + \frac{1}{5}sin(5 \cdot x) + \dots) \\
-    \textrm{square}(x) &= \frac{4}{\pi}\sum_{n=1, 3, 5, \dots}^{M}(n \cdot x)
-\end{align}
-
-Thus, the value \textit{M} is the harmonic with the highest frequency. This is calculated to be the number of odd harmonics less than the Nyquist frequency of $\frac{F_S}{2}$, rounded down to the nearest whole number. [INSERT DEF OF NYQUIST FREQ]
-
 \subsection{Sawtooth Waves}
-A Sawtooth wave is a signal with an amplitude which changes linearly between a minimum value, and a maximum value, as in figure \ref{fig:basic-sawtooth-wave}. Sawtooth waves are also created through additive synthesis, combining multiple sine functions together to create it. We have a similar equation to the one for square waves. 
+The sawtooth waveform is also a non-sinusoidal wave, which resembles the teeth of a plain-toothed saw. Similar to the square wave, a sawtooth wave will ramp upwards to a peak amplitude height, then sharply drop to its trough, as in Figure \ref{fig:basic-sawtooth-wave}. Then, we are able to take Equation \ref{eq:sawtooth-piecewise-function}, and place it into a periodic function, as in Equation \ref{eq:sawtooth-sinusoidal-function}. For the periodic function, let $frac(x) = t - \lfloor t \rfloor$.
+
+\begin{equation}
+	x(t) = t - \lfloor t \rfloor
+	\label{eq:sawtooth-piecewise-function}
+\end{equation}
+
+\begin{equation}
+	S(x) = Afrac(\frac{x}{T} + \phi)
+	\label{eq:sawtooth-sinusoidal-function}
+\end{equation}
+
+Like with other waveforms, the variable \textit{A} represents the wave's amplitude, and \textit{T} represents the wave's period. The variable $\phi$ denotes the wave's phase, with positive values causing a shift to the left, and negative values a shift to the right. Sawtooth waves are typically created through additive synthesis, much like square waves are, and so we notice that sawtooth waves and square waves have similar periodic equations \cite{Tarr_2019}.
 
 \begin{figure}
   \centering
@@ -67,14 +95,18 @@ A Sawtooth wave is a signal with an amplitude which changes linearly between a m
 \end{figure}
 
 
-\begin{align}
-    \textrm{Let } x &= 2 \cdot \pi \cdot f \cdot t \\
-    M &= \bigg \lfloor \frac{F_s}{2 \cdot f} \bigg \rfloor \\
-    \textrm{square}(x) &= \frac{1}{2} - \frac{1}{\pi}(sin(x) + \frac{1}{2}sin(2 \cdot x) + \frac{1}{3}sin(3 \cdot x) + \dots) \\
-    \textrm{square}(x) &= \frac{1}{2} - \frac{1}{\pi}\sum_{n=1}^{M}(\frac{1}{n}sin(n \cdot x)
-\end{align}
+\subsection{Triangle Wave}
 
-One thing to notice, is the equations for saw tooth waves and square waves are very similar, with both waves being the summation of the odd harmonics of the fundamental frequency \cite{Tarr_2019}.
+A triangle wave is also a non-sinusoidal waveform, named for its triangular shape. Like with square waves, this type of wave only contains odd harmonics, i.e. only containing valid values which are odd numbers.
+
+\begin{equation}
+	f(x) = \frac{2}{\pi}sin^{-1}\lceil sin(\pi x) \rceil
+	\label{eq:triangle-wave-function}	
+\end{equation}
+
+
+\subsection{Pulse Wave}\label{subsection:pulse-wave}
+The final common waveform type is the pulse wave. This is a non-sinusoidal waveform which includes squares waves, in which the shape of the wave is determined by the pulse width of the input. However, unlike with square waves, the second half of a cycle within a pulse wave is replaced with silence, as in Figure %TODO: insert figure of pulse wave.
 
 \section{Time Domain and Frequency Domain}
 
@@ -98,7 +130,7 @@ To convert a signal into the frequency domain, and to obtain its frequency compo
 \section{Digital Signal Processing (DSP)}
 
 \section{Audio Manipulations}
-As previously mentioned in section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}:
+As previously mentioned in Section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in Figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}:
 
 \begin{figure}
 	\centering
@@ -111,9 +143,9 @@ As previously mentioned in section \ref{section:modular-synth-what-is}, modular 
 	y(t) = A \sin(2\pi ft + \varphi) = A\sin(\omega t + \varphi)
 \end{equation}
 
-with variables $A$, $f$, $\omega$, $\varphi$. $A$ is the wave's amplitude, which determines the peak deviation from zero. $f$ is the temporal frequency. $w = 2\pi f$ and is the angular frequency, and $\varphi$ is the wave's phase, which specifies (in radians) where in its cycle the wave's oscillation is at time $t = 0$ \cite{Kirk_Hunt_2013}. When $\varphi$ is not equal to zero, the wave itself will appear to be shifted by the value equal to $\varphi / \omega$, which is known as a wave's \say{phase shift}. A negative value will represent a delay in sound, while a positive value will represent an advance in the heard sound.
+with variables $A$, $f$, $\omega$, $\varphi$. $A$ is the wave's amplitude, which determines the peak deviation from zero. $f$ is the temporal frequency. $w = 2\pi f$ and is the angular frequency, and $\varphi$ is the wave's phase, which specifies (in radians) where in its cycle the wave's oscillation is at time $t$ \cite{Kirk_Hunt_2013}. When $\varphi$ is not equal to zero, the wave itself will appear to be shifted by the value equal to $\varphi / \omega$, which is known as a wave's \say{phase shift.} A negative value will represent a delay in sound, while a positive value will represent an advance in the heard sound.
 
-Thus, there are three primary options when manipulating audio (or a simple waveform); amplitude, frequency, and phase can all be modified at various points to affect the audio output. The first, amplitude, will determine the volume of the wave's sound. The larger the distance between zero and the wave's peak, the higher the human ear will perceive the sound to be\cite{Zjalic_2021}. In figure \ref{fig:sine-wave-period-amplitude}, amplitude is colored purple, and we see it has a value of 1 (the default value of amplitude of a sine wave from the unit circle), as $A$ does in equation \ref{eq:full-sine-wave-equation}. By changing the value of $A$ to either $\frac{1}{2}$, or $2$, the peak of the wave will change accordingly, becoming larger or smaller depending on the set value of $A$. This change is reflected in the sound we can hear, as like in figure \ref{fig:half-sized-sine-wave} and equation \ref{eq:half-sized-sine-wave}, the volume of this sine wave is halved.
+Thus, there are three primary options when manipulating audio (or a simple waveform); amplitude, frequency, and phase can all be modified at various points to affect the audio output. The first, amplitude, will determine the volume of the wave's sound. The larger the distance between zero and the wave's peak, the louder the human ear will perceive the sound to be\cite{Zjalic_2021}. In Figure \ref{fig:sine-wave-period-amplitude}, amplitude is colored purple, and we see it has a value of 1 (the default value of amplitude of a sine wave from the unit circle), as $A$ does in Equation \ref{eq:full-sine-wave-equation}. By changing the value of $A$ to either $\frac{1}{2}$, or $2$, the peak of the wave will change accordingly, becoming larger or smaller depending on the set value of $A$. This change is reflected in the sound we can hear, as like in Figure \ref{fig:half-sized-sine-wave} and Equation \ref{eq:half-sized-sine-wave}, the volume of this sine wave is halved.
 
 \begin{equation}\label{eq:half-sized-sine-wave}
 	y(t) = \frac{1}{2} \sin(\omega t + \varphi)
@@ -126,7 +158,7 @@ Thus, there are three primary options when manipulating audio (or a simple wavef
 	\label{fig:half-sized-sine-wave}
 \end{figure}
 
-The second option commonly used to manipulate audio is to change an audio signal or wave's temporal frequency. For sound and audio manipulations, the temporal frequency component determines a sound's \say{color}, or \say{timbre}. It is the property of a waveform which determines the output sound's pitch. The high-end of audible frequencies for the human ear is around 20,000 Hz (20 kHz), though this reduces with age. The generally accepted range of human hearing ranges from 20 Hz to 20 kHz, with frequencies below 20 Hz felt more than heard\cite{Rosen_Howell_2011}. This range is further broken down in table \ref{tbl:frequency-table-of-human-hearing-general}. Thus, with equation \ref{eq:full-sine-wave-equation}, we change the value of $f$, which will alter the frequency of the wave, and then also alter the perceived pitch. With an increase in temporal frequency, there will also be an increase in angular frequency $\omega$, which increases the rate of change of the sine wave. With the period of the sine wave in figure \ref{fig:sine-wave-period-amplitude} marked blue, it is this blue section that will increase with an increase in $\omega$. As $\omega$ increases, there are more repetitions of the sine wave's phase, so the audio output's pitch will increase.
+The second option commonly used to manipulate audio is to change an audio signal or wave's temporal frequency. For sound and audio manipulations, the temporal frequency component determines a sound's \say{color,} or \say{timbre.} It is the property of a waveform which determines the output sound's pitch. The high-end of audible frequencies for the human ear is around 20,000 Hz (20 kHz), though this reduces with age. The generally accepted range of human hearing ranges from 20 Hz to 20 kHz, with frequencies below 20 Hz felt more than heard\cite{Rosen_Howell_2011}. This range is further broken down in Table \ref{tbl:frequency-table-of-human-hearing-general}. Thus, with Equation \ref{eq:full-sine-wave-equation}, we change the value of $f$, which will alter the frequency of the wave, and then also alter the perceived pitch. With an increase in temporal frequency, there will also be an increase in angular frequency $\omega$, which increases the rate of change of the sine wave. With the period of the sine wave in Figure \ref{fig:sine-wave-period-amplitude} marked blue, it is this blue section that will increase with an increase in $\omega$. As $\omega$ increases, there are more repetitions of the sine wave's phase, so the audio output's pitch will increase.
 
 \begin{table}
 	\begin{tabular}{|p{20em} | p{25em}|}
@@ -152,7 +184,7 @@ The second option commonly used to manipulate audio is to change an audio signal
 \label{tbl:frequency-table-of-human-hearing-general}\cite{Suits_1998}\cite{Zjalic_2021}
 \end{table}
 
-Finally, a modification to a wave's phase will determine if the audio signal output is on-time, delayed, or early. The numeric value of $\varphi$ depends on the start of the wave's period. Similar to the changes made to amplitude and frequency, by modifying the value of $\varphi$, we change the phase of the waveform. This will be most noticeable with multiple harmonics or simple waveforms stacked on top of each other, in which each signal will have a phase at a slightly different time, as in figure \ref{fig:sine-wave-phase-shift}. The period of the blue sine wave has a length of $\frac{\pi}{2}$, but otherwise is a normal unit circle sine wave. The red sine wave is phase shifted, with a $\varphi$ value of positive 2, which shifts the wave negative, causing the output audio to sound early in comparison to the blue wave. 
+Finally, a modification to a wave's phase will determine if the audio signal output is on-time, delayed, or early. The numeric value of $\varphi$ depends on the start of the wave's period. Similar to the changes made to amplitude and frequency, by modifying the value of $\varphi$, we change the phase of the waveform. This will be most noticeable with multiple harmonics or simple waveforms stacked on top of each other, in which each signal will have a phase at a slightly different time, as in Figure \ref{fig:sine-wave-phase-shift}. The period of the blue sine wave has a length of $\frac{\pi}{2}$, but otherwise is a normal unit circle sine wave. The red sine wave is phase shifted, with an $\varphi$ value of positive 2, which shifts the wave negative, causing the output audio to sound early in comparison to the blue wave. 
 
 \begin{figure}
 	\centering
