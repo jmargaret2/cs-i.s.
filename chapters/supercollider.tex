@@ -15,7 +15,7 @@ scsynth renders audio, and works similarly to an analog modular synthesizer, whe
 	\label{lst:sine-wave-ug}
 \end{listing}
 
-A SynthDef is a pre-compiled graph of UGens. To turn a Unit Generator into a SynthDef, we start with a simple synth, and place it into a UGen. As in Listing \ref{lst:simple-synth-wrap-UGen}, we begin with a simple synth, this time a sawtooth wave. Then, we give a name, \mysaw to the function which will call the UGen. The sawtooth wave is wrapped in a UGen called \say{Out}. We then create a Synth, or a child (instantiation) of a SynthDef, which can be controlled by referencing it with a variable, as in Listing \ref{lst:instantiate-synthedef}\cite{McCartney_2021}.
+A SynthDef is a pre-compiled graph of UGens. To turn a Unit Generator into a SynthDef, we start with a simple synth, and place it into a UGen. As in Listing \ref{lst:simple-synth-wrap-UGen}, we begin with a simple synth, this time a sawtooth wave. Then, we give a name, mysaw, to the function which will call the UGen. The sawtooth wave is wrapped in a UGen called \say{Out.} We then create a Synth, or a child (instantiation) of a SynthDef, which can be controlled by referencing it with a variable, as in Listing \ref{lst:instantiate-synthedef}\cite{McCartney_2021}.
 
 \begin{listing}
 	\begin{lstlisting}
