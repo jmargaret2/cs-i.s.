@@ -8,9 +8,17 @@
 
 \section{The Modules: Pure Waveforms}
 
+\begin{listing}
+	\begin{lstlisting}
+		{SynthDef("sinewave", {arg freq=440, vol=50; Out.ar(0, SinOsc.ar(freq, 0, vol))}).add;}
+	\end{lstlisting}
+	\caption{Creating a sinewave SynthDef in SuperCollider}
+	\label{lst:sinewave-synthdef}
+\end{listing}
+
 \subsection{Legato Switch: A Sustain Button}
 
-The \textit{legato} switch for this synthesizer is meant to emulate the legato notation found in classical music. Legato is a directive, typically found in its full form in classical music, which indicates the performance of a specific passage to be played in a smooth, graceful, and connected style (opposed to the \textit{staccato} notation) \cite{Winer_2018}. It will often be indicated by a slur over the notes, or an accent mark with a line over the notes to be affected, as in Figure \ref{fig:legato-example}. On a physical electronic keyboard, this module is most often seen with a \textit{sustain} button, in which the notes played are extended, and slurred into each other. However, it is important to note that not all slur lines in written sheet music will be meant to be played legato. Notes that are to be played legato will differ in pitch, connecting notes of different pitches to be played in succession in a smooth manner. 
+The \textit{legato} switch for this synthesizer is meant to emulate the legato notation found in classical music. Legato is a directive, typically found in its full form in classical music, which indicates the performance of a specific passage to be played in a smooth, graceful, and connected style (opposed to the \textit{staccato} notation) \cite{Winer_2018}. It will often be indicated by a slur over the notes, or an accent mark with a line over the notes to be affected, as in Figure \ref{fig:legato-example}. On a physical electronic keyboard, this module is most often seen with a \textit{sustain} button, in which the notes played are extended, and slurred into each other. However, it is important to note that not all slur lines in written sheet music will be meant to be played legato. Notes that are to be played legato will differ in pitch, connecting notes of different pitches to be played in succession in a smooth manner. This is unlike the notation for tied notes, as in Figure \ref{fig:tied-notes-example}, which connect notes that are the same pitch. The durations of the notes which are tied together are combined, and played at that new longer note duration instead.
 
 \begin{figure}
   \centering
@@ -21,10 +29,12 @@ The \textit{legato} switch for this synthesizer is meant to emulate the legato n
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{tied-notes-example.png}
+  \includegraphics[width=0.5\textwidth]{figures/tied-notes-example.png}
   \caption{An example of tied notes}
   \label{fig:tied-notes-example}
 \end{figure}
+
+The waveforms created through SuperCollider are through the ``SinOsc`` Unit Generator. As in Listing \ref{lst:sinewave-synthdef}, a simple sinewave is created, with a frequency of 440 Hz, and a volume of 50.
 
 
 \section{The Modules: In Midi}\label{section:the-modules-midi}
