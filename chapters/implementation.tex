@@ -1,13 +1,33 @@
 \chapter[Modular Synthesizer]{Building a Virtual Analog Modular Synthesizer}\label{chapter:building-a-mod-synth}
 
-implementation details?
-
 %https://www.gemtracks.com/guides/view.php?title=music-genres-and-their-typical-bpms&id=823 -> cite for SuperCollider tempo module
 %http://hyperphysics.phy-astr.gsu.edu/hbase/Music/mussca.html -> for arpeggiator module, on how to decide how to dynamically get the third and fifth intervals -> also need to explain interval ratios
 
 \section{MIDI Input}\label{section:midi-input}
+% how MIDI is input in SuperCollider
 
-\section{The Modules}\label{section:the-modules}
+\section{The Modules: Pure Waveforms}
+
+\subsection{Legato Switch: A Sustain Button}
+
+The \textit{legato} switch for this synthesizer is meant to emulate the legato notation found in classical music. Legato is a directive, typically found in its full form in classical music, which indicates the performance of a specific passage to be played in a smooth, graceful, and connected style (opposed to the \textit{staccato} notation) \cite{Winer_2018}. It will often be indicated by a slur over the notes, or an accent mark with a line over the notes to be affected, as in Figure \ref{fig:legato-example}. On a physical electronic keyboard, this module is most often seen with a \textit{sustain} button, in which the notes played are extended, and slurred into each other. However, it is important to note that not all slur lines in written sheet music will be meant to be played legato. Notes that are to be played legato will differ in pitch, connecting notes of different pitches to be played in succession in a smooth manner. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/legato-example.png}
+  \caption{An example of the legato notation}
+  \label{fig:legato-example}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{tied-notes-example.png}
+  \caption{An example of tied notes}
+  \label{fig:tied-notes-example}
+\end{figure}
+
+
+\section{The Modules: In Midi}\label{section:the-modules-midi}
 % how the MIDI input was changed
 
 \subsection{Pitch Bend}
