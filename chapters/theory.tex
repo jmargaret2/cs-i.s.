@@ -104,26 +104,26 @@ A triangle wave is also a non-sinusoidal waveform, named for its triangular shap
 	\label{eq:triangle-wave-function}	
 \end{equation}
 
-\section{Time Domain and Frequency Domain}
-
-Digital signals are studied in one of four domains: time domain, spatial domain, frequency domain, and wavelet domain. For the purposes of this research, we focus most on only two of these domains: the time domain and the frequency domain. These domains are most commonly used in audio analysis and synthesis. Digital audio is normally viewed in the time domain, and through the use of the Discrete Fourier Transform (sometimes also called the Fast Fourier Transform), we are able to produce a frequency domain representation for frequency analysis.
-
-\subsection{Time Domain}
-
-Audio is most commonly represented as a waveform, most commonly as the sine wave, with time plotted against the wave's amplitude. The x-axis will represent the discrete audio signal, and is normalized to represent the hours, minutes, or seconds. Normalization is the process of transposing a data set to a specific reference value, by dividing the output value by a given constant \cite{Zjalic_2021}. In audio, the most common type of normalization will be applied to a common audio waveform, to produce a signal that is normalized between the values of 1 and -1. 1 thus becomes the reference value for positive values, and -1 for negative values. To normalize audio, the following formula is applied to an audio signal: sample value $\times$ $\frac{1}{\textrm{reference value }}$. Audio normalization is useful for audio analysis, in that it allows for comparisons to be made between signals, regardless of their magnitude and sample rate. The y-axis then represents the magnitude of each audio sample, in which the decibels (or another magnitude unit) are a bipolar normalized value, between a positive and negative value. 
-
-To transform the time representation from samples to seconds, the sample rate must first be known. From there, it is simple to transpose \cite{Zjalic_2021}. For example, we assume that for the 44100 samples we have that the sample rate is also 44100 Hz. So, $44100 / 441100 = 1$ second, in that we divide the number of samples by the sample rate, to obtain a time representation in seconds. Another example may showcase this better. Assume we have 2646000 samples, and a sample rate of 44100 Hz. Then, we have $2646000/44100 = 60$ seconds.
-
-\subsection{Frequency Domain}
-The physical concept of frequency is relatively simple: it is the number of occurrences per unit of time in a given phenomenon \cite{Gabrielli_2020}. In audio, this becomes the number of repetitions, or cycles, of a sine wave. This type of frequency is known as the \textit{temporal frequency}, and will be denoted with the letter \textit{f}. For acoustic audio signals, we will be describing frequency in Hertz (H).\footnote{The reciprocal of the temporal frequency is known as the period, denoted as capital \textit{T}. This is defined as the time required to completed one full cycle at any given frequency, otherwise known as $T = \frac{1}{\textit{f}}$.} In digital signal processing, we instead will be using angular frequency (radians per second, denoted with $\omega$), which measures the angular displacement per unit of time. Thus, we have the following relation between temporal frequency, angular frequency, and period \cite{Gabrielli_2020}.
-
-\begin{align}
-    f &= \frac{\omega}{2\pi} &w &= 2\pi &f &= \frac{2\pi}{T}
-\end{align}
-
-To convert a signal into the frequency domain, and to obtain its frequency components, the Fourier Transform can be used\footnote{The Inverse Fourier Transform can be used to go from the frequency domain to the time domain.}. Transforms like these are common in audio signal processing. These are mathematical operations which allow you to observe a signal from a different perspective\footnote{The result of a transform on an audio signal can be seen in figure 2.9 of Gabrielli.}.
-
-\section{Digital Signal Processing (DSP)}
+%\section{Time Domain and Frequency Domain}
+%
+%Digital signals are studied in one of four domains: time domain, spatial domain, frequency domain, and wavelet domain. For the purposes of this research, we focus most on only two of these domains: the time domain and the frequency domain. These domains are most commonly used in audio analysis and synthesis. Digital audio is normally viewed in the time domain, and through the use of the Discrete Fourier Transform (sometimes also called the Fast Fourier Transform), we are able to produce a frequency domain representation for frequency analysis.
+%
+%\subsection{Time Domain}
+%
+%Audio is most commonly represented as a waveform, most commonly as the sine wave, with time plotted against the wave's amplitude. The x-axis will represent the discrete audio signal, and is normalized to represent the hours, minutes, or seconds. Normalization is the process of transposing a data set to a specific reference value, by dividing the output value by a given constant \cite{Zjalic_2021}. In audio, the most common type of normalization will be applied to a common audio waveform, to produce a signal that is normalized between the values of 1 and -1. 1 thus becomes the reference value for positive values, and -1 for negative values. To normalize audio, the following formula is applied to an audio signal: sample value $\times$ $\frac{1}{\textrm{reference value }}$. Audio normalization is useful for audio analysis, in that it allows for comparisons to be made between signals, regardless of their magnitude and sample rate. The y-axis then represents the magnitude of each audio sample, in which the decibels (or another magnitude unit) are a bipolar normalized value, between a positive and negative value. 
+%
+%To transform the time representation from samples to seconds, the sample rate must first be known. From there, it is simple to transpose \cite{Zjalic_2021}. For example, we assume that for the 44100 samples we have that the sample rate is also 44100 Hz. So, $44100 / 441100 = 1$ second, in that we divide the number of samples by the sample rate, to obtain a time representation in seconds. Another example may showcase this better. Assume we have 2646000 samples, and a sample rate of 44100 Hz. Then, we have $2646000/44100 = 60$ seconds.
+%
+%\subsection{Frequency Domain}
+%The physical concept of frequency is relatively simple: it is the number of occurrences per unit of time in a given phenomenon \cite{Gabrielli_2020}. In audio, this becomes the number of repetitions, or cycles, of a sine wave. This type of frequency is known as the \textit{temporal frequency}, and will be denoted with the letter \textit{f}. For acoustic audio signals, we will be describing frequency in Hertz (H).\footnote{The reciprocal of the temporal frequency is known as the period, denoted as capital \textit{T}. This is defined as the time required to completed one full cycle at any given frequency, otherwise known as $T = \frac{1}{\textit{f}}$.} In digital signal processing, we instead will be using angular frequency (radians per second, denoted with $\omega$), which measures the angular displacement per unit of time. Thus, we have the following relation between temporal frequency, angular frequency, and period \cite{Gabrielli_2020}.
+%
+%\begin{align}
+%    f &= \frac{\omega}{2\pi} &w &= 2\pi &f &= \frac{2\pi}{T}
+%\end{align}
+%
+%To convert a signal into the frequency domain, and to obtain its frequency components, the Fourier Transform can be used\footnote{The Inverse Fourier Transform can be used to go from the frequency domain to the time domain.}. Transforms like these are common in audio signal processing. These are mathematical operations which allow you to observe a signal from a different perspective\footnote{The result of a transform on an audio signal can be seen in figure 2.9 of Gabrielli.}.
+%
+%\section{Digital Signal Processing (DSP)}
 
 \section{Audio Manipulations}
 As previously mentioned in Section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in Figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}:
