@@ -27,7 +27,7 @@ The waveforms created through SuperCollider are through the ``SinOsc'' Unit Gene
 
 \subsection{Volume Slider}
 
-Volume is a simple concept to understand, as it is how loud or soft the human ear hears at a particular frequency. Volume ranges, as they are known in classical music, begin at a soft, and at times, barely audible \textit{pianissimo}, and become as loud as \textit{fortissimo}. The sine wave SynthDef created in Listing \ref{lst:sinewave-synthdef} contains a variable value for volume. In the SynthDef, the volume is initialized at the number 50, which generally correlates to a medium-loud volume of \textit{mezzo forte}. %TODO: add A = volume from sine wave equation
+Volume is a simple concept to understand, as it is how loud or soft the human ear hears at a particular frequency. Volume ranges, as they are known in classical music, begin at a soft, and at times, barely audible \textit{pianissimo}, and become as loud as \textit{fortissimo}. The sine wave SynthDef created in Listing \ref{lst:sinewave-synthdef} contains a variable value for volume. In the SynthDef, the volume is initialized at the number 50, which generally correlates to a medium-loud volume of \textit{mezzo forte}. The variable A of the generic sine wave equation \ref{eq:sine-wave-equation} is equivalent to this change in volume.
 
 As the sine wave Synth Def contains two variables, one for frequency, and one for volume, creating modules for both a volume slider and a pitch knob is simple. To create the volume slider, a SuperCollider class called \textit{EZSlider} creates the outline of the volume slider itself, as in Figure \ref{fig:volume-slider-basic}. For the slider's functionality, there are three important parts: the ``controlSpec,'' ``action,'' and ``initVal.'' The ``controlSpec'' defines the ``control spec,'' or the range of values allowed for the specified module. Negative volume does not exist, so this simple volume module will contain valid values for 0 volume (\textit{pianissimo}) up to 100 volume (\textit{fortissimo}). Then, the ``action'' argument of the \textit{EZSlider} class determines the function that runs when the value of the volume slider is changed. 
 
@@ -71,14 +71,14 @@ Similar to the volume slider, creating the pitch knob in SuperCollider relies on
 
 
 
-\subsection{Legato Switch: A Sustain Button} %TODO: legato in italicize
+\subsection{Legato Switch: A Sustain Button}
 
-The \textit{legato} switch for this synthesizer is meant to emulate the \textit{legato} notation found in classical music. \textit{Legato} is a directive, typically found in its full form in classical music, which indicates the performance of a specific passage to be played in a smooth, graceful, and connected style (opposed to the \textit{staccato} notation) \cite{Winer_2018}. It will often be indicated by a slur over the notes, or an accent mark with a line over the notes to be affected, as in Figure \ref{fig:legato-example}\cite{Henle_2009}. On a physical electronic keyboard, this module is most often seen with a \textit{sustain} button, in which the notes played are extended, and slurred into each other. However, it is important to note that not all slur lines in written sheet music will be meant to be played legato. Notes that are to be played legato will differ in pitch, connecting notes of different pitches to be played in succession in a smooth manner. This is unlike the notation for tied notes, as in Figure \ref{fig:tied-notes-example}\cite{Lung_2016}, which connect notes that are the same pitch. The durations of the notes which are tied together are combined, and played at that new longer note duration instead. However, further development on this module is not needed. A continuous sine wave was created through the SynthDef, and later put into a Synth for sound output. A module which sustains a note, or in the case a waveform, smoothly connects it to the next waveform and will not alter the sound of the continuous waveforms that are created within SuperCollider code.
+The \textit{legato} switch for this synthesizer is meant to emulate the \textit{legato} notation found in classical music. \textit{Legato} is a directive, typically found in its full form in classical music, which indicates the performance of a specific passage to be played in a smooth, graceful, and connected style (opposed to the \textit{staccato} notation) \cite{Winer_2018}. It will often be indicated by a slur over the notes, or an accent mark with a line over the notes to be affected, as in Figure \ref{fig:legato-example}\cite{Henle_2009}. On a physical electronic keyboard, this module is most often seen with a \textit{sustain} button, in which the notes played are extended, and slurred into each other. However, it is important to note that not all slur lines in written sheet music will be meant to be played \textit{legato}. Notes that are to be played \textit{legato} will differ in pitch, connecting notes of different pitches to be played in succession in a smooth manner. This is unlike the notation for tied notes, as in Figure \ref{fig:tied-notes-example}\cite{Lung_2016}, which connect notes that are the same pitch. The durations of the notes which are tied together are combined, and played at that new longer note duration instead. However, further development on this module is not needed. A continuous sine wave was created through the SynthDef, and later put into a Synth for sound output. A module which sustains a note, or in the case a waveform, smoothly connects it to the next waveform and will not alter the sound of the continuous waveforms that are created within SuperCollider code.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{bartok-dance-four-b-section-second-system.jpg}
-  \caption{An example of legato notation, found in Bela Bartok's \textit{Six Romanian Folk Dances}, Sz. 56, BB 68}
+  \caption{An example of \textit{legato} notation, found in Bela Bartok's \textit{Six Romanian Folk Dances}, Sz. 56, BB 68}
   \label{fig:legato-notes-example}
 \end{figure}
 
@@ -91,8 +91,7 @@ The \textit{legato} switch for this synthesizer is meant to emulate the \textit{
 
 \subsection{Major Chord Generator}
 
-To understand the major chord generator, we must first understand what a major chord is. A chord can be defined as the simultaneous sounding of two or more notes (typically three or more). Most chords are triadic in nature (that is, containing only three notes), with the interval of a major third or minor third between each of the three notes. The major third interval can be defined as the interval which spans three degrees of the diatonic scale in the Western twelve-semitone tuning system (refer to subsection \ref{subsection:how-midi}), or four semitones.\footnote{The major third interval is also enharmonically equivalent to the diminished fourth interval.} The minor third interval contains one fewer degrees than the major third interval, thus having only two degrees of the diatonic scale, and so only three semitones. For instance, the interval between $A$ and $C\musSharp{}$ is a major third, as the note $C\musSharp{}$ lies four semitones away from the note $A$, while the interval between $A$ and $C$ is a minor third, with the note $C$ lying only three semitones away from the note $A$. Notable examples of the major third interval include the first two notes of the song ``When the Saints Go Marching In,'' the first movement of Ludwig van Beethoven's \textit{Fifth Symphony} (Figure \ref{fig:beethoven-fifth}\cite{Beethoven_1862}), or the song ``Swing Low, Sweet Chariot.'' Examples of the minor third interval include the first two notes of the tune of ``Greensleeves,'' Christmas tune ``What Child is This,'' or The Beatles' ``Hey, Jude.'' %TODO: add example of minor third interval
-
+To understand the major chord generator, we must first understand what a major chord is. A chord can be defined as the simultaneous sounding of two or more notes (typically three or more). Most chords are triadic in nature (that is, containing only three notes), with the interval of a major third or minor third between each of the three notes. The major third interval can be defined as the interval which spans three degrees of the diatonic scale in the Western twelve-semitone tuning system (refer to subsection \ref{subsection:how-midi}), or four semitones.\footnote{The major third interval is also enharmonically equivalent to the diminished fourth interval.} The minor third interval contains one fewer degrees than the major third interval, thus having only two degrees of the diatonic scale, and so only three semitones. For instance, the interval between $A$ and $C\musSharp{}$ is a major third, as the note $C\musSharp{}$ lies four semitones away from the note $A$, while the interval between $A$ and $C$ is a minor third, with the note $C$ lying only three semitones away from the note $A$. Notable examples of the major third interval include the first two notes of the song ``When the Saints Go Marching In,'' the first movement of Ludwig van Beethoven's \textit{Fifth Symphony} (Figure \ref{fig:beethoven-fifth}\cite{Beethoven_1862}), or the song ``Swing Low, Sweet Chariot.'' Examples of the minor third interval include the first two notes of the tune of ``Greensleeves,'' (Figure \ref{fig:greensleeves}\cite{Kurtz_2010}) Christmas tune ``What Child is This,'' or The Beatles' ``Hey, Jude.''
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{beethoven-fifth.jpg}
@@ -100,12 +99,19 @@ To understand the major chord generator, we must first understand what a major c
   \label{fig:beethoven-fifth}
 \end{figure}
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.4\textwidth]{greensleeves.jpg}
+  \caption{An example of a minor third interval, found in the English Folk Song ``Greensleeves''}
+  \label{fig:greensleeves}
+\end{figure}
+
 
 The interval of the third is important to distinguish \textit{major} chords, and \textit{minor} chords, as major chords will have a root note (the tonic note), major third interval, and another minor third interval (or perfect fifth interval above the tonic) stacked on top of one another, while a minor chord will have the tonic, minor third, and perfect fifth.
 
 The Major Chord Generator within this modular synthesizer involve two pieces: calculating the proper frequencies of the major third and perfect fifth intervals--as they are subject to change from the user's input on the pitch knob--and adding these two intervals to play simultaneously with the original waveform sound. First, to calculate the proper intervals of tonic note to major third, and tonic note to perfect fifth, \textit{interval ratios} (the widths of semitones) are used. As mentioned within Subsection \ref{subsection:how-midi}, the commonly-used tuning system in the Western world is the twelve-tone equal temperament system, which divides the octave into 12 parts. Each of these parts are equally tempered (or equally spaced) on a logarithmic scale, such that each ratio is equal to $2^\frac{1}{12}$, or $\sqrt[12]{2} \approx 1.05946$ (the 12th square root of 2). This tuning system is normally tuned relative to the standard pitch of 440 Hz, known as \textit{A440}, signifying that the note $A$ (typically $A_4$) is tuned to 440 Hertz, and all other notes are defined relative to this pitch, as some multiple of semitones away from it, either higher or lower in frequency. Thus,  the modular synthesizer created also begins with a starting pitch of A440, every other pitch is defined relative to it. 
 
-Within the twelve-tone equal temperament system, calculating the intervals for the major third and perfect fifth is some multiplication of the single semitone $\sqrt[12]{2}$. As there are four semitones between the tonic note and its major third, the interval ratio is $2^\frac{4}{12}$, or $\sqrt[\frac{4}{12}]{2}$, and seven semitones between the tonic and perfect fifth, the interval ratio is $2^\frac{7}{12}$, or $\sqrt[\frac{7}{12}]{2} \approx \sqrt[12]{128}$, as in Listing \ref{lst:major-chord-creation}. %TODO: fix this it doesn't make sense
+Within the twelve-tone equal temperament system, calculating the intervals for the major third and perfect fifth is some multiplication of the single semitone $\sqrt[12]{2}$. As there are four semitones between the tonic note and its major third, the interval ratio is $2^\frac{4}{12}$, or $\sqrt[\frac{4}{12}]{2}$, and seven semitones between the tonic and perfect fifth, the interval ratio is $2^\frac{7}{12}$, or $\sqrt[\frac{7}{12}]{2} \approx \sqrt[12]{128}$, as in Listing \ref{lst:chord-creation}. %TODO: fix this it doesn't make sense
 
 \begin{listing}
 	\begin{lstlisting}
@@ -113,7 +119,7 @@ Within the twelve-tone equal temperament system, calculating the intervals for t
 		var thirdFreq = baseFrequency**(4/12);
 		var fifthFreq = baseFrequency** (7/12);
 	\end{lstlisting}
-	\label{lst:major-chord-creation}
+	\label{lst:chord-creation}
 	\caption{Creating the major third and perfect fifth intervals}
 \end{listing}
 
@@ -147,6 +153,10 @@ The ``majChord'' variable is placed into a button class \textit{Button}, which h
 	\label{lst:major-chord-button}
 	\caption{Implementing the major chord module using the \textit{Button} class}
 \end{listing}
+
+\subsection{Delay Slider}
+
+The ``delay'' effect (or ``echo'' effect as it is sometimes known) is an effect created by a tool, such as this project's modular synthesizer, which records an input signal, stores it, then plays it back after a defined time.
 
 
 \section{MIDI Input}\label{section:midi-input}
