@@ -156,7 +156,19 @@ The ``majChord'' variable is placed into a button class \textit{Button}, which h
 
 \subsection{Delay Slider}
 
-The ``delay'' effect (or ``echo'' effect as it is sometimes known) is an effect created by a tool, such as this project's modular synthesizer, which records an input signal, stores it, then plays it back after a defined time.
+The ``delay'' effect (or ``echo'' effect as it is sometimes known) is an effect created by a tool, such as this project's modular synthesizer, which records an input signal, stores it, then plays it back after a defined time. Typically, the delayed audio is mixed with the live audio input creating an echo effect, where we first hear the original audio, followed by the delayed audio. To create this module, we must think back to the unit circle (Figure \ref{fig:unit-circle}), and the generic equation for a sine wave (Equation \ref{eq:sine-wave-equation}). The value of \textit{D} in Equation \ref{eq:sine-wave-equation} determines the shift of the wave, and thus also the sound. A positive value (such as $\frac{\pi}{6}$) will shift the sine wave to the left on the Cartesian plane, resulting in a sine wave which sounds early. The same applies to a negative \textit{D} value, in which a value such as $-\frac{\pi}{6}$ shifts the sine wave to the right, creating a sine wave which sounds ``late'' or delayed.
+
+To create the delay slider, which determines the time which the waveform is delayed, we rely on the same native SuperCollider class we did to create the volume slider: \textit{EZSlider}. Like with the volume slider, we are using the same three arguments: controlSpec, action, and initVal. For the control spec of the delay slider, we must make sure these values match those available in the unit circle, so that the valid range of values is between $\frac{\pi}{6}$ to $\frac{11\pi}{6}$. While it is possible to use values greater than $\frac{11\pi}{6}$, or less than $\frac{\pi}{6}$ in theory, in practice it will sound equivalent to values within this range, as the sine wave will be overlaid directly on top of the possible values in this range. 
+
+\begin{listing}
+	\begin{lstlisting}
+		delaySlider = EZSlider(awindow, label:"Delay Time", labelHeight:50, labelWidth:100, controlSpec:[(-pi)/6, pi/6], action: {|md| x.set("phase", md.value)}, initVal:0);	
+	\end{lstlisting}
+	\caption{Creating a delay slider in SuperCollider}
+	\label{lst:delay-slider}
+\end{listing}
+
+In SuperCollider the time values for delay are calculated in radians, so using the values from the unit circle works well. For the ``action'' argument, similarly to previous modules, the phase of Synth ``x'' is set to be equivalent to the value of the delay slider. The slider itself is initialized to 0, where there is no early or late arrival of the sound.
 
 
 \section{MIDI Input}\label{section:midi-input}
