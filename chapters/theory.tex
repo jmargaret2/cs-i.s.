@@ -1,7 +1,7 @@
 %!TEX root = ../username.tex
 \chapter[Theory]{Theory}\label{chapter:theory}
 
-\section{Waveforms}\label{section:waveforms}
+\section{Mathematical Background}\label{section:waveforms}
 According to Joseph Fourier, the creator of the Fourier Transform, any periodic signal or sound can be reduced into their individual sine waves, or other waveform types \cite{Broughton_Bryan_2008}. There are five basic waveform types: a sine wave, square wave, sawtooth wave, triangle wave, and pulse wave \cite{Winer_2018}. The pulse wave is a special type of waveform, as it is a non-sinusoidal waveform which includes square waves within it, and is similarly periodic to square waves, but also asymmetrical. The other waveform types are also periodic waves, as they repeat in a pattern of motion known as a cycle, and the period is the time length.
 
 The speed with which each wave rises and falls is its frequency. If the frequency is too low (less than 20 cycles per second, or 20 Hertz, abbreviated as Hz), little to no noise will be audible by the human ear. If the frequency is too high (generally above 20,000 cycles per second, or 20 kiloHertz, abbreviated kHz), again, few noises besides high-pitched and shrill noises will be audible. The range of human hearing is generally stated as being from 20 cycles per second, with 20 Hertz at the low end to 20,000 cycles per second (20 kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
@@ -38,7 +38,7 @@ Like with the other periodic waves, sine waves have three important properties: 
 \subsection{Square Waves}
 The square wave is the second of the periodic waveforms, and is a wave in which the frequency oscillates between a single fixed minimum and maximum value \cite{Tarr_2019}. Within the unit circle definition of the square wave, the maximum frequency is positive or negative one, as in Figure \ref{fig:square-wave}. This unit square wave details the ideal square wave, in which the change between minimum and maximum frequency happen instantaneously. An approximation of square waves may be created through the combination of multiple individual harmonics (sine functions). This method of creating an audio signal is known as \textit{additive synthesis}, in which a new timbre or sound is create by adding together periodic waveforms, usually sine waves \cite{Tarr_2019}. 
 
-The square wave is a certain type of pulse wave (discussed separately in section \ref{subsection:pulse-wave}) which allows for a frequency to sound at fixed amplitudes for an arbitrary duration. At its simplest, a square wave can be defined as a sign function of a sinusoidal. A sign function, or a signum function, as in Figure \ref{fig:sign-function}, is an odd mathematical function which extracts the sign of a real number, expressed as $sgn$. Of a real number $x$, it is a piecewise function, defined as in Equation \ref{eq:sgn-function}.
+The square wave is a certain type of pulse wave which allows for a frequency to sound at fixed amplitudes for an arbitrary duration. At its simplest, a square wave can be defined as a sign function of a sinusoidal. A sign function, or a signum function, as in Figure \ref{fig:sign-function}, is an odd mathematical function which extracts the sign of a real number, expressed as $sgn$. Of a real number $x$, it is a piecewise function, defined as in Equation \ref{eq:sgn-function}.
 
 \begin{equation}
 	sgn (x): \begin{cases}
