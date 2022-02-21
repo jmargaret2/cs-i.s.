@@ -88,7 +88,7 @@ The \textit{legato} switch for this synthesizer is meant to emulate the \textit{
 
 \subsection{Major Chord Generator}
 
-To understand the major chord generator, we must first understand what a major chord is. A chord can be defined as the simultaneous sounding of two or more notes (typically three or more). Most chords are triadic in nature (that is, containing only three notes), with the interval of a major third or minor third between each of the three notes. The major third interval can be defined as the interval which spans four degrees of the diatonic scale in the Western twelve-semitone tuning system (refer to subsection \ref{subsection:how-midi}), or four semitones \cite{Nave_2017}.\footnote{The major third interval is also enharmonically equivalent to the diminished fourth interval.} The minor third interval contains one fewer degrees than the major third interval, thus having only two degrees of the diatonic scale, and so only three semitones. For instance, the interval between $A$ and $C\musSharp{}$ is a major third, as the note $C\musSharp{}$ lies four semitones away from the note $A$, while the interval between $A$ and $C$ is a minor third, with the note $C$ lying only three semitones away from the note $A$. Notable examples of the major third interval include the first two notes of the song ``When the Saints Go Marching In,'' the first movement of Ludwig van Beethoven's \textit{Fifth Symphony} (Figure \ref{fig:beethoven-fifth}\cite{Beethoven_1862}), or the song ``Swing Low, Sweet Chariot.'' Examples of the minor third interval include the first two notes of the tune of ``Greensleeves,'' (Figure \ref{fig:greensleeves}\cite{Kurtz_2010}) Christmas tune ``What Child is This,'' or The Beatles' ``Hey, Jude.''
+To understand the major chord generator, we must first understand what a major chord is. A chord can be defined as the simultaneous sounding of two or more notes (typically three or more). Most chords are triadic in nature (that is, containing only three notes), with the interval of a major third or minor third between each of the three notes. The major third interval can be defined as the interval which spans four degrees of the diatonic scale in the Western twelve-semitone tuning system (refer to subsection \ref{subsection:how-midi}), or four semitones \cite{Nave_2017}.\footnote{The major third interval is also enharmonically equivalent to the diminished fourth interval. The enharmonic interval describes notes which sonically are the same, yet notated differently.} The minor third interval contains one fewer degrees than the major third interval, thus having only two degrees of the diatonic scale, and so only three semitones. For instance, the interval between $A$ and $C\musSharp{}$ is a major third, as the note $C\musSharp{}$ lies four semitones away from the note $A$, while the interval between $A$ and $C$ is a minor third, with the note $C$ lying only three semitones away from the note $A$. Notable examples of the major third interval include the first two notes of the song ``When the Saints Go Marching In,'' the first movement of Ludwig van Beethoven's \textit{Fifth Symphony} (Figure \ref{fig:beethoven-fifth}\cite{Beethoven_1862}), or the song ``Swing Low, Sweet Chariot.'' Examples of the minor third interval include the first two notes of the tune of ``Greensleeves,'' (Figure \ref{fig:greensleeves}\cite{Kurtz_2010}) Christmas tune ``What Child is This,'' or The Beatles' ``Hey, Jude.''
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{beethoven-fifth.jpg}
@@ -322,32 +322,40 @@ The staccato and legato buttons for the MIDI synthesizer are similar. Musically,
 
 Legato, as previously defined, is a directive which indicates that a certain passage of a composition must be played smoothly, in a connected manner. Notes are no longer clearly distinctive from one another, as each note will flow gracefully into the next. 
 
-For this module, we rely heavily on two aspects of the ADSR envelope, the Attack level, and the Decay level. In combination, a shorter attack time and a shorter decay time will create a sudden perceived drop in the volume level of a MIDI input signal. As in Listing \ref{lst:midi-note-on-and-off}, we have created four variables which contain the values for each of the four stages of the ADSR envelope: \texttt{aLevel} for Attack, \texttt{dLevel} for Decay, \texttt{sLevel} for Sustain, and \texttt{rTime} for Release. In Listing \ref{lst:midi-attack-decay}, the values for \texttt{aLevel} and \texttt{dLevel} are set to 0. With Attack set to 0, the sound of the MIDI input will hit immediately after the signal is begun. Decay set to 0 results in no time for the sound's level to fall from its peak of \texttt{amp} to the \texttt{dLevel}.
-
-\begin{listing}
-	\begin{lstlisting}
-		aLevel = 0;
-		dLevel = 0;
-	\end{lstlisting}
-	\caption{Altering the Attack and Decay to create a staccato module}
-	\label{lst:midi-attack-decay}
-\end{listing}
+For this module, we rely heavily on two aspects of the ADSR envelope, the Attack level, and the Decay level. In combination, a shorter attack time and a shorter decay time will create a sudden perceived drop in the volume level of a MIDI input signal. As in Listing \ref{lst:midi-note-on-and-off}, we have created four variables which contain the values for each of the four stages of the ADSR envelope: \texttt{aLevel} for Attack, \texttt{dLevel} for Decay, \texttt{sLevel} for Sustain, and \texttt{rTime} for Release. For this module, the values for \texttt{aLevel} and \texttt{dLevel} are set to 0. With Attack set to 0, the sound of the MIDI input will hit immediately after the signal is begun. Decay set to 0 results in no time for the sound's level to fall from its peak of \texttt{amp} to the \texttt{dLevel}.
 
 \subsection{Adding Legato}
 
 The legato button emulates the musical concept of legato. On a physical MIDI keyboard, a legato button will more often be referenced as a \textit{sustain} button, in which the lengths of notes are extended, and flow into one another. For the concept of legato, it is imperative that each note meant to be played legato are of different pitches. If the pitches of notes meant to be played legato are the same, the duration of these notes will simply be elongated--and the notes tied together--to be the sum of each individual note. Two other aspects of the ADSR envelope are important to extended the sounding of a MIDI note, to connect it to another MIDI note: Attack and Release. As mentioned, increasing the level of the Attack stage will result in the sound of a MIDI input signal lengthening. This results in more time needing to pass before the gate will move onto the second stage of the ADSR envelope. Extending the time the gate is in the Release stage is also important. For proper legato within MIDI, the Release stage will need to be extended, as the ADSR envelope is only within the note on MIDI message. The note within the MIDI note on message will continue to sound, even after the MIDI note off message is sent through SuperCollider.
 
-\begin{listing}
-	\begin{lstlisting}
-		aLevel = 1;
-		rTime = 5;
-	\end{lstlisting}
-	\caption{Creating the legato button for MIDI}
-	\label{lst:midi-legato}
-\end{listing}
-
 
 \subsection{Distortion}
 
+Distortion, the altering and deforming of an audio signal's waveform, is done to add specific textures and harmonic over what an instrumentalist would play. For this module, we add regular distortion to the input MIDI signal, in order to add additional harmonics. Regular distortion is the easiest type of distortion to implement for MIDI, as it is similar to how distortion would be added in rock music, and guitar solos, with Jimi Hendrix songs as one example. Distortion in this module will be a kind of gentle distortion in which two pure sound waveforms are added on top of the MIDI signal, when a note on message is sent. 
+
+This module is built differently than the distortion module for pure sound waveforms. With pure sound waveforms, we used simple unit waves--such as sine waves and sawtooth waves--and altered the sound through a native SuperCollider class. The pure sound waves were only ever able to output one frequency at a time, a limitation which does not hold true with MIDI. MIDI is able to output multiple frequencies at once, through the use of multiple note on messages. So it is much easier to simply add pink noise to a sine wave, both at the same frequency as the wave which the user is playing, and run that aggregated sound through a class. With MIDI, though we are also adding additional harmonics over an input MIDI signal, we are not adding colored noise. Instead, as in Listing \ref{lst:midi-distortion}, we borrow some logic from the major chord generator, but use a tritone interval instead of the pleasant-sounding major third and perfect fifth intervals. In place of these two intervals, the tritone interval is used. 
+
+The tritone is the interval of an augmented fourth,\footnote{Enharmonically equivalent to the diminished fifth, both the augmented fourth interval and the diminished fifth interval will sound the same to a listener, but are notated differently.} and in the Medieval era of music was known to be the ``devil in music'' or the ``devil's interval'' because it is the most dissonant interval in the diatonic scale \cite{Burkholder_Grout_Palisca_2014}. %TODO: explain diatonic scale
+
+The tritone is made up of six semitones, and is the interval between C and F\musSharp{}, for example. Its unpleasant sound to the human ear can be traced back to a phenomenon found within the human brain: it is hardwired to find harmony and symmetry within music, and is resistant towards dissonant sounds (rather than pleasing consonant sounds). Intervals which sound pleasing to the human ear are those in which there is a simple ratio between the frequencies. This is clear in the ratios of very pleasant intervals: the octave, which contains the very pleasing 2:1 ratio, and the perfect fifth, which has a ratio of 3:2 \cite{Gann}. These frequency intervals continue through the remaining notes of the scale, oscillating between consonant and dissonant intervals. The tritone, as the most dissonant of all the intervals on the diatonic scale contains a frequency ratio of 45:32 (or 64:45, depending on the tuning method). 
+
+Distortion for MIDI is not meant to sound as pleasing as adding additional harmonics to an electric guitar signal through an amplifier may be. Instead, for the purposes of this module, the tritone interval is used, to give the distortion an unpleasing effect. The distortion effect is also used for this module, albeit in the simple way of adding two pure sound waveforms over the input MIDI signal. As the tritone interval is six semitones away from a root note, we first calculate the tritone interval to be $f_n = 440 * 2^\frac{6}{12}$, using Concert A as the base frequency. Then, as in Listing \ref{lst:midi-distortion}, the tritone frequency is added to two waveform UGens, \texttt{SinOsc} and \texttt{Saw}, which will add the necessary unpleasant sounds to the MIDI input note's frequency.
+
+\begin{listing}
+	\begin{lstlisting}
+		tritone = baseFrequency * (2**(6/12));
+			
+		SynthDef("distortionSynthDef", {arg out = 0;
+			Out.ar(out, SinOsc.ar(tritone, 0, 50), Saw.ar(tritone, 0, 50))
+		}).add;
+	\end{lstlisting}
+	\caption{Adding distortion in MIDI}
+	\label{lst:midi-distortion}
+\end{listing}
+
+
+\subsection{Manually Adjusting the ADSR Envelope}
+
+The final module for the MIDI synthesizer will be a method of manually adjusting the values for the four pieces of the ADSR envelope. 
 
 
