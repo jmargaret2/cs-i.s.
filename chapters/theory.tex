@@ -1,8 +1,8 @@
 %!TEX root = ../username.tex
-\chapter[Theory]{Theory}\label{chapter:theory}
+\chapter{Physics of Sound Waves}\label{chapter:theory}
 
 \section{Mathematical Background}\label{section:waveforms}
-According to Joseph Fourier, the creator of the Fourier Transform, any periodic signal or sound can be reduced into their individual sine waves, or other waveform types \cite{Broughton_Bryan_2008}. There are five basic waveform types: a sine wave, square wave, sawtooth wave, triangle wave, and pulse wave \cite{Winer_2018}. The pulse wave is a special type of waveform, as it is a non-sinusoidal waveform which includes square waves within it, and is similarly periodic to square waves, but also asymmetrical. The other waveform types are also periodic waves, as they repeat in a pattern of motion known as a cycle, and the period is the time length.
+According to Joseph Fourier, the creator of the Fourier Transform, any periodic signal or sound can be reduced into their individual sine waves, or other waveform types \cite{Broughton_Bryan_2008}. There are five basic waveform types: a sine wave, square wave, sawtooth wave, triangle wave, and pulse wave \cite{Winer_2018}. The pulse wave is a special type of waveform, as it is a non-sinusoidal waveform which includes square waves within it, and is similarly periodic to square waves, but also asymmetrical, but will not be discussed within the scope of this project. The other waveform types are also periodic waves, as they repeat in a pattern of motion known as a cycle, and the period is the time length.
 
 The speed with which each wave rises and falls is its frequency. If the frequency is too low (less than 20 cycles per second, or 20 Hertz, abbreviated as Hz), little to no noise will be audible by the human ear. If the frequency is too high (generally above 20,000 cycles per second, or 20 kiloHertz, abbreviated kHz), again, few noises besides high-pitched and shrill noises will be audible. The range of human hearing is generally stated as being from 20 cycles per second, with 20 Hertz at the low end to 20,000 cycles per second (20 kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
 
@@ -104,7 +104,7 @@ A triangle wave is also a non-sinusoidal waveform, named for its triangular shap
 	\label{eq:triangle-wave-function}	
 \end{equation}
 
-\section{Audio Manipulations of Waves}
+\section{Manipulating Pure Sound Waves}
 As previously mentioned in Section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in Figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}:
 
 \begin{figure}
@@ -134,30 +134,6 @@ Thus, there are three primary options when manipulating audio (or a simple wavef
 \end{figure}
 
 The second option commonly used to manipulate audio is to change an audio signal or wave's temporal frequency. For sound and audio manipulations, the temporal frequency component determines a sound's \say{color,} or \say{timbre.} It is the property of a waveform which determines the output sound's pitch. The high-end of audible frequencies for the human ear is around 20,000 Hz (20 kHz), though this reduces with age. The generally accepted range of human hearing ranges from 20 Hz to 20 kHz, with frequencies below 20 Hz felt more than heard\cite{Rosen_Howell_2011}. This range is further broken down in Table \ref{tbl:frequency-table-of-human-hearing-general}. Thus, with Equation \ref{eq:full-sine-wave-equation}, we change the value of $f$, which will alter the frequency of the wave, and then also alter the perceived pitch. With an increase in temporal frequency, there will also be an increase in angular frequency $\omega$, which increases the rate of change of the sine wave. With the period of the sine wave in Figure \ref{fig:sine-wave-period-amplitude} marked blue, it is this blue section that will increase with an increase in $\omega$. As $\omega$ increases, there are more repetitions of the sine wave's phase, so the audio output's pitch will increase.
-
-\begin{table}
-	\begin{tabular}{|p{20em} | p{25em}|}
-		\hline
-		General Frequency Range & Description of Range \\ 
-		\hline
-		<20Hz - 60Hz & The lowest threshold of human hearing. This includes many frequencies that are felt and not heard, and provides the \say{rumble} feeling in music. This range gives much of music its power, and is typically known as \say{sub-bass}. \\
-		\hline
-		60Hz - 250Hz & This range determines the amount of \say{warmth} and how full the sound is perceived to be. The notes fundamental to rhythm lives in this range, and too much sound in this frequency range will result in the overall sound being \say{boomy}, or muddy-sounding and messy. It is otherwise known as the the \say{bass} frequency. \\
-		\hline
-		250Hz - 500Hz & The lower harmonics of many instruments are in this range. It is generally known as the \say{lower midrange} of frequencies, and can introduce listening fatigue and a telephone-quality to the sound if this range is emphasized too much. \\
-		\hline
-		500Hz - 2 kHz & This range is considered the middle of the midrange. It gives many instruments prominence in a mix, and determines how audible one instrument or vocalist is in comparison to another. If this range is emphasized, audio output may sound tinny and small, which could lead to listening and ear fatigue, as the human ear is sensitive to the human voice, and the frequencies it covers. \\
-		\hline
-		2 kHz - 4 kHz & The \say{upper midrange} is responsible for much of the attack sounds on percussive and rhythmic instruments. This range may add presence to the mix if boosted, but if it is emphasized too much, it may mask some speech recognition sounds. Listening fatigue may also set in if this range is emphasized too much, as the slightest boost in this range will result in a noticeable change in the sound's timbre. \\
-		\hline
-		4 kHz - 6 kHz & This range is known as the \say{presence} range. It defines a sound's clarity and the definition of voices and instruments that are present. If this range is boosted, instruments and voices may sound physically closer to the listener, and vice versa, with reducing this range causing instruments and voices to sound further away. However, if this range is emphasized too much, a harsh, irritating sound may occur. \\
-		\hline
-		6 kHz - 20 kHz & This range controls the \say{brilliance} and clarity of sounds within the mix. Instead of pitches, this range is composed entirely of harmonics, and brings \say{sparkle} to the sound. This range also may easily cause ear fatigue, as an over-emphasis can increase the hiss heard, and produce sibilance, or an unpleasant tonal harnshness which can happen with consonant syllables (most noticeably: S, T, and Z), especially on vocals. \\
-		\hline
-	\end{tabular}
-\caption[A description of the human hearing range]{Descriptions of general frequencies ranges within the range of human hearing}
-\label{tbl:frequency-table-of-human-hearing-general}\cite{Suits_1998}\cite{Zjalic_2021}
-\end{table}
 
 Finally, a modification to a wave's phase will determine if the audio signal output is on-time, delayed, or early. The numeric value of $\varphi$ depends on the start of the wave's period. Similar to the changes made to amplitude and frequency, by modifying the value of $\varphi$, we change the phase of the waveform. This will be most noticeable with multiple harmonics or simple waveforms stacked on top of each other, in which each signal will have a phase at a slightly different time, as in Figure \ref{fig:sine-wave-phase-shift}. The period of the blue sine wave has a length of $\frac{\pi}{2}$, but otherwise is a normal unit circle sine wave. The red sine wave is phase shifted, with an $\varphi$ value of positive 2, which shifts the wave negative, causing the output audio to sound early in comparison to the blue wave. 
 
