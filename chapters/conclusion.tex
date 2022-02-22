@@ -3,3 +3,36 @@
 This project resulted in the successful implementation of a modular synthesizer, in which both pure sound waveforms and MIDI signals are used as inputs. Within the timeframe available, we accomplished a set of minimal goals necessary for success. While this thesis project ends with a positive result, there are also multiple ways in which this synthesizer can be improved upon, or extended. To conclude, we review the necessary goals of this project, which we accomplished, in addition to the areas in which further research and development can be pursued. 
 
 \section{Completed Goals}
+
+There were several goals that we needed to accomplish in order to build a fully functional modular synthesizer in SuperCollider:
+
+\begin{enumerate}
+	\item The application is capable of creating pure sound waveforms and altering these waves.
+	\item The application is capable of accepting and altering MIDI input.
+	\item The user interface is clean and simple, and makes the interactions the user has with the application easy.
+\end{enumerate}
+
+It is clear that the ability to alter and create sounds is the minimum requirement for this application, as this functionality is dependent on and driving the development of the application. However, if the functionality is also not implemented with a clean user interface for easy use, then the application is rendered near-useless. So, there is a need for a quality and easy-to-use interface. As this application works with various different modules which affect different aspects of a waveform or user-input MIDI signal, it is logical that a user would need a clean interface to understand which modules are able to complete which functionality. 
+
+\section{Future Work}
+
+\subsection{Optimizations}
+
+\subsection{Features}
+
+The current iteration of this modular synthesizer is easily able to alter input sounds and signals, and output a modification. However, this does not mean that all available features for a modular synthesizer are included in the scope of this project; there are still many ways in which additional features can be added or expanded, including:
+
+\begin{itemize}
+	\item Implementing a pitch oscillator for MIDI, which would adjust the frequency of the input signal up or down an octave.
+	\item Layering additional sounds and harmonics over both pure sound waveforms and a MIDI input signal, rather than solely harmonics which make up a major chord.
+	\item Implementing various fades and filters, to clean up and remove certain frequencies from an output sound.
+	\item Adding multichannel support. 
+	\item Increasing or decreasing the soundstage of an output sound, determining whether sounds are heard to be very close to the user, or far away.
+	\item Adding compression, to ``glue'' sounds together, to make it appear that the sounds belong together, and are not simply layered over one another.
+\end{itemize}
+
+Pitch is an important aspect of both music and modular synthesizers. To obtain the correct sound for the instrument of choice, the pitch will need to be altered. For instance, if a user would like to use a bass guitar sound or a bass synth, then the sound will need to be in a lower octave, and the pitch cannot always be Concert A. The ability to layer various sounds over top of each other is an aspect of synthesis which is not fully explored in this project. Layering sounds will allow a user to create a fuller tone and sound, of which the frequencies may or may not be the same. In this synthesizer, we have layered two sounds over a user defined base frequency: a major third interval, and the perfect fifth interval. Additional frequencies which are either the same as the defined base frequency, or within a small difference of the base frequency will result in a bigger sound.
+
+Filters are a fundamental aspect of modular frequencies, especially with the high-pass, low-pass, and band-pass filters. Each of these filter types allow a specific range of frequencies to be removed from the output sound, i.e. high-pass filters allow higher frequencies through, low-pass filters allow lower frequencies, and band-pass filters allow a band, or a certain range, of frequencies. Through the ability to filter out various frequencies, a user's desired sound output can be more easily fulfilled. 
+
+Stereo audio, or multichannel audio, is another aspect of music which is frequently used, but less often within DSP. Creating stereo sound for a modular synthesizer involves increasing the width of the sound. Most noticeable if a user uses headphones while using a synthesizer, stereo audio will feed audio into both the left and right channels, into the left and right ears separately, with slightly different sounds fed into each channel. Thus, sound can be placed as if it were to the left or right of the user, widening the sound output. Adding space to sound output from a modular synthesizer will also allow individual harmonics the room to be heard, and for a user to ``locate'' where the sound is coming from in space. This could also be achieved through the use of heavy reverb and delay effects. Compression would be a useful module to add as well. Using a compressor such as the \textit{bus compressor} would compress every layer of the sound output together into one. This will make the aggregate output sound as if it were one layer, instead of multiple harmonics.
