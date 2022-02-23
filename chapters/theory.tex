@@ -4,6 +4,16 @@
 \section{Mathematical Background}\label{section:waveforms}
 According to Joseph Fourier, the creator of the Fourier Transform, any periodic signal or sound can be reduced into their individual sine waves, or other waveform types \cite{Broughton_Bryan_2008}. There are five basic waveform types: a sine wave, square wave, sawtooth wave, triangle wave, and pulse wave \cite{Winer_2018}. The pulse wave is a special type of waveform, as it is a non-sinusoidal waveform which includes square waves within it, and is similarly periodic to square waves, but also asymmetrical, but will not be discussed within the scope of this project. The other waveform types are also periodic waves, as they repeat in a pattern of motion known as a cycle, and the period is the time length.
 
+In its most basic form, in addition to the periodic waveform types, there are three general types of waves \cite{Halliday_Resnick_Walker_2005}.
+
+\begin{enumerate}
+	\item Mechanical waves.
+	\item Electromagnetic waves.
+	\item Matter waves.
+\end{enumerate}
+
+Mechanical waves are the most familiar to many, due to its ubiquity; mechanical waves are found as water waves, sound waves, and sonic waves. These waves are known by two key features: a governance by Newton's three laws, and an existence that occurs only within a material medium, such as air or water. Electromagnetic waves are the second most familiar type of wave, found in visible and ultraviolet light, x-rays, and radar waves. Unlike mechanical waves, electromagnetic waves do not require any material medium to exist, able to travel through a vacuum at a speed of $c = 299,792,458 \textrm{ } m/s$. Finally, matter waves are the least frequently recognized type of wave, though it is commonly found in technology. These waves work within fundamental particle types, including protons, electrons, atoms, and molecules. 
+
 The speed with which each wave rises and falls is its frequency. If the frequency is too low (less than 20 cycles per second, or 20 Hertz, abbreviated as Hz), little to no noise will be audible by the human ear. If the frequency is too high (generally above 20,000 cycles per second, or 20 kiloHertz, abbreviated kHz), again, few noises besides high-pitched and shrill noises will be audible. The range of human hearing is generally stated as being from 20 cycles per second, with 20 Hertz at the low end to 20,000 cycles per second (20 kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
 
 \begin{figure}
@@ -106,7 +116,7 @@ A triangle wave is also a non-sinusoidal waveform, named for its triangular shap
 
 \section{Representing Sound Digitally}
 
-We now understand the physics and mathematics behind each of the major waveform types. However, sounds in real life are not composed of simple pure waveforms; sounds in the world around us are made up of multiple harmonics and frequencies layered on top of one another to produce the composite sound which we hear. Sound, like electricity and light, is a form of energy in which molecules in air vibrate and move in a wave pattern. This wave pattern produces the sound waves \cite{Au-Yeung_2021}. Air is able to support multiple sound waves simultaneously, explaining our ability to hear different sounds at the same time. This sound energy is dispersed outwards from the sound source, and will continue to move until the molecules run out of energy, as the energy weakens the further it moves away from the sound source. The sound energy is transferred between molecules, as each molecule moves from an original resting point, transfers energy to another molecule, then returns to its resting point, as in Figure \ref{fig:graphical-rep-vs-physical-sound}. This molecule movement is the oscillation of sound. Molecules become closer together when vibrating, and crowd together in certain places, and thus there are fewer molecules in other places. This visualization of crowds of molecules can be done as a wave, with the peak of a sound wave indicating that there are more molecules together in space (compression of air molecules), and the trough of a sound wave indicating there are fewer molecules (rarefaction) \cite{Toft_2020}. Typically, sound is visualized in a graphical format, with peaks and troughs to a wave rather than drawings showing the compression and rarefaction of air molecules. 
+We now understand the physics and mathematics behind sound waves. However, sounds in real life are not composed of simple pure waveforms; sounds in the world around us are made up of multiple harmonics and frequencies layered on top of one another to produce the composite sound which we hear. Sound, like electricity and light, is a form of energy in which molecules in air vibrate and move in a wave pattern. This wave pattern produces the sound waves \cite{Au-Yeung_2021}. Air is able to support multiple sound waves simultaneously, explaining our ability to hear different sounds at the same time. This sound energy is dispersed outwards from the sound source, and will continue to move until the molecules run out of energy, as the energy weakens the further it moves away from the sound source. The sound energy is transferred between molecules, as each molecule moves from an original resting point, transfers energy to another molecule, then returns to its resting point, as in Figure \ref{fig:graphical-rep-vs-physical-sound}. This molecule movement is the oscillation of sound. Molecules become closer together when vibrating, and crowd together in certain places, and thus there are fewer molecules in other places. This visualization of crowds of molecules can be done as a wave, with the peak of a sound wave indicating that there are more molecules together in space (compression of air molecules), and the trough of a sound wave indicating there are fewer molecules (rarefaction) \cite{Toft_2020}. Typically, sound is visualized in a graphical format, with peaks and troughs to a wave rather than drawings showing the compression and rarefaction of air molecules. 
 
 \begin{figure}
   \centering
@@ -135,12 +145,21 @@ The process of sampling will typically produce numbers which are an incomplete r
 
 Analog sound exists in two dimensions: time (a period of each wavelength) and space (the displacement of each waveform from the atmospheric pressure). So it makes sense that to convert from analog audio to digital signals, we use these two dimensions: time (\textit{sample rate}) and space (\textit{bit depth}). 
 
-\textit{Sample rate}, or \textit{sample frequency}, is the number of samples which are captured per period (which is commonly measured in Hertz). Typically, digital audio samples of analog audio waves are taken at a rate of 8,000 times per second, or more \cite{Zjalic_2021}. Occasionally, a sound will be sampled that is at a frequency rate higher than 8,000 and the system doing the sampling is unable to identify two points on the waveform to understand the period. Harry Nyquist (1879-1976) was a Swedish physicist and electrical engineer to solve this problem, through the \textit{Nyquist frequency} (or \textit{folding frequency}). Nyquist discovered that in order for an analog audio wave to be accurately represented by a digital signal, and thus also the system which is sampling the audio wave, the wave must be sampled at least twice per wavelength, known as the \textit{Nyquist Theorem} \cite{Zjalic_2021} and visualized in Figure \ref{fig:nyquist-sampling-theorem}. Thus, for a given sample rate, the highest frequency within a system cannot exceed half this sample rate. In other words, the Nyquist frequency is the frequency at 50\% of the sample rate. Otherwise, for a frequency which does not satisfy the requirements for the Nyquist Theorem, a phenomenon called ``aliasing'' would occur, in which signals that exceed half the sample rate are misrepresented as ``alias signals.'' An ``anti-aliasing'' filter would then typically be applied to the signal before sampling occurs, to act as a low-pass filter with a cut-off at the Nyquist frequency.
+\textit{Sample rate}, or \textit{sample frequency}, is the number of samples which are captured per period (which is commonly measured in Hertz). Typically, digital audio samples of analog audio waves are taken at a rate of 8,000 times per second, or more \cite{Zjalic_2021}. Occasionally, a sound will be sampled that is at a frequency rate higher than 8,000 and the system doing the sampling is unable to identify two points on the waveform to understand the period. Harry Nyquist (1879-1976) was a Swedish physicist and electrical engineer who solved this problem, through the \textit{Nyquist frequency} (or \textit{folding frequency}). Nyquist discovered that in order for an analog audio wave to be accurately represented by a digital signal, and thus also the system which is sampling the audio wave, the wave must be sampled at least twice per wavelength, known as the \textit{Nyquist Theorem} \cite{Zjalic_2021} and visualized in Figure \ref{fig:nyquist-sampling-theorem}. Thus, for a given sample rate, the highest frequency within a system cannot exceed half this sample rate. In other words, the Nyquist frequency is the frequency at 50\% of the sample rate. Otherwise, for a frequency which does not satisfy the requirements for the Nyquist Theorem, a phenomenon called ``aliasing'' would occur, in which signals that exceed half the sample rate are misrepresented as ``alias signals.'' An ``anti-aliasing'' filter would then typically be applied to the signal before sampling occurs, to act as a low-pass filter with a cut-off at the Nyquist frequency.
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\textwidth]{nyquist-sampling-thoerem.jpeg}
+  \caption{The Nyquist sampling theorem visualised. Upper: Signal sampled at 2x Nyquist frequency, Middle: Signal sampled at 1.5x Nyquist frequency (and thus aliasing and not a true representation of the original signal), Bottom: Signal containing both accurate and aliasing components}\cite{Zjalic_2021}
+  \label{fig:nyquist-sampling-theorem}
+\end{figure}
+
 
 \textit{Bit depth} is defined as the discrete values which are available within the digital system, representing the magnitude of a continuous electrical signal \cite{Zjalic_2021}, in the form $log_2{x}$. These levels can become exponentially large, and so \textit{quantization} is used, to process data from a broad range into values within a smaller range. It will convert the levels of a continuous analog signal, as the signal after sampling is still in the analog domain, into binary digits (bits). Using bits will allow us to be able to manipulate and store audio data digitally. After sampling the amplitude of an analog audio wave at various precise intervals, we are able to output this amplitude level in its equivalent in bits, which represent the originally sampled amplitude level, known as \textit{bit rates}. The bit ``rate'' can then be defined as the amount of data stored or transmitted per second of time, or in Equation \ref{eq:bit-rate}, measured in kbps \cite{Zjalic_2021}. In general, the higher the value of the bit rate, the higher the quality of the audio data that is stored, since there is more data to represent the captured sound available.
 
 \begin{equation}
-	\textrm{bit rate (bits per second)} = \textrm{sample rate (Hz) x} \textrm{bit depth x} \textrm{number of channels}
+	\textrm{bit rate (bits per second)} = \textrm{sample rate (Hz) x } \textrm{bit depth x } \textrm{number of channels}
 	\label{eq:bit-rate}	
 \end{equation}
 
@@ -153,18 +172,10 @@ From our original three stages of converting analog sound to digital signals, we
 \end{enumerate}
 
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.4\textwidth]{nyquist-sampling-thoerem.jpeg}
-  \caption{The Nyquist sampling theorem visualised. Upper: Signal sampled at 2x Nyquist frequency, Middle: Signal sampled at 1.5x Nyquist frequency (and thus aliasing and not a true representation of the original signal), Bottom: Signal containing both accurate and aliasing components}\cite{Zjalic_2021}
-  \label{fig:nyquist-sampling-theorem}
-\end{figure}
-
-
 \section{Manipulating Sound Waves}\label{section:manip-waves}
-As previously mentioned in Section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in Figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}
+As previously mentioned in Section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we arbitrarily choose the simple sine wave as an example, as in Figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\textwidth]{figures/sine-wave-period-amplitude.png}
 	\caption{A basic sine wave, with period demarcated in blue, and amplitude in purple}
@@ -183,7 +194,7 @@ Thus, there are three primary options when manipulating audio (or a simple wavef
 	y(t) = \frac{1}{2} \sin(\omega t + \varphi)
 \end{equation}
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{figures/half-sized-sine-wave.png}
 	\caption{A sine wave, with an amplitude of $\frac{1}{2}$}
@@ -193,6 +204,14 @@ Thus, there are three primary options when manipulating audio (or a simple wavef
 The second option commonly used to manipulate audio is to change an audio signal or wave's frequency. For sound and audio manipulations, the frequency component determines a sound's \say{color,} or \say{timbre.} It is the property of a waveform which determines the output sound's pitch. The high-end of audible frequencies for the human ear is around 20,000 Hz (20 kHz), though this reduces with age. The generally accepted range of human hearing ranges from 20 Hz to 20 kHz, with frequencies below 20 Hz felt more than heard\cite{Rosen_Howell_2011}. This range is further broken down in Table \ref{tbl:frequency-table-of-human-hearing-general}. Thus, with Equation \ref{eq:full-sine-wave-equation}, we change the value of $w$, which increases the rate of change of the sine wave, increasing the perceived pitch. With the period of the sine wave in Figure \ref{fig:sine-wave-period-amplitude} marked blue, it is this blue section that will increase with an increase in $\omega$. As $\omega$ increases, there are more repetitions of the sine wave's phase, so the audio output's pitch will increase. Pitch is how high or low a sound is perceived to be, and will be determined by the frequency of the vibrations \cite{Toft_2020}. Frequency is the number of wave cycles which pass through a given point per second. A higher frequency will result in a higher pitch, and a lower frequency will result in a lower pitch. For instance, with a frequency of 261 Hz, we perceive the note Middle C to be played. 
 
 Finally, a modification to a wave's phase will determine if the audio signal output is on-time, delayed, or early. The numeric value of $\varphi$ depends on the start of the wave's period. Similar to the changes made to amplitude and frequency, by modifying the value of $\varphi$, we change the phase of the waveform. This will be most noticeable with multiple harmonics or simple waveforms stacked on top of each other, in which each signal will have a phase at a slightly different time, as in Figure \ref{fig:sine-wave-phase-shift}. The period of the blue sine wave has a length of $\frac{\pi}{2}$, but otherwise is a normal unit circle sine wave. The red sine wave is phase shifted, with an $\varphi$ value of positive 2, which shifts the wave negative and to the left, causing the output audio to sound early in comparison to the blue wave. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/sine-wave-phase-shift.png}
+	\caption{The phase shift in a sine wave}
+	\label{fig:sine-wave-phase-shift}
+\end{figure}
+
 
 This type of sound modulation is done through this synthesizer's ``delay'' effect (sometimes known as ``echo'' effect). It is an effect which records an input signal, stores it, then plays it back after a defined time. Typically, the delayed audio is mixed with the live audio input creating an echo effect, where we first hear the original audio, followed by the delayed audio. The value of $D$ in Equation \ref{eq:sine-wave-equation} determines the shift of the wave, and thus also the sound. A positive value (such as $\frac{\pi}{2}$) will shift the sine wave to the left on the Cartesian plane, resulting in a sine wave which sounds early. The same applies to a negative $D$ value, in which a value such as $-\frac{\pi}{6}$ shifts the sine wave to the right, creating a sine wave which sounds ``late'' or delayed.
 
@@ -207,14 +226,14 @@ Other modules can be created through similar logic. To create legato and staccat
 
 We will also create a module meant to layer specific harmonics over a base frequency: the major third interval, and the perfect fifth interval, which together will form a major chord. A chord can be defined as the simultaneous sounding of two or more notes (typically three or more). Most chords are triadic in nature (that is, containing only three notes), with the interval of a major third or minor third between each of the three notes. The major third interval can be defined as the interval which spans four degrees of the diatonic scale in the Western twelve-semitone tuning system (refer to subsection \ref{subsection:how-midi}), or four semitones \cite{Nave_2017}.\footnote{The major third interval is also enharmonically equivalent to the diminished fourth interval. The enharmonic interval describes notes which sonically are the same, yet notated differently.} The minor third interval contains one fewer degrees than the major third interval, thus having only two degrees of the diatonic scale, and so only three semitones. For instance, the interval between $A$ and $C\musSharp{}$ is a major third, as the note $C\musSharp{}$ lies four semitones away from the note $A$, while the interval between $A$ and $C$ is a minor third, with the note $C$ lying only three semitones away from the note $A$. Notable examples of the major third interval include the first two notes of the song ``When the Saints Go Marching In,'' the first movement of Ludwig van Beethoven's \textit{Fifth Symphony} (Figure \ref{fig:beethoven-fifth} \cite{Beethoven_1862}), or the song ``Swing Low, Sweet Chariot.'' Examples of the minor third interval include the first two notes of the tune of ``Greensleeves,'' (Figure \ref{fig:greensleeves} \cite{Kurtz_2010}) Christmas tune ``What Child is This,'' or The Beatles' ``Hey, Jude.''
 
-\begin{figure}
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.5\textwidth]{beethoven-fifth.jpg}
   \caption{Ludwig van Beethoven, Symphony No. 5 in C Minor, \textit{Allegro con brio}, mm. 1-4}
   \label{fig:beethoven-fifth}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.4\textwidth]{greensleeves.jpg}
   \caption{``Greensleeves'', mm. 1}
@@ -223,7 +242,7 @@ We will also create a module meant to layer specific harmonics over a base frequ
 
 The interval of the third is important to distinguish \textit{major} chords, and \textit{minor} chords, as major chords will have a root note (the tonic note), major third interval, and another minor third interval (or perfect fifth interval above the tonic) stacked on top of one another, while a minor chord will have the tonic, minor third, and perfect fifth. Either multiple waveforms (of the specified major third and perfect fifth intervals) can be stacked to produce the major chord sound, or MIDI inputs can trigger a major chord.
 
-To add the distortion alteration (as opposed to the specific distortion effect) to a sound is simply to add desired textures to a sound, through changing and deforming an audio signal's waveform. For many, a prime example is seen with the use of an electric guitar, as the pedals used with an electric guitar allow for added harmonics, and other changes made to the guitar's sound. One of the most used types of distortion is known as \textit{clipping}, in which the level of a signal (typically amplitude) goes beyond the maximum that a system is able to handle, leading to clipping, as the maximum of the waveforms gets abruptly cut off at the system's maximum. At its best form, distortion can be a gentle audio effect, which can add many types of sounds to a signal, including saturating the sound, and adding overdrive and \textit{fuzz} through adding \textit{gain} (defined as an increase in some type of value). Within the field of distortion, \textit{gain} is referred to as \textit{transmission gain}, in which there is an increase in the power of a signal, expressed in \textit{decibels} (dB).
+To add the distortion alteration (as opposed to the specific distortion effect) to a sound is simply to add desired textures to a sound, through changing and deforming an audio signal's waveform. For many, a prime example is seen with the use of an electric guitar, as the pedals used with an electric guitar allow for added harmonics, and other changes made to the guitar's sound. One of the most used types of distortion is known as \textit{clipping}, in which the level of a signal (typically amplitude) goes beyond the maximum that a system is able to handle, leading to clipping, as the maximum of the waveforms gets abruptly cut off at the system's maximum. At its best form, distortion can be a gentle audio effect, which can add many types of sounds to a signal, including saturating the sound, and adding overdrive and \textit{fuzz} through adding \textit{gain} (defined as an increase in some type of value). Within the field of distortion, \textit{gain} is referred to as \textit{transmission gain}, in which there is an increase in the power of a signal, expressed in \textit{decibels} (dB), usually done through an arbitrary combination of increasing the amplitude and frequency of a sound wave.
 
 The two most common, and most subtle, types of distortion are saturation and clipping. The result of these two types of clipping is ``soft clipping'' in which the peaks of the signal's waveform are softly rounded, and not abruptly cut off \cite{Tarr_2019}. The signal will be pushed only slightly over the 0 dB threshold. 
 
@@ -241,11 +260,3 @@ The type of decibels used for music production are ``Decibels Full Scale'' (dBFS
 So, keeping the noise level somewhere between -80 dB and -10 dB will help in introducing distortion to pure sound waveforms. If a signal is ``softly clipped'' (boosted slightly over the 0 dB threshold), the output sound may contain subtle harmonics (other frequencies overlaid on top of the original frequency) or other overtones. 
 
 Overdrive, the distortion effect, and fuzz are three other types of distortion effects, and now are synonymous with electric guitar rigs, pedals, and other similar hardware. Overdrive tends to be the most subtle of the three, with higher gain levels. Distortion and fuzz are more intense, with distortion allowing for large amounts of sustain, harmonics, and a mostly altered sound from the original input, noticeable in heavy rock music and guitar solos. Fuzz is similar to distortion in gain level, but also employs the use of a \textit{frequency multiplier} to produce sound similar to that of a square wave. Distortion using the fuzz effect produces a traditional synth-like effect, with digital artifacts, or overly processed sounds.
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\textwidth]{figures/sine-wave-phase-shift.png}
-	\caption{The phase shift in a sine wave}
-	\label{fig:sine-wave-phase-shift}
-\end{figure}
-
