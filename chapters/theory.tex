@@ -125,7 +125,7 @@ To get from an analog sound wave to a digital sound signal, we must sample the c
 	\item This number is presented at an output port.
 \end{enumerate}
 
-The process of sampling will typically produce numbers which are an incomplete representation of the original audio sound, but through careful sampling, this amount of incompleteness can be made insignificant. This same process can be reversed to convert from a digital signal to an analog one, and is known as ``sample replay.'' Sample replay also has three stages:
+The process of sampling will typically produce numbers which are an incomplete representation of the original audio sound, but through careful sampling, this amount of incompleteness can be made insignificant. This same process can be reversed to convert from a digital signal to an analog one, and is known as ``sample replay.'' Sample replay also has three stages and serves as the basis for digital synthesizers, as the conversion from digital signal to analog wave produces the sound that is heard:
 
 \begin{enumerate}
 	\item A number is presented to an input port.
@@ -133,7 +133,28 @@ The process of sampling will typically produce numbers which are an incomplete r
 	\item The analog value forms part of an audio signal.
 \end{enumerate}
 
-It serves as the basis for digital synthesizers, as the conversion from digital signal to analog wave produces the sound that is heard. 
+Analog sound exists in two dimensions: time (a period of each wavelength) and space (the displacement of each waveform from the atmospheric pressure). So it makes sense that to convert from analog audio to digital signals, we use these two dimensions: time (\textit{sample rate}) and space (\textit{bit depth}). 
+
+\textit{Sample rate}, or \textit{sample frequency}, is the number of samples which are captured per period (which is commonly measured in Hertz). Typically, digital audio samples of analog audio waves are taken at a rate of 8,000 times per second, or more \cite{Zjalic_2021}. Occasionally, a sound will be sampled that is at a frequency rate higher than 8,000 and the system doing the sampling is unable to identify two points on the waveform to understand the period. Harry Nyquist (1879-1976) was a Swedish physicist and electrical engineer to solve this problem, through the \textit{Nyquist frequency} (or \textit{folding frequency}). Nyquist discovered that in order for an analog audio wave to be accurately represented by a digital signal, and thus also the system which is sampling the audio wave, the wave must be sampled at least twice per wavelength, known as the \textit{Nyquist Theorem} \cite{Zjalic_2021} and visualized in Figure \ref{fig:nyquist-sampling-theorem}. Thus, for a given sample rate, the highest frequency within a system cannot exceed half this sample rate. In other words, the Nyquist frequency is the frequency at 50\% of the sample rate. Otherwise, for a frequency which does not satisfy the requirements for the Nyquist Theorem, a phenomenon called ``aliasing'' would occur, in which signals that exceed half the sample rate are misrepresented as ``alias signals.'' An ``anti-aliasing'' filter would then typically be applied to the signal before sampling occurs, to act as a low-pass filter with a cut-off at the Nyquist frequency.
+
+\textit{Bit depth} is defined as the discrete values which are available within the digital system, representing the magnitude of a continuous electrical signal \cite{Zjalic_2021}, in the form $log_2{x}$. These levels can become exponentially large, and so \textit{quantization} is used, to process data from a broad range into values within a smaller range. It will convert the levels of a continuous analog signal, as the signal after sampling is still in the analog domain, into binary digits (bits). Using bits will allow us to be able to manipulate and store audio data digitally. After sampling the amplitude of an analog audio wave at various precise intervals, we are able to output this amplitude level in its equivalent in bits, which represent the originally sampled amplitude level. 
+
+From our original three stages of converting analog sound to digital signals, we can now specify the processes which occur in each stage \cite{Huber_Runstein_2018}. Upon playback, the bits are then converted back into analog amplitude values, at precise intervals in time, allowing for the originally recorded amplitude values to be re-created, processed, and played back \cite{Huber_Runstein_2018}. 
+
+\begin{enumerate}
+	\item Sampling analog audio wave amplitude levels at precise intervals in time.
+	\item Converting these samples into the digital bit value (typically a 16-bit length), which most accurately represents the amplitude levels.
+	\item Storing these sample equivalents (the bit values) within digital memory.
+\end{enumerate}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.4\textwidth]{nyquist-sampling-thoerem.jpeg}
+  \caption{The Nyquist sampling theorem visualised. Upper: Signal sampled at 2x Nyquist frequency, Middle: Signal sampled at 1.5x Nyquist frequency (and thus aliasing and not a true representation of the original signal), Bottom: Signal containing both accurate and aliasing components}\cite{Zjalic_2021}
+  \label{fig:nyquist-sampling-theorem}
+\end{figure}
+
 
 \section{Manipulating Sound Waves}\label{section:manip-waves}
 As previously mentioned in Section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in Figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}
