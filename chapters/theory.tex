@@ -104,8 +104,39 @@ A triangle wave is also a non-sinusoidal waveform, named for its triangular shap
 	\label{eq:triangle-wave-function}	
 \end{equation}
 
-\section{Manipulating Pure Sound Waves}
-As previously mentioned in Section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in Figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}:
+\section{Representing Sound Digitally}
+
+We now understand the physics and mathematics behind each of the major waveform types. However, sounds in real life are not composed of simple pure waveforms; sounds in the world around us are made up of multiple harmonics and frequencies layered on top of one another to produce the composite sound which we hear. Sound, like electricity and light, is a form of energy in which molecules in air vibrate and move in a wave pattern. This wave pattern produces the sound waves \cite{Au-Yeung_2021}. Air is able to support multiple sound waves simultaneously, explaining our ability to hear different sounds at the same time. This sound energy is dispersed outwards from the sound source, and will continue to move until the molecules run out of energy, as the energy weakens the further it moves away from the sound source. The sound energy is transferred between molecules, as each molecule moves from an original resting point, transfers energy to another molecule, then returns to its resting point, as in Figure \ref{fig:graphical-rep-vs-physical-sound}. This molecule movement is the oscillation of sound. Molecules become closer together when vibrating, and crowd together in certain places, and thus there are fewer molecules in other places. This visualization of crowds of molecules can be done as a wave, with the peak of a sound wave indicating that there are more molecules together in space (compression of air molecules), and the trough of a sound wave indicating there are fewer molecules (rarefaction) \cite{Toft_2020}. Typically, sound is visualized in a graphical format, with peaks and troughs to a wave rather than drawings showing the compression and rarefaction of air molecules. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.4\textwidth]{graphical-rep-vs-physical-sound.jpeg}
+  \caption{A graphical representation of sound, vs its physical phenomenon}\cite{Toft_2020}
+  \label{fig:graphical-rep-vs-physical-sound}
+\end{figure}
+
+Through this periodic nature of waves, the repetitions create what we will recognize to be musical sound, but lacking the specific tonality and timbral qualities of specific instruments. Musical instruments generate a composite set of frequencies, arranged as a layered set of harmonics above the fundamental frequency (the first frequency which is played, typically the lowest). Thus, the fundamental frequency will be the pitch of the note, and the additional harmonics (also known as overtones) will lie above this pitch and add the tonality or timbre of the note \cite{Toft_2020}. This is what differentiates pure sound waveforms from notes generated from musical instruments, as pure sound waveforms all have pitch, but lack specific timbral quality.\footnote{This is what gives pure sound waveforms their name, ``pure tones,'' as each of these waveforms has pitch but no timbre.} Another factor which dictates what a sound wave will be perceived as is the amplitude of a wave. The wave's amplitude is the distance from the middle of a wave to its crest (peak or trough). Amplitude is also known as the sound's volume, as adjusting the amplitude of a wave will result in a louder sound, and will be further discussed in Section \ref{section:manip-waves}.
+
+To get from an analog sound wave to a digital sound signal, we must sample the continuous analog wave into its digital representation. While an audio signal or sound is a continuous set of values, which are able to be displayed on an oscilloscope (a tool to show oscillations) as a waveform, the digital ``signal'' is a series of numbers, representing various discrete values from the continuous wave. These numbers will represent the values of an audio signal at specific points in time, and are known as \textit{samples} \cite{Russ_2012}. The sampling process to convert from analog (physical) waves to a digital signal involves three steps:
+
+\begin{enumerate}
+	\item The audio signal is ``sampled.''
+	\item The sample value is converted into a number.
+	\item This number is presented at an output port.
+\end{enumerate}
+
+The process of sampling will typically produce numbers which are an incomplete representation of the original audio sound, but through careful sampling, this amount of incompleteness can be made insignificant. This same process can be reversed to convert from a digital signal to an analog one, and is known as ``sample replay.'' Sample replay also has three stages:
+
+\begin{enumerate}
+	\item A number is presented to an input port.
+	\item This number is converted into an analog signal.
+	\item The analog value forms part of an audio signal.
+\end{enumerate}
+
+It serves as the basis for digital synthesizers, as the conversion from digital signal to analog wave produces the sound that is heard. 
+
+\section{Manipulating Sound Waves}\label{section:manip-waves}
+As previously mentioned in Section \ref{section:modular-synth-what-is}, modular synthesis involves sending an audio signal through patches or modules in a linear format to achieve the desired sound output changes. To explain how these changes occur to a sound wave, we begin with a simple sine wave, as in Figure \ref{fig:sine-wave-period-amplitude}. Sine waves are a waveform which is a function of time \texttt{t}
 
 \begin{figure}
 	\centering
@@ -115,12 +146,12 @@ As previously mentioned in Section \ref{section:modular-synth-what-is}, modular 
 \end{figure}
 
 \begin{equation}\label{eq:full-sine-wave-equation}
-	y(t) = A \sin(2\pi ft + \varphi) = A\sin(\omega t + \varphi)
+	y(t) = A \sin(2\pi ft + \varphi)
 \end{equation}
 
-with variables $A$, $f$, $\omega$, $\varphi$. $A$ is the wave's amplitude, which determines the peak deviation from zero. $f$ is the temporal frequency. $w = 2\pi f$ and is the angular frequency, and $\varphi$ is the wave's phase, which specifies (in radians) where in its cycle the wave's oscillation is at time $t$ \cite{Kirk_Hunt_2013}. When $\varphi$ is not equal to zero, the wave itself will appear to be shifted by the value equal to $\varphi / \omega$, which is known as a wave's \say{phase shift.} A negative value will represent a delay in sound, while a positive value will represent an advance in the heard sound.
+with variables $A$, $\varphi$. $A$ is the wave's amplitude, which determines the peak deviation from zero. The frequency is $f$, and $\varphi$ is the wave's phase, which specifies (in radians) where in its cycle the wave's oscillation is at time $t$ \cite{Kirk_Hunt_2013}. When $\varphi$ is not equal to zero, the wave itself will appear to be shifted by the value equal to $\varphi$, which is known as a wave's \say{phase shift.} A negative value will represent a delay in sound, while a positive value will represent an advance in the heard sound.
 
-Thus, there are three primary options when manipulating audio (or a simple waveform); amplitude, frequency, and phase can all be modified at various points to affect the audio output. The first, amplitude, will determine the volume of the wave's sound. The larger the distance between zero and the wave's peak, the louder the human ear will perceive the sound to be\cite{Zjalic_2021}. In Figure \ref{fig:sine-wave-period-amplitude}, amplitude is colored purple, and we see it has a value of 1 (the default value of amplitude of a sine wave from the unit circle), as $A$ does in Equation \ref{eq:full-sine-wave-equation}. By changing the value of $A$ to either $\frac{1}{2}$, or $2$, the peak of the wave will change accordingly, becoming larger or smaller depending on the set value of $A$. This change is reflected in the sound we can hear, as like in Figure \ref{fig:half-sized-sine-wave} and Equation \ref{eq:half-sized-sine-wave}, the volume of this sine wave is halved.
+Thus, there are three primary options when manipulating audio (or a simple waveform); amplitude, frequency, and phase can all be modified at various points to affect the audio output. The first, amplitude, will determine the volume of the wave's sound. The larger the distance between zero and the wave's peak, the louder the human ear will perceive the sound to be\cite{Zjalic_2021}. In Figure \ref{fig:sine-wave-period-amplitude}, amplitude is colored purple, and we see it has a value of 1 (the default value of amplitude of a sine wave from the unit circle), as $A$ does in Equation \ref{eq:full-sine-wave-equation}. By changing the value of $A$ to either $\frac{1}{2}$, or $2$, the peak of the wave will change accordingly, becoming larger or smaller depending on the set value of $A$. This change is reflected in the sound we can hear, as like in Figure \ref{fig:half-sized-sine-wave} and Equation \ref{eq:half-sized-sine-wave}, the volume of this sine wave is halved. Thus, volume ranges can be between soft (at a barely audible \textit{pianissimo}) with an amplitude $A = \frac{1}{2}$, or loud (\textit{fortissimo}), with $A = 4$, for instance.
 
 \begin{equation}\label{eq:half-sized-sine-wave}
 	y(t) = \frac{1}{2} \sin(\omega t + \varphi)
@@ -133,9 +164,58 @@ Thus, there are three primary options when manipulating audio (or a simple wavef
 	\label{fig:half-sized-sine-wave}
 \end{figure}
 
-The second option commonly used to manipulate audio is to change an audio signal or wave's temporal frequency. For sound and audio manipulations, the temporal frequency component determines a sound's \say{color,} or \say{timbre.} It is the property of a waveform which determines the output sound's pitch. The high-end of audible frequencies for the human ear is around 20,000 Hz (20 kHz), though this reduces with age. The generally accepted range of human hearing ranges from 20 Hz to 20 kHz, with frequencies below 20 Hz felt more than heard\cite{Rosen_Howell_2011}. This range is further broken down in Table \ref{tbl:frequency-table-of-human-hearing-general}. Thus, with Equation \ref{eq:full-sine-wave-equation}, we change the value of $f$, which will alter the frequency of the wave, and then also alter the perceived pitch. With an increase in temporal frequency, there will also be an increase in angular frequency $\omega$, which increases the rate of change of the sine wave. With the period of the sine wave in Figure \ref{fig:sine-wave-period-amplitude} marked blue, it is this blue section that will increase with an increase in $\omega$. As $\omega$ increases, there are more repetitions of the sine wave's phase, so the audio output's pitch will increase.
+The second option commonly used to manipulate audio is to change an audio signal or wave's frequency. For sound and audio manipulations, the frequency component determines a sound's \say{color,} or \say{timbre.} It is the property of a waveform which determines the output sound's pitch. The high-end of audible frequencies for the human ear is around 20,000 Hz (20 kHz), though this reduces with age. The generally accepted range of human hearing ranges from 20 Hz to 20 kHz, with frequencies below 20 Hz felt more than heard\cite{Rosen_Howell_2011}. This range is further broken down in Table \ref{tbl:frequency-table-of-human-hearing-general}. Thus, with Equation \ref{eq:full-sine-wave-equation}, we change the value of $w$, which increases the rate of change of the sine wave, increasing the perceived pitch. With the period of the sine wave in Figure \ref{fig:sine-wave-period-amplitude} marked blue, it is this blue section that will increase with an increase in $\omega$. As $\omega$ increases, there are more repetitions of the sine wave's phase, so the audio output's pitch will increase. Pitch is how high or low a sound is perceived to be, and will be determined by the frequency of the vibrations \cite{Toft_2020}. Frequency is the number of wave cycles which pass through a given point per second. A higher frequency will result in a higher pitch, and a lower frequency will result in a lower pitch. For instance, with a frequency of 261 Hz, we perceive the note Middle C to be played. 
 
-Finally, a modification to a wave's phase will determine if the audio signal output is on-time, delayed, or early. The numeric value of $\varphi$ depends on the start of the wave's period. Similar to the changes made to amplitude and frequency, by modifying the value of $\varphi$, we change the phase of the waveform. This will be most noticeable with multiple harmonics or simple waveforms stacked on top of each other, in which each signal will have a phase at a slightly different time, as in Figure \ref{fig:sine-wave-phase-shift}. The period of the blue sine wave has a length of $\frac{\pi}{2}$, but otherwise is a normal unit circle sine wave. The red sine wave is phase shifted, with an $\varphi$ value of positive 2, which shifts the wave negative, causing the output audio to sound early in comparison to the blue wave. 
+Finally, a modification to a wave's phase will determine if the audio signal output is on-time, delayed, or early. The numeric value of $\varphi$ depends on the start of the wave's period. Similar to the changes made to amplitude and frequency, by modifying the value of $\varphi$, we change the phase of the waveform. This will be most noticeable with multiple harmonics or simple waveforms stacked on top of each other, in which each signal will have a phase at a slightly different time, as in Figure \ref{fig:sine-wave-phase-shift}. The period of the blue sine wave has a length of $\frac{\pi}{2}$, but otherwise is a normal unit circle sine wave. The red sine wave is phase shifted, with an $\varphi$ value of positive 2, which shifts the wave negative and to the left, causing the output audio to sound early in comparison to the blue wave. 
+
+This type of sound modulation is done through this synthesizer's ``delay'' effect (sometimes known as ``echo'' effect). It is an effect which records an input signal, stores it, then plays it back after a defined time. Typically, the delayed audio is mixed with the live audio input creating an echo effect, where we first hear the original audio, followed by the delayed audio. The value of $D$ in Equation \ref{eq:sine-wave-equation} determines the shift of the wave, and thus also the sound. A positive value (such as $\frac{\pi}{2}$) will shift the sine wave to the left on the Cartesian plane, resulting in a sine wave which sounds early. The same applies to a negative $D$ value, in which a value such as $-\frac{\pi}{6}$ shifts the sine wave to the right, creating a sine wave which sounds ``late'' or delayed.
+
+Other modules can be created through similar logic. To create legato and staccato, we either connect the waves of different frequencies together, or separate the waves to the point there is a clear distinction between the notes. Musically, these two concepts are total opposites; staccato is defined as the style of playing notes in a detached and separated manner, in which each note is clearly distinct from one another. It is typically indicated by a dot directly above or below the notehead, depending on if the stem of the note goes upwards (a dot is placed below the notehead), or goes downwards (a dot is placed above the notehead) \cite{Burkholder_Grout_Palisca_2014}. An example of staccato is in Figure \ref{fig:bartok-dance-five-b-section}, in which there are dots clearly above and below some of the notes, and the location of the dot is dependent on whether the stems of the notes face upwards or downwards. Legato is the directive which defines notes to be played in a smooth and connected manner, with notes that are no longer clearly distinctive from one another, as each note will flow gracefully into the next.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{bartok-dance-five-b-section.jpg}
+  \caption{Béla Bartók, Romanian Folk Dances, \textit{Poarga Românească}, mm. 16-19}
+  \label{fig:bartok-dance-five-b-section}
+\end{figure}
+
+We will also create a module meant to layer specific harmonics over a base frequency: the major third interval, and the perfect fifth interval, which together will form a major chord. A chord can be defined as the simultaneous sounding of two or more notes (typically three or more). Most chords are triadic in nature (that is, containing only three notes), with the interval of a major third or minor third between each of the three notes. The major third interval can be defined as the interval which spans four degrees of the diatonic scale in the Western twelve-semitone tuning system (refer to subsection \ref{subsection:how-midi}), or four semitones \cite{Nave_2017}.\footnote{The major third interval is also enharmonically equivalent to the diminished fourth interval. The enharmonic interval describes notes which sonically are the same, yet notated differently.} The minor third interval contains one fewer degrees than the major third interval, thus having only two degrees of the diatonic scale, and so only three semitones. For instance, the interval between $A$ and $C\musSharp{}$ is a major third, as the note $C\musSharp{}$ lies four semitones away from the note $A$, while the interval between $A$ and $C$ is a minor third, with the note $C$ lying only three semitones away from the note $A$. Notable examples of the major third interval include the first two notes of the song ``When the Saints Go Marching In,'' the first movement of Ludwig van Beethoven's \textit{Fifth Symphony} (Figure \ref{fig:beethoven-fifth} \cite{Beethoven_1862}), or the song ``Swing Low, Sweet Chariot.'' Examples of the minor third interval include the first two notes of the tune of ``Greensleeves,'' (Figure \ref{fig:greensleeves} \cite{Kurtz_2010}) Christmas tune ``What Child is This,'' or The Beatles' ``Hey, Jude.''
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{beethoven-fifth.jpg}
+  \caption{Ludwig van Beethoven, Symphony No. 5 in C Minor, \textit{Allegro con brio}, mm. 1-4}
+  \label{fig:beethoven-fifth}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.4\textwidth]{greensleeves.jpg}
+  \caption{``Greensleeves'', mm. 1}
+  \label{fig:greensleeves}
+\end{figure}
+
+The interval of the third is important to distinguish \textit{major} chords, and \textit{minor} chords, as major chords will have a root note (the tonic note), major third interval, and another minor third interval (or perfect fifth interval above the tonic) stacked on top of one another, while a minor chord will have the tonic, minor third, and perfect fifth. Either multiple waveforms (of the specified major third and perfect fifth intervals) can be stacked to produce the major chord sound, or MIDI inputs can trigger a major chord.
+
+%TODO: explain distortion as a concept will be *this* and distortion itself refers to *this*
+To add distortion to a sound is simply to add desired textures to a sound, through changing and deforming an audio signal's waveform. For many, a prime example is seen with the use of an electric guitar, as the pedals used with an electric guitar allow for added harmonics, and other changes made to the guitar's sound. One of the most used types of distortion is known as \textit{clipping}, in which the level of a signal (typically amplitude) goes beyond the maximum that a system is able to handle, leading to clipping, as the maximum of the waveforms gets abruptly cut off at the system's maximum. At its best form, distortion can be a gentle audio effect, which can add many types of sounds to a signal, including saturating the sound, and adding overdrive and \textit{fuzz} through adding \textit{gain} (defined as an increase in some type of value). Within the field of distortion, \textit{gain} is referred to as \textit{transmission gain}, in which there is an increase in the power of a signal, expressed in \textit{decibels} (dB).
+
+The two most common, and most subtle, types of distortion are saturation and clipping. The result of these two types of clipping is ``soft clipping'' in which the peaks of the signal's waveform are softly rounded, and not abruptly cut off \cite{Tarr_2019}. The signal will be pushed only slightly over the 0 dB threshold. 
+
+The concept of the 0 dB threshold is important, as it is a fundamental aspect of music production and mixing, as well as how to effectively create distortion within a modular synthesizer. Both digital and analog meters for volume, as in Figure \ref{fig:server-meter}, have ranges between negative infinity (or silence), up to 0 dB (the absolute loudest). These decibels are different that the standard decibels used to describe the loudness of everyday sounds. Standard decibels allow us to compare the relative loudness of sounds to each other; a jet taking off sounds at 140 dB, a firecracker is 140-165 dB, and a whisper may be 30 dB \cite{Hearing_Health_Foundation}. These decibels act as a unit measurement for sound, and the National Institute of Occupational Safety (NIOSH) states that while exposure to noise at 85 decibels or above  will cause hearing loss, the exposure dangers for higher levels become exponentially more damaging. While at a noise level of 70 dB would take over 24 hours to cause hearing damage, sound at a level of 115 dB would cause hearing damage at only 28 seconds. The 115 dB volume of a rock concert and symphonic orchestra concert is much more noticeable, especially when comparing to the volume of listening to music on personal devices at maximum volume (105 dB).
+
+The type of decibels used for music production are ``Decibels Full Scale'' (dBFS) when discussing digital music, or ``Sound Pressure Level'' (dB SPL) in the real world. This is the measurement of decibels as it pertains to the levels in an audio recording. Unlike the scale for dB, in which 0 dB is absolute silence, and higher numbers indicate a louder perceived volume, the scale for dBFS is reversed. With the dBFS scale, 0 dB is the maximum level of audio a system can process before it ``clips'' the signal. The lowest detectable level of sound in the system, the ``noise floor,''  can be as low as -150 dB, but is typically between -80 dB and -90 dB. In general, the common range for volume lies between -10 and -18 dB, leaving 10 dB as headroom when combining all audio signals into one master track.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.2\textwidth]{server-meter.jpg}
+  \caption{The server meter in SuperCollider}
+  \label{fig:server-meter}
+\end{figure}
+
+So, keeping the noise level somewhere between -80 dB and -10 dB will help in introducing distortion to pure sound waveforms. If a signal is ``softly clipped'' (boosted slightly over the 0 dB threshold), the output sound may contain subtle harmonics (other frequencies overlaid on top of the original frequency) or other overtones. 
+
+Overdrive, distortion itself, and fuzz are three other types of distortion effects, and now are synonymous with electric guitar rigs, pedals, and other similar hardware. Overdrive tends to be the most subtle of the three, with higher gain levels. Distortion and fuzz are more intense, with distortion allowing for large amounts of sustain, harmonics, and a mostly altered sound from the original input, noticeable in heavy rock music and guitar solos. Fuzz is similar to distortion in gain level, but also employs the use of a \textit{frequency multiplier} to produce sound similar to that of a square wave. Distortion using the fuzz effect produces a traditional synth-like effect, with digital artifacts, or overly processed sounds.
 
 \begin{figure}
 	\centering
@@ -144,4 +224,3 @@ Finally, a modification to a wave's phase will determine if the audio signal out
 	\label{fig:sine-wave-phase-shift}
 \end{figure}
 
-These three changes to an audio waveform will be the basis for the waveform modules created in this project, in which some combination of modifications made to the audio signal will produce the desired changes. 
