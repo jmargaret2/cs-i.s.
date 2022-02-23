@@ -21,7 +21,7 @@ From a hardware perspective, the MIDI protocol will determine which types of plu
 	\item MIDI OUT: this will send data to other devices (MIDI receivers). An example of this will include an electronic keyboard which plays a note, and then \say{note messages} are sent out from the MIDI OUT socket.
 	\item MIDI IN: this socket will receive the MIDI information from other devices. Using the previous example, if a keyboard's MIDI OUT socket is connected with a MIDI cable to another sound module's IN socket, then the sound module will be able to produce sound on behalf of the keyboard.
 	\item MIDI THRU: this socket will relay the messages received at the MIDI IN socket, so more devices will be able to be chained together.
-\end{enumerate}\label{enu:list-of-midi-sockets}
+\end{enumerate}
 
 \begin{figure}
 	\centering
@@ -42,7 +42,7 @@ MIDI also contains \say{system} messages, sent to all devices within the MIDI sy
 	\item real-time: this type of message allows the devices within the MIDI system to synchronize together.
 	\item common: this message allows the devices to agree on some type of common musical issues, with tuning and song selection as two examples.
 	\item exclusive: this message will exclusively send data to one device type. For manufacturers, these messages are used to send data to only one type of synthesizer or device type, serving as \say{add-ons} to MIDI.
-\end{enumerate}\label{enu:midi-system-messages}
+\end{enumerate}
 
 \noindent System messages are much harder to understand than channel messages, and so will not be discussed to great detail within the scope of this project.
 
@@ -77,7 +77,7 @@ The note on message indicates the beginning of a MIDI note. Typically, one note 
 
 \subsubsection{Note Off Messages}
 
-A note off message is similar to that of a note on message, except that it is a command used to stop playing a MIDI note. A MIDI note on message will play until a corresponding note off message for that note is received by the MIDI receiver. So, a musical composition can, in its most basic form, be written as various MIDI note on and note off messages. There are also three bytes in a MIDI note off message (refer to table \ref{tbl:byte-structure-note-on}), except that the third byte instead is a release velocity value. This value, also ranging from 0-127, will indicate the velocity in which a key or controller is released. A lower value indicates that the key was released slowly, and a higher value shows the key was released quickly. For MIDI devices which are able to respond to receiving a release velocity value, these are able to be programmed to vary the note's speed of decay, reducing the note's decay time as the release velocity value increases \cite{Kirk_Hunt_2013}. %TODO: explain what MIDI decay is
+A note off message is similar to that of a note on message, except that it is a command used to stop playing a MIDI note. A MIDI note on message will play until a corresponding note off message for that note is received by the MIDI receiver. So, a musical composition can, in its most basic form, be written as various MIDI note on and note off messages. There are also three bytes in a MIDI note off message (refer to Table \ref{tbl:byte-structure-note-on}), except that the third byte instead is a release velocity value. This value, also ranging from 0-127, will indicate the velocity in which a key or controller is released. A lower value indicates that the key was released slowly, and a higher value shows the key was released quickly. For MIDI devices which are able to respond to receiving a release velocity value, these are able to be programmed to vary the note's speed of decay, reducing the note's decay time as the release velocity value increases \cite{Kirk_Hunt_2013}. %TODO: explain what MIDI decay is
 
 \subsubsection{Pressure/Aftertouch Messages}
 
@@ -158,6 +158,6 @@ The control change type of MIDI message is typically referred to as a performanc
 	\label{tbl:byte-structure-control-change-message}
 \end{table}
 
-A control change message will be transmitted whenever the corresponding controllers are varied in real time \cite{Huber_2012}, and consist of three bytes: the MIDI channel number, controller ID number (0-127), and the corresponding controller value (0-127), as in table \ref{tbl:byte-structure-control-change-message}. The second byte of a control change message, which dictates the controller ID number, is used to specify which of the device's program or performance parameters are to be referenced. 
+A control change message will be transmitted whenever the corresponding controllers are varied in real time \cite{Huber_2012}, and consist of three bytes: the MIDI channel number, controller ID number (0-127), and the corresponding controller value (0-127), as in Table \ref{tbl:byte-structure-control-change-message}. The second byte of a control change message, which dictates the controller ID number, is used to specify which of the device's program or performance parameters are to be referenced. 
 
 The third byte of the control change message, the controller value, describes the controller itself's actual data value. This is used to specify the position, depth, and/or level of a particular parameter\cite{Huber_2012}.
