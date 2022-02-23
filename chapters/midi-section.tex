@@ -48,23 +48,19 @@ MIDI also contains \say{system} messages, sent to all devices within the MIDI sy
 
 \subsection[Constructing MIDI Messages]{Constructing MIDI Messages}\label{section:midi-messages}
 
-MIDI messages are composed of three bytes, with a byte defined as a fundamental computation building block which consists of eight binary digits (or bits), either zero or one. Bytes which begin with a zero will be a \say{data byte} and bytes which begin with a one are \say{status bytes.} The most significant bit (MSB, or the leftmost binary bit within a MIDI message) is used to identity the byte type. The MSB of a data byte is 0, while the MSB of a status byte is 1.
+MIDI messages are composed of three bytes, with a byte defined as a fundamental computation building block which consists of eight binary digits (or bits), either zero or one. Bytes which begin with a zero will be a \say{data byte} and bytes which begin with a one are \say{status bytes.} The most significant bit (the MSB, or the leftmost binary bit within a MIDI message) identifies the byte type. As mentioned, bytes which have a MSB of 0 (or which begin with a 0) are data bytes while bytes with an MSB of 1 are status bytes.
 
 \[\textrm{a status byte: } \textit{1xxx nnnn} \] \[\textrm{a data byte: } \textit{0nnn nnnn} \]
 
-A status byte determines the type of MIDI function that will be performed, and encodes channel data, allowing the instruction to be received by a device that is set to respond to the selected channel. A data byte is used to associate a certain value to the event that is given by the accompanying status byte. This will determine the type of message that is sent (as they are normally channel messages) between note on, note off, pitch bend, or another type of message.
-
-% TODO: this is confusing 
-After the top bit/MSB of one in a status byte, which begins a MIDI message, the next three bits, or digits, are the bits which actively determine the type of message it is, of which there are eight possible combinations:
+A status byte determines the type of MIDI function that will be performed, and encodes channel data, allowing the instruction to be received by a device that is set to respond to the selected channel. A data byte is used to associate a certain value to the event that is given by the accompanying status byte. This will determine the type of message that is sent (as they are normally channel messages) between note on, note off, pitch bend, or another type of message. Within a status byte, the MSB begins the MIDI message, then the next three bits actively determine the type of MIDI message that is being sent. There are eight possible combinations which determine the type of MIDI message:
 
 \[000, 001, 010, 100, 101, 110, 111 \]
 
-The last four bits of a MIDI message determine which channel the message is delivered through, with 16 combinations for each of the 16 channels, as seen below. %TODO: fix the tables, so this makes sense
+Finally, the last four bits of a MIDI message determine which channel the MIDI message is delivered through. There are 16 possibilities, for each of the 16 channels available in MIDI. It is through this combination of bits and bytes which creates each of the six major types of MIDI messages.
 
-% TODO: have better transition between last section to talking about individual message types
 \subsubsection{Note On Messages}
 
-The note on message indicates the beginning of a MIDI note. Typically, one note on message is generated each time a note is triggered on a MIDI device, such as a keyboard, controller, or other MIDI instrument\footnote{This includes, pressing down a key, hitting a MIDI drum pad, or playing a MIDI sequence.}. A note on message will contain three bytes of information: the MIDI channel number, the pitch number, and the attack velocity value. As in Table \ref{tbl:byte-structure-note-on}, the first byte specifies that this MIDI message is a note on message, and the MIDI channel that this message will go through. The second byte determines the specific note, of the possible 128 notes numbered 0-127, which will be sounded by the MIDI instrument. The third and final byte of a note on message is the note's velocity, also ranged from 0-127. This will denote the loudness of the sounding note, increasing in volume the higher this value goes. For MIDI instruments which do no interpret the entire 128-numbered range of velocity values, we will instead see an attack velocity value of 64 used, regardless of how loud or soft the note itself may be played. This value of 64 gives the note a dynamic/loudness of \textit{mezzo forte}, or moderately loud. Additionally, a note on message with an attack velocity of 0 will generally be equivalent to a note off message, discussed in the next section. In a note on message with an attack velocity value of 0, the MIDI receiver will generally silence the currently-sounding note, by playing it with a velocity (or volume) value of 0\cite{Huber_2012}.
+The note on message indicates the beginning of a MIDI note. Typically, one note on message is generated each time a note is triggered on a MIDI device, such as a keyboard, controller, or other MIDI instrument\footnote{This includes, pressing down a key, hitting a MIDI drum pad, or playing a MIDI sequence.}. A note on message will contain three bytes of information: the MIDI channel number, the pitch number, and the attack velocity value. As in Table \ref{tbl:byte-structure-note-on}, the first byte specifies that this MIDI message is a note on message, and the MIDI channel that this message will go through. The second byte determines the specific note, of the possible 128 notes numbered 0-127, which will be sounded by the MIDI instrument. The third and final byte of a note on message is the note's velocity, also ranged from 0-127. This will denote the loudness of the sounding note, increasing in volume the higher this value goes. For MIDI instruments which do no interpret the entire 128-numbered range of velocity values, we will instead see an attack velocity value of 64 used, regardless of how loud or soft the note itself may be played. This value of 64 gives the note a dynamic/loudness of \textit{mezzo forte}, or moderately loud. Additionally, a note on message with an attack velocity of 0 will generally be equivalent to a note off message, discussed in the next section. In a note on message with an attack velocity value of 0, the MIDI receiver will generally silence the currently-sounding note, by playing it with a velocity (or volume) value of 0 \cite{Huber_2012}.
 
 \begin{table}
 	\centering
@@ -75,26 +71,13 @@ The note on message indicates the beginning of a MIDI note. Typically, one note 
 		(1001 CCCC) & (0NNN NNNN) & (0VVV VVVV) \\
 	\hline
 	\end{tabular}
-	\caption{The structure of a note on MIDI message}
+	\caption{The structure of a note on and note off MIDI message}
 	\label{tbl:byte-structure-note-on}
 \end{table}
 
 \subsubsection{Note Off Messages}
 
-\begin{table}
-	\centering
-	\begin{tabular}{|c|c|c|}
-	\hline
-		Channel number (0-15) & Note number (0-127) & Release velocity (0-127) \\
-		\hline
-		(1001 CCCC) & (0NNN NNNN) & (0VVV VVVV) \\
-	\hline
-	\end{tabular}
-	\caption{The structure of a note off MIDI message}
-	\label{tbl:byte-structure-note-off}
-\end{table}
-
-A note off message is similar to that of a note on message, except that it is a command used to stop playing a MIDI note. A MIDI note on message will play until a corresponding note off message for that note is received by the MIDI receiver. So, a musical composition can, in its most basic form, be written as various MIDI note on and note off messages. There are also three bytes in a MIDI note off message (refer to table \ref{tbl:byte-structure-note-off}), except that the third byte instead is a release velocity value. This value, also ranging from 0-127, will indicate the velocity in which a key or controller is released. A lower value indicates that the key was released slowly, and a higher value shows the key was released quickly. For MIDI devices which are able to respond to receiving a release velocity value, these are able to be programmed to vary the note's speed of decay, reducing the note's decay time as the release velocity value increases\cite{Kirk_Hunt_2013}. %TODO: explain what MIDI decay is
+A note off message is similar to that of a note on message, except that it is a command used to stop playing a MIDI note. A MIDI note on message will play until a corresponding note off message for that note is received by the MIDI receiver. So, a musical composition can, in its most basic form, be written as various MIDI note on and note off messages. There are also three bytes in a MIDI note off message (refer to table \ref{tbl:byte-structure-note-on}), except that the third byte instead is a release velocity value. This value, also ranging from 0-127, will indicate the velocity in which a key or controller is released. A lower value indicates that the key was released slowly, and a higher value shows the key was released quickly. For MIDI devices which are able to respond to receiving a release velocity value, these are able to be programmed to vary the note's speed of decay, reducing the note's decay time as the release velocity value increases \cite{Kirk_Hunt_2013}. %TODO: explain what MIDI decay is
 
 \subsubsection{Pressure/Aftertouch Messages}
 
