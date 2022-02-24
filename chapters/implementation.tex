@@ -154,7 +154,7 @@ In SuperCollider the time values for delay are calculated in radians, so using t
 
 \subsection{Adding Distortion}
 
-The distortion of a simple pure audio signal involves a SuperCollider class known as \textit{InsideOut}. For this module, both clipping and fuzz are used. As in Listing \ref{lst:distortion-waveforms}, there are two aspects which create the clipping and fuzz effects: a sine wave Unit Generator (UGen), and a \texttt{Pink Noise} UGen. The sine wave UGen allows for the clipping of the sound wave. The \texttt{Pink Noise} UGen is added through the fuzz effect, using the value 30 as the frequency multiplier. %TODO: PinkNoise vs Pink noise formatting -> put in same sentence/near each other to prove difference
+The distortion of a simple pure audio signal involves a SuperCollider class known as \textit{InsideOut}. For this module, both clipping and fuzz are used. As in Listing \ref{lst:distortion-waveforms}, there are two aspects which create the clipping and fuzz effects: a sine wave Unit Generator (UGen), and a \texttt{Pink Noise} UGen. The sine wave UGen allows for the clipping of the sound wave. The \texttt{Pink Noise} UGen is added through the fuzz effect, using the value 30 as the frequency multiplier, and allows us to add a type of colored noise known as ``pink noise.''
 
 \begin{listing}
 	\begin{lstlisting}
