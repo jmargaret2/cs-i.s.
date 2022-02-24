@@ -12,7 +12,7 @@ In its most basic form, there are three general types of waves \cite{Halliday_Re
 	\item Matter waves.
 \end{enumerate}
 
-Mechanical waves are the most familiar to many, due to its ubiquity; mechanical waves are found as water waves, sound waves, and sonic waves. These waves are known by two key features: a governance by Newton's three laws, and an existence that occurs only within a material medium, such as air or water. Electromagnetic waves are the second most familiar type of wave, found in visible and ultraviolet light, x-rays, and radar waves. Unlike mechanical waves, electromagnetic waves do not require any material medium to exist, able to travel through a vacuum at a speed of $c = 299,792,458 \textrm{ } m/s$. Finally, matter waves are the least frequently recognized type of wave, though it is commonly found in technology. These waves work within fundamental particle types, including protons, electrons, atoms, and molecules. 
+Mechanical waves are the most familiar to many, due to its ubiquity; mechanical waves are found as water waves, sound waves, and sonic waves. These waves are known by two key features: a governance by Newton's three laws, and an existence that occurs only within a material medium, such as air or water. Additionally, these waves follow the idea of \textit{simple harmonic motion}, in which the wave oscillates in a specific path, and varies sinusoidally in time, following a sine or cosine function. Electromagnetic waves are the second most familiar type of wave, found in visible and ultraviolet light, x-rays, and radar waves. Unlike mechanical waves, electromagnetic waves do not require any material medium to exist, able to travel through a vacuum at a speed of $c = 299,792,458 \textrm{ } m/s$. Finally, matter waves are the least frequently recognized type of wave, though it is commonly found in technology. These waves work within fundamental particle types, including protons, electrons, atoms, and molecules. 
 
 The speed with which each wave rises and falls is its frequency $f$. If the frequency is too low (less than 20 cycles per second, or 20 Hertz, abbreviated as Hz), little to no noise will be audible by the human ear. If the frequency is too high (generally above 20,000 cycles per second, or 20 kiloHertz, abbreviated kHz), again, few noises besides high-pitched and shrill noises will be audible. The range of human hearing is generally stated as being from 20 cycles per second, with 20 Hertz at the low end to 20,000 cycles per second (20 kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
 
@@ -45,8 +45,6 @@ The final way in which we are able to easily study waves is to monitor the wave 
   \caption{(a) A single pulse is sent along a stretched string. A typical string element (marked with a dot) moves up once and then down as the pulse passes. The element’s motion is perpendicular to the wave’s direction of travel, so the pulse is a transverse wave. (b) A sinusoidal wave is sent along the string. A typical string element moves up and down continuously as the wave passes. This too is a transverse wave.}\cite{Halliday_Resnick_Walker_2005}
   \label{fig:transverse-wave-longitudinal-wave}
 \end{figure}
-
-Sound waves are generally defined to be longitudinal waves.
 
 
 \subsection{Sine Waves}\label{subsection:sine-waves}
@@ -92,7 +90,7 @@ The square wave is a certain type of pulse wave which allows for a frequency to 
 	\label{eq:sgn-function}
 \end{equation}
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=0.5\textwidth]{sign-function.png}
   \caption{A sign function}
@@ -102,18 +100,19 @@ The square wave is a certain type of pulse wave which allows for a frequency to 
 Thus, we have a square wave equal to Equation \ref{eq:square-wave-function}. The function $x(t)$ will equal 1 when the sinusoidal is positive, -1 when negative, and 0 at the discrete values where the sinusoidal is equivalent to 0.
 
 \begin{align}
-	x(t) = sgn(sin(\frac{2\pi\textrm{t}}{T}) &
-	= sgn(sin2\pi ft)
+	x(t) = sgn(sin2\pi ft)
 	\label{eq:square-wave-function}
-\end{align} %TODO: write out periodic function to compare with sawtooth
+\end{align} 
 
 
-\begin{figure}
+\begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\textwidth]{figures/square-wave.png}
+  \includegraphics[width=0.3\textwidth]{square-wave.png}
   \caption{A basic square wave}
   \label{fig:square-wave}
 \end{figure}
+
+Similar logic to sine waves can be applied to square waves to alter the sound of a square wave. 
 
 \subsection{Sawtooth Waves}
 The sawtooth waveform is also a non-sinusoidal wave, which resembles the teeth of a plain-toothed saw. Similar to the square wave, a sawtooth wave will ramp upwards to a peak amplitude height, then sharply drop to its trough, as in Figure \ref{fig:basic-sawtooth-wave}. Then, we are able to take Equation \ref{eq:sawtooth-piecewise-function}, and place it into a periodic function, as in Equation \ref{eq:sawtooth-sinusoidal-function}. For the periodic function, let $frac(x) = t - \lfloor t \rfloor$.
