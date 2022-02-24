@@ -2,9 +2,9 @@
 \chapter{Physics of Sound Waves}\label{chapter:theory}
 
 \section{Mathematical Background}\label{section:waveforms}
-According to Joseph Fourier, the creator of the Fourier Transform, any periodic signal or sound can be reduced into their individual sine waves, or other waveform types \cite{Broughton_Bryan_2008}. There are five basic waveform types: a sine wave, square wave, sawtooth wave, triangle wave, and pulse wave \cite{Winer_2018}. The pulse wave is a special type of waveform, as it is a non-sinusoidal waveform which includes square waves within it, and is similarly periodic to square waves, but also asymmetrical, but will not be discussed within the scope of this project. The other waveform types are also periodic waves, as they repeat in a pattern of motion known as a cycle, and the period is the time length.
+According to Joseph Fourier, the creator of the Fourier Transform, any periodic signal or sound can be reduced into their individual sine waves, or other waveform types \cite{Broughton_Bryan_2008}. There are five basic periodic waveform types: a sine wave, square wave, sawtooth wave, triangle wave, and pulse wave \cite{Winer_2018}. The pulse wave is a special type of waveform, as it is a non-sinusoidal waveform which includes square waves within it, and is similarly periodic to square waves, but also asymmetrical, but will not be discussed within the scope of this project. The other waveform types repeat in a pattern of motion known as a cycle, and the period is the time length.
 
-In its most basic form, in addition to the periodic waveform types, there are three general types of waves \cite{Halliday_Resnick_Walker_2005}.
+In its most basic form, there are three general types of waves \cite{Halliday_Resnick_Walker_2005}.
 
 \begin{enumerate}
 	\item Mechanical waves.
@@ -14,17 +14,50 @@ In its most basic form, in addition to the periodic waveform types, there are th
 
 Mechanical waves are the most familiar to many, due to its ubiquity; mechanical waves are found as water waves, sound waves, and sonic waves. These waves are known by two key features: a governance by Newton's three laws, and an existence that occurs only within a material medium, such as air or water. Electromagnetic waves are the second most familiar type of wave, found in visible and ultraviolet light, x-rays, and radar waves. Unlike mechanical waves, electromagnetic waves do not require any material medium to exist, able to travel through a vacuum at a speed of $c = 299,792,458 \textrm{ } m/s$. Finally, matter waves are the least frequently recognized type of wave, though it is commonly found in technology. These waves work within fundamental particle types, including protons, electrons, atoms, and molecules. 
 
-The speed with which each wave rises and falls is its frequency. If the frequency is too low (less than 20 cycles per second, or 20 Hertz, abbreviated as Hz), little to no noise will be audible by the human ear. If the frequency is too high (generally above 20,000 cycles per second, or 20 kiloHertz, abbreviated kHz), again, few noises besides high-pitched and shrill noises will be audible. The range of human hearing is generally stated as being from 20 cycles per second, with 20 Hertz at the low end to 20,000 cycles per second (20 kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
+The speed with which each wave rises and falls is its frequency $f$. If the frequency is too low (less than 20 cycles per second, or 20 Hertz, abbreviated as Hz), little to no noise will be audible by the human ear. If the frequency is too high (generally above 20,000 cycles per second, or 20 kiloHertz, abbreviated kHz), again, few noises besides high-pitched and shrill noises will be audible. The range of human hearing is generally stated as being from 20 cycles per second, with 20 Hertz at the low end to 20,000 cycles per second (20 kHz) at the high end. Older people generally lose the ability to hear the higher frequencies.
 
-\begin{figure}
+For any sine wave, one method of notating the sine wave function is in Equation \ref{eq:physics-sine-wave} \cite{Halliday_Resnick_Walker_2005}, describing a sine wave which oscillates parallel to the y-axes at time \texttt{t}, with the displacement of $y$ at position $x$.
+
+\begin{equation}
+	y(x,t) = y_m \sin(k(x + \lambda) - \omega t)
+	\label{eq:physics-sine-wave}
+\end{equation}
+
+The amplitude of a wave ($y_m$) is the magnitude of the maximum displacement of the wave's crest (peak or trough) from its equilibrium position. As this value is a magnitude, the quantity of amplitude will always be positive, even if it measures the trough of a wave instead of the peak. The phase of wave ($kx - \omega t$) will change linearly with a time \texttt{t}, dependent on the oscillation of the wave. Arbitrarily, as a sine wave oscillates between values of $-1$ and $+1$, the wave's amplitude is at value $-y_m$ and $+y_m$ respectively. Thus, the time-dependent nature of the wave's phase will correspond to the oscillation of the wave, with the amplitude determining the extremeness of the displacement of the wave's crest. The wavelength $\lambda$ of a wave is the distance between repetitions of peaks or troughs, and is parallel to the direction of the wave's travel. Finally, the period of a wave \texttt{T} is the time to move through one full oscillation \cite{Halliday_Resnick_Walker_2005}. Due to the nature of a sine wave to follow the unit circle counterclockwise (discussed more in Subsection \ref{subsection:sine-waves}), the sine wave will begin to repeat when its angle $\theta$ (or argument $k$) is increased by $2\pi$. Thus, we also have Equation \ref{eq:sine-wave-period} which is equivalent to Equation \ref{eq:physics-wavelength}.
+
+\begin{equation}
+	k = \frac{2\pi}{\lambda}
+	\label{eq:physics-wavelength}
+\end{equation}
+
+So, we now have two types of frequency: $\omega$ (angular frequency) and $f$ (temporal frequency). The temporal frequency $f$ of a wave is defined relative to angular frequency $\omega$, as in Equation \ref{eq:physics-freq-eq}. Frequency $f$ is the number of oscillations per unit time, usually measured in Hertz or kiloHertz. Angular frequency is the frequency of an arbitrary sine wave as it moves counterclockwise around the unit circle.
+
+\begin{equation}
+	f = \frac{1}{T} = \frac{\omega}{2\pi}
+	\label{eq:physics-freq-eq}
+\end{equation}
+
+The final way in which we are able to easily study waves is to monitor the wave forms (the shape of the waves) as the waves move left to right. Alternatively, we could also monitor the wave as it oscillates up and down, but the result is the same: either the displacement of the peaks and troughs of an oscillating wave is perpendicular to the direction of travel of the wave, or the direction of travel of an oscillating wave is parallel to the displacement of the crest of the wave \cite{Halliday_Resnick_Walker_2005}. This first type of motion is a \textit{transverse wave}, and the second is a \textit{longitudinal wave}, as in Figure \ref{fig:transverse-wave-longitudinal-wave}. Both wave shapes are also known as \textit{traveling waves} as they travel from one defined point to another.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\textwidth]{fig_16_1.jpeg}
+  \caption{(a) A single pulse is sent along a stretched string. A typical string element (marked with a dot) moves up once and then down as the pulse passes. The element’s motion is perpendicular to the wave’s direction of travel, so the pulse is a transverse wave. (b) A sinusoidal wave is sent along the string. A typical string element moves up and down continuously as the wave passes. This too is a transverse wave.}\cite{Halliday_Resnick_Walker_2005}
+  \label{fig:transverse-wave-longitudinal-wave}
+\end{figure}
+
+Sound waves are generally defined to be longitudinal waves.
+
+
+\subsection{Sine Waves}\label{subsection:sine-waves}
+The first of the basic periodic waves is the sine wave, and is the most common type of periodic wave. The sine wave is a signal with only one frequency, and represents the unidimensional motion for any signal with a phase angle that rotates at a constant rate. It is also based on the trigonometric sine function. On the unit circle, the trigonometric sine function of a phase angle $\theta$ is defined as the ratio of the length of the opposite side and the hypotenuse of a right triangle. The unit circle, with a radius of 1, results in the sine function $sin\theta$ being equal to the y-value in Cartesian coordinates, where the hypotenuse of the right triangle that is formed meets the circle, like in Figure \ref{fig:unit-circle}. We can then use this trigonometric sine wave to synthesize a sine wave audio signal. As sine wave is a continuous periodic wave, in which the wave continues to sound until stopped, we must use the sine wave function on the unit circle continuously. Thus, we use the sine function continuously around the unit circle, going counterclockwise. We notice that in the correlation between Figures \ref{fig:basic-sine-wave} and \ref{fig:unit-circle} moving counterclockwise through the unit circle results in the appropriate rise and fall of the sine wave. $\frac{\pi}{2}$ is the highest y-value within the Cartesian plane, and so denotes a peak in the sine wave, while $\frac{3\pi}{2}$ is the lowest, denoting a trough.
+
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\textwidth]{figures/sine-wave-form.png}
 	\caption{A basic sine wave}
 	\label{fig:basic-sine-wave}
 \end{figure}
-
-\subsection{Sine Waves}\label{subsection:sine-waves}
-The first of the basic periodic waves is the sine wave, and is the most common type of periodic wave. The sine wave is a signal with only one frequency, and represents the unidimensional motion for any signal with a phase angle that rotates at a constant rate. It is also based on the trigonometric sine function. On the unit circle, the trigonometric sine function of a phase angle $\theta$ is defined as the ratio of the length of the opposite side and the hypotenuse of a right triangle. The unit circle, with a radius of 1, results in the sine function $sin\theta$ being equal to the y-value in Cartesian coordinates, where the hypotenuse of the right triangle that is formed meets the circle, like in Figure \ref{fig:unit-circle}. We can then use this trigonometric sine wave to synthesize a sine wave audio signal. As sine wave is a continuous periodic wave, in which the wave continues to sound until stopped, we must use the sine wave function on the unit circle continuously. Thus, we use the sine function continuously around the unit circle, going counterclockwise. We notice that in the correlation between Figures \ref{fig:basic-sine-wave} and \ref{fig:unit-circle} moving counterclockwise through the unit circle results in the appropriate rise and fall of the sine wave. $\frac{\pi}{2}$ is the highest y-value within the Cartesian plane, and so denotes a peak in the sine wave, while $\frac{3\pi}{2}$ is the lowest, denoting a trough.
 
 \begin{equation}
 	y = Asin(B(x + C)) + D
