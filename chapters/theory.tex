@@ -2,7 +2,7 @@
 \chapter{Physics of Sound Waves}\label{chapter:theory}
 
 \section{Mathematical Background}\label{section:waveforms}
-According to Joseph Fourier, the creator of the Fourier Transform, any periodic signal or sound can be reduced into their individual sine waves, or other waveform types \cite{Broughton_Bryan_2008}. There are five basic periodic waveform types: a sine wave, square wave, sawtooth wave, triangle wave, and pulse wave \cite{Winer_2018}. The pulse wave is a special type of waveform, as it is a non-sinusoidal waveform which includes square waves within it, and is similarly periodic to square waves, but also asymmetrical, but will not be discussed within the scope of this project. The other waveform types repeat in a pattern of motion known as a cycle, and the period is the time length.
+According to Joseph Fourier, the creator of the Fourier Transform, any periodic signal or sound can be reduced into their individual sine waves, or other waveform types \cite{Broughton_Bryan_2008}. There are five basic periodic waveform types: a sine wave, square wave, sawtooth wave, triangle wave, and pulse wave \cite{Winer_2018}. The pulse wave is a special type of waveform, as it is a non-sinusoidal waveform which includes square waves within it, and is similarly periodic to square waves, but also asymmetrical, but will not be discussed within the scope of this project. The other waveform types repeat in a pattern of motion known as a cycle, and the period is the time length. Each of these waves have its own individual sound and characteristics, and thus will be used for different types of sound synthesis and applications.
 
 In its most basic form, there are three general types of waves \cite{Halliday_Resnick_Walker_2005}.
 
@@ -55,9 +55,11 @@ Simple tones, such as sine waves and cosine waves, are transverse periodic waves
 Occasionally, multiple sinusoidal waves of the same wavelength and amplitude moving in the same direction may \textit{interfere} with each other, as the superposition principle applies. The resultant wave of this interference depends on the extent to which the waves are in phase/in step with respect to each other. If the phase of both waves are exactly the same (``in phase,'' in which the peaks and troughs of each wave is the same) then the total displacement is doubled from the displacement of each individual wave. On the other hand, if both waves are exactly ``out of phase'' (the peaks of one wave is the exact same as the troughs of the other) then the total interference will result in the cancellation of noise, as each wave will fully cancel the other \cite{Halliday_Resnick_Walker_2005}. This is how much of the new ``noise-cancelling'' technology works in headphones and speakers, in which the phases of multiple waveforms combine to cancel each other, resulting in the perception of no noise. As in Equation \ref{eq:noise-cancelling}, suppose $y_1(x, t)$ is the displacement of $y$ of one wave, and $y_2(x, t)$ be the displacement of another wave. 
 
 \begin{equation}
-	y_1(x, t) = y_m\sin(kx - \omega t) \\ 
-	y_2(x, t) = y_m\sin(kx - \omega t + \varphi)
+	\begin{aligned}
+	y_1(x, t) &= y_m\sin(kx - \omega t) \\ 
+	y_2(x, t) &= y_m\sin(kx - \omega t + \varphi)
 	\label{eq:noise-cancelling}
+	\end{aligned}
 \end{equation}
 
 Waves $y_1(x, t)$ and $y_2(x, t)$ have the same angular frequency $\omega$ (and thus also the same temporal frequency $f$, the same angular wave number $k$ (and thus also the same wavelength $\lambda$), and amplitude $y_m$. Both waves travel in the positive direction of the x-axis, at the same speed. The only difference between the two waves is the phase shift $\varphi$, resulting in the two waves being out of phase, and cancelling the noise of the resultant wave.
@@ -77,14 +79,13 @@ The first of the basic periodic waves is the sine wave, and is the most common t
 	\label{eq:sine-wave-equation}
 \end{equation}
 
-Like with the other periodic waves, sine waves have three important properties: frequency, amplitude, and phase. From the generic function for a sine wave as in Equation \ref{eq:sine-wave-equation}, we are able to compute the various properties. First, \textit{A} is the sine wave's amplitude. This is defined as the height from the center line of the wave to its peak or trough. For our unit sine wave, this value will be 1. Second is the variable \textit{B}, which helps to define the period of the wave, or the distance between one peak and the next, or one trough and the next. With Equation \ref{eq:sine-wave-period}, we see the period is equivalent to taking the total circumference of the unit circle, and dividing it by \textit{B}. Third, the phase shift of a sine wave is denoted by \textit{C}. If the expression is $(x + C)$, then the phase of the sine wave will shift to the left, as the x-value of the wave becomes negative \textit{C}. Otherwise, if the expression is $(x - C)$, then the wave will shift right, with a positive x-value as \textit{C}. Finally, the variable \textit{D} is equivalent to the vertical shift of the wave. This notates the distance that the wave will shift vertically from its unit circle position.
+Like with the other periodic waves, sine waves have three important properties: frequency, amplitude, and phase. From the generic function for a sine wave as in Equation \ref{eq:sine-wave-equation}, we are able to compute the various properties. First, \textit{A} is the sine wave's amplitude. This is defined as the height from the center line of the wave to its peak or trough. For our unit sine wave, this value will be 1. Second is the variable \textit{B}, which helps to define the period of the wave, or the distance between one peak and the next, or one trough and the next. With Equation \ref{eq:sine-wave-period}, we see the period is equivalent to taking the total circumference of the unit circle, and dividing it by \textit{B}. Third, the phase shift of a sine wave is denoted by \textit{C}. If the expression is $(x + C)$, then the phase of the sine wave will shift to the left, as the x-value of the wave becomes negative \textit{C}. Otherwise, if the expression is $(x - C)$, then the wave will shift right, with a positive x-value as \textit{C}. Finally, the variable \textit{D} is equivalent to the vertical shift of the wave. This notates the distance that the wave will shift vertically from its unit circle position. As sine waves are only composed of a fundamental frequency, these waves are most used as pure sound tones.
 
 \begin{equation}
 	\frac{2\pi}{B}
 	\label{eq:sine-wave-period}
 \end{equation}
 
-%TODO: brief explanation of what each wave is used for
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\textwidth]{figures/unit-circle.png}
@@ -93,9 +94,15 @@ Like with the other periodic waves, sine waves have three important properties: 
 \end{figure}
 
 \subsection{Square Waves}
-The square wave is the second of the periodic waveforms, and is a wave in which the frequency oscillates between a single fixed minimum and maximum value \cite{Tarr_2019}. Within the unit circle definition of the square wave, the maximum frequency is positive or negative one, as in Figure \ref{fig:square-wave}. This unit square wave details the ideal square wave, in which the change between minimum and maximum frequency happen instantaneously. An approximation of square waves may be created through the combination of multiple individual harmonics (sine functions). This method of creating an audio signal is known as \textit{additive synthesis}, in which a new timbre or sound is create by adding together periodic waveforms, usually sine waves \cite{Tarr_2019}. 
 
-The square wave is a certain type of pulse wave which allows for a frequency to sound at fixed amplitudes for an arbitrary duration. At its simplest, a square wave can be defined as a sign function of a sinusoidal. A sign function, or a signum function, as in Figure \ref{fig:sign-function}, is an odd mathematical function which extracts the sign of a real number, expressed as $sgn$. Of a real number $x$, it is a piecewise function, defined as in Equation \ref{eq:sgn-function}.
+The square wave is a certain type of pulse wave which allows for a frequency to sound at fixed amplitudes for an arbitrary duration. At its simplest, a square wave can be defined as a sign function of a sinusoidal. A sign function, or a signum function, as in Figure \ref{fig:sign-function}, is an odd mathematical function which extracts the sign of a real number, expressed as $sgn$. Of a real number $x$, it is a piecewise function, defined as in Equation \ref{eq:sgn-function}. So, the square wave is only able to contain odd harmonics, given by its nature of being a type of signum function. Potential harmonics which are not odd or do not fall within exact odd multiples of an arbitrary frequency will cause the wave to become non-square \cite{Case_2007}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\textwidth]{square-wave.png}
+  \caption{A basic square wave}
+  \label{fig:square-wave}
+\end{figure}
 
 \begin{equation}
 	sgn (x): \begin{cases}
@@ -113,22 +120,16 @@ The square wave is a certain type of pulse wave which allows for a frequency to 
   \label{fig:sign-function}
 \end{figure}
 
-Thus, we have a square wave equal to Equation \ref{eq:square-wave-function}. The function $x(t)$ will equal 1 when the sinusoidal is positive, -1 when negative, and 0 at the discrete values where the sinusoidal is equivalent to 0.
+Thus, we have a square wave equal to Equation \ref{eq:square-wave-function}. The function $x(t)$ will equal 1 when the sinusoidal is positive, -1 when negative, and 0 at the discrete values where the sinusoidal is equivalent to 0. Other aspects of the formula can be altered, similarly to how the function for the sine wave is modified, to produce sound changes. The variable $f$ can be modified like how a period for a sine wave is (variable $B$), in which a larger value, as long as the new value is odd, is able to cause a different frequency result over time \texttt{t}. Amplitude can be increased by multiplying our $A$ value, in Equation \ref{eq:square-wave-function} notated as $sgn$, by some arbitrary odd value. This will increase the value of the amplitude, or the value of $x(t)$ to some other value greater than $+1$ and less than $-1$. Finally, we are also able to modify the period of a square wave, multiplying an odd value by our variable $B$, or $\sin(2\pi)$ \cite{Case_2007}.
 
 \begin{align}
 	x(t) = sgn(sin2\pi ft)
 	\label{eq:square-wave-function}
 \end{align} 
 
+Square waves are the harshest and brightest sounding of the major sound wave types. As they contain odd harmonics only, square waves are most used for low bass sounds, and reeds \cite{Dowsett_2016}. 
+
 %TODO: add statement - here's the function, way we rep. these waves
-
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.3\textwidth]{square-wave.png}
-  \caption{A basic square wave}
-  \label{fig:square-wave}
-\end{figure}
 
 \subsection{Sawtooth Waves}
 The sawtooth waveform is also a non-sinusoidal wave, which resembles the teeth of a plain-toothed saw. Similar to the square wave, a sawtooth wave will ramp upwards to a peak amplitude height, then sharply drop to its trough, as in Figure \ref{fig:basic-sawtooth-wave}. Then, we are able to take Equation \ref{eq:sawtooth-piecewise-function}, and place it into a periodic function, as in Equation \ref{eq:sawtooth-sinusoidal-function}. For the periodic function, let $frac(x) = t - \lfloor t \rfloor$.
@@ -145,9 +146,11 @@ The sawtooth waveform is also a non-sinusoidal wave, which resembles the teeth o
 
 Like with other waveforms, the variable \textit{A} represents the wave's amplitude, and \textit{T} represents the wave's period. The variable $\phi$ denotes the wave's phase, with positive values causing a shift to the left, and negative values a shift to the right. Sawtooth waves are typically created through additive synthesis, much like square waves are, and so we notice that sawtooth waves and square waves have similar periodic equations \cite{Tarr_2019}.
 
+The nature of the sawtooth wave gives it a bright and energetic sound, and contains both even and odd harmonics. Due to this, sawtooth waves will be used for a variety of instruments, such as strings, brass, pads, and basses \cite{Dowsett_2016}.
+
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.5\textwidth]{figures/sawtooth-wave.png}
+  \includegraphics[width=0.3\textwidth]{figures/sawtooth-wave.png}
   \caption{A basic sawtooth wave}
   \label{fig:basic-sawtooth-wave}
 \end{figure}
@@ -155,7 +158,9 @@ Like with other waveforms, the variable \textit{A} represents the wave's amplitu
 
 \subsection{Triangle Wave}
 
-A triangle wave is also a non-sinusoidal waveform, named for its triangular shape. Like with square waves, this type of wave only contains odd harmonics, i.e. only containing valid values which are odd numbers.
+A triangle wave is also a non-sinusoidal waveform, named for its triangular shape. Like with square waves, this type of wave only contains odd harmonics, i.e. only containing valid values which are odd numbers. It also shares similarities to the sawtooth wave. In a sawtooth wave, the amplitude of the wave will increase linearly, from a set minimum value (usually 0) to the set maximum value. When the wave reaches this maximum value, the amplitude will immediately return to the minimum value, to begin a new period, or new cycle. Instead, triangle waves will decrease the amplitude of the wave once the maximum value is achieved, until the amplitude reaches the minimum value \cite{Tarr_2019}.
+
+Triangle waves are also ``soft'' sounding waveforms, which decrease in sound faster than some other types of waves. This results in triangle waves being used for piano and flute sounds, as well as other instruments which rely on a quick decay of a note \cite{Dowsett_2016}.
 
 \begin{equation}
 	f(x) = \frac{2}{\pi}sin^{-1}\lceil sin(\pi x) \rceil
@@ -175,7 +180,7 @@ We now understand the physics and mathematics behind sound waves. However, sound
   \label{fig:graphical-rep-vs-physical-sound}
 \end{figure}
 
-Through this periodic nature of waves, the repetitions create what we will recognize to be musical sound, but lacking the specific tonality and timbral qualities of specific instruments. Musical instruments generate a composite set of frequencies, arranged as a layered set of harmonics above the fundamental frequency (the first frequency which is played, typically the lowest). Thus, the fundamental frequency will be the pitch of the note, and the additional harmonics (also known as overtones) will lie above this pitch and add the tonality or timbre of the note \cite{Toft_2020}. This is what differentiates pure sound waveforms from notes generated from musical instruments, as pure sound waveforms all have pitch, but lack specific timbral quality.\footnote{This is what gives pure sound waveforms their name, ``pure tones,'' as each of these waveforms has pitch but no timbre.} Another factor which dictates what a sound wave will be perceived as is the amplitude of a wave. The wave's amplitude is the distance from the middle of a wave to its crest (peak or trough). Amplitude is also known as the sound's volume, as adjusting the amplitude of a wave will result in a louder sound, and will be further discussed in Section \ref{section:manip-waves}.
+Through this periodic nature of waves, the repetitions create what we will recognize to be musical sound, but lacking the specific tonality and timbral qualities of specific instruments. Musical instruments generate a composite set of frequencies, arranged as a layered set of harmonics above the fundamental frequency (the lowest frequency which is played). Thus, the fundamental frequency will be the pitch of the note, and the additional harmonics (also known as overtones) will lie above this pitch and add the tonality or timbre of the note \cite{Toft_2020}. This is what differentiates pure sound waveforms from notes generated from musical instruments, as pure sound waveforms all have pitch, but lack specific timbral quality.\footnote{This is what gives pure sound waveforms their name, ``pure tones,'' as each of these waveforms has pitch but no timbre.} Another factor which dictates what a sound wave will be perceived as is the amplitude of a wave. The wave's amplitude is the distance from the middle of a wave to its crest (peak or trough). Amplitude is also known as the sound's volume, as adjusting the amplitude of a wave will result in a louder sound, and will be further discussed in Section \ref{section:manip-waves}.
 
 To get from an analog sound wave to a digital sound signal, we must sample the continuous analog wave into its digital representation. While an audio signal or sound is a continuous set of values, which are able to be displayed on an oscilloscope (a tool to show oscillations) as a waveform, the digital ``signal'' is a series of numbers, representing various discrete values from the continuous wave. These numbers will represent the values of an audio signal at specific points in time, and are known as \textit{samples} \cite{Russ_2012}. The sampling process to convert from analog (physical) waves to a digital signal involves three steps:
 
