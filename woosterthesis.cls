@@ -1859,6 +1859,7 @@ by \\
 		allcolors=black,%
 		linkcolor=black,%
 		citecolor=black,%
+		unicode%
 		pagebackref=false,%
 		plainpages=false,%
 		linktocpage=true,%			
@@ -1881,6 +1882,7 @@ by \\
 		bookmarksopen=true,%
 		pdfstartview=FitV,%
 		colorlinks,%
+		unicode,%
 		allcolors=black,%
 		linkcolor=refcolor,%
 		citecolor=citecolor,%
