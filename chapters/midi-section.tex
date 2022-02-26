@@ -94,9 +94,9 @@ A note off message is similar to that of a note on message, except that it is a 
 	\label{tbl:byte-structure-aftertouch}
 \end{table}
 
-Pressure messages, also known as \say{Aftertouch} messages, happen after a key is pressed, and the user decides to press down on the key harder. For compatible MIDI devices, aftertouch can generally be assigned to parameters which include vibrato(the pulsating or vibrating element of some sounds, produced by a very slight fluctuation of the pitch of a note), volume (loudness), filter cutoff (the frequency range which will not pass through the filter), and pitch (frequency). As defined by MIDI, and the byte structure of an aftertouch message in Table \ref{tbl:byte-structure-aftertouch}, there are two types of aftertouch messages: channel pressure messages and polyphonic key pressure messages \cite{Huber_2012}. 
+Pressure messages, also known as \say{Aftertouch} messages, happen after a key is pressed, and the user decides to press down on the key harder. For compatible MIDI devices, aftertouch can generally be assigned to parameters which include vibrato (the pulsating or vibrating element of some sounds, produced by a very slight fluctuation of the pitch of a note), volume (loudness), filter cutoff (the frequency range which will not pass through the filter), and pitch (frequency). As defined by MIDI, and the byte structure of an aftertouch message in Table \ref{tbl:byte-structure-aftertouch}, there are two types of aftertouch messages: channel pressure messages and polyphonic key pressure messages \cite{Huber_2012}. 
 
-\begin{table}
+\begin{table}[ht]
 	\centering
 	\begin{tabular}{|c|c|c|}
 	\hline
@@ -115,7 +115,7 @@ Polyphonic key pressure messages are similar to channel pressure messages, but r
 
 \subsubsection{Program Change Messages}
 
-\begin{table}
+\begin{table}[ht]
 	\centering
 	\begin{tabular}{|c|c|}
 	\hline
@@ -145,7 +145,7 @@ The control change type of MIDI message is typically referred to as a performanc
 	\item channel mode message controllers: controllers which range from the controller numbers 120 and 127, used to set the note's sounding status, the instrument reset, the local control's on/off, all notes off message, and the MIDI mode status of a device.
 \end{enumerate}
 
-\begin{table}
+\begin{table}[ht]
 	\centering
 	\begin{tabular}{|c|c|c|}
 	\hline
@@ -154,7 +154,7 @@ The control change type of MIDI message is typically referred to as a performanc
 		(1011 CCCC) & (0CCC CCCC) & (0VVV VVVV) \\
 	\hline
 	\end{tabular}
-	\caption{The structure of a program change message}
+	\caption{The structure of a control change message}
 	\label{tbl:byte-structure-control-change-message}
 \end{table}
 
