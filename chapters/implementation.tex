@@ -1,8 +1,10 @@
 \chapter{Building a Modular Synthesizer}\label{chapter:building-a-mod-synth}
 
+In the work done on creating a virtual synthesizer, the result is two input options: pure sound tones (such as the sine waves, square waves, and other waveforms previously mentioned in Section \ref{section:waveforms}), and MIDI. Due to the continuous movement of pure sound waves, modules built for pure tones will be somewhat different from the modules which are built for MIDI input. The following section focuses on the pure sound tones, and the modules built to manipulate these waves. Then, we discuss the ways in which a user can interact with this project's synthesizer through the use of MIDI, and the various sound alterations that result.
+
 \section{The Modules: Pure Waveforms}
 
-The waveforms created through SuperCollider are through the ``SinOsc'' Unit Generator. As in Listing \ref{lst:sinewave-synthdef}, a simple sine wave is created, with a frequency of 440 Hz ($A_4$, or Concert A), and a volume of 50. Thus, as previously seen in both Figure \ref{fig:basic-sine-wave} and Equation \ref{eq:sine-wave-equation}, a continuous sine wave has been created.
+The waveforms created through SuperCollider are through Unit Generators (UGens) such as the ``SinOsc'' Unit Generator. As in Listing \ref{lst:sinewave-synthdef}, a simple sine wave is created, with a frequency of 440 Hz ($A_4$, defined as the A in the fourth octave of the keyboard, or Concert A), and a volume of 50. The \texttt{SinOsc} UGen defines the specific properties (frequency, amplitude) of the sine wave, as well as the wave itself. Thus, as previously seen in both Figure \ref{fig:basic-sine-wave} and Equation \ref{eq:sine-wave-equation}, a continuous sine wave has been created.
 
 \begin{listing}
 	\begin{lstlisting}
