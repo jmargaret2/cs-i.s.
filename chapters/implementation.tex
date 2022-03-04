@@ -91,59 +91,52 @@ In this synthesizer, a pure sound wave was created through the SynthDef, and lat
 
 \subsection{Major Chord Generator}
 
-The Major Chord Generator within this modular synthesizer involve two pieces: calculating the proper frequencies of the major third and perfect fifth intervals--as they are subject to change from the user's input on the pitch knob--and adding these two intervals to play simultaneously with the original waveform sound. First, to calculate the proper intervals of tonic note to major third, and tonic note to perfect fifth, \textit{interval ratios} (the widths of semitones) are used (refer to Appendix \ref{appendix:music-theory-terms} for further definitions for each of these terms). As mentioned within Subsection \ref{subsection:how-midi}, the commonly used tuning system in the Western world is the twelve-tone equal temperament system, which divides the octave into 12 parts. Each of these parts are equally tempered (or equally spaced) on a logarithmic scale, such that each ratio is equal to $2^\frac{1}{12}$, or $\sqrt[12]{2} \approx 1.05946$ (the 12th square root of 2, and $a$ in Equation \ref{eq:equal-temperament-eq} \cite{Suits_1998}). This tuning system is normally tuned relative to the standard pitch of 440 Hz, known as \textit{A440}, signifying that the note $A$ (typically $A_4$, or Concert A) is tuned to 440 Hertz, and all other notes are defined relative to this pitch, as some multiple of semitones away from it, either higher or lower in frequency. Thus,  the modular synthesizer created also begins with a starting pitch of A440, every other pitch is defined relative to it ($f_0$ in Equation \ref{eq:equal-temperament-eq}).
+The Major Chord Generator within this modular synthesizer involve two pieces: calculating the proper frequencies of the major third and perfect fifth intervals--as they are subject to change from the user's input on the pitch knob--and adding these two intervals to play simultaneously with the original waveform sound. First, to calculate the proper intervals of tonic note (the base frequency, otherwise known as the ``root note'') to major third, and tonic note to perfect fifth, \textit{interval ratios} (the widths of semitones, and the calculation of frequencies relative to a base frequency, typically A440) are used (refer to Appendix \ref{appendix:music-theory-terms} for further definitions for each of these terms). As mentioned within Subsection \ref{subsection:how-midi}, the commonly used tuning system in the Western world is the twelve-tone equal temperament system, which divides the octave into 12 parts. Each of these parts are equally tempered (or equally spaced) on a logarithmic scale, such that each ratio is equal to $2^\frac{1}{12}$, or $\sqrt[12]{2} \approx 1.05946$ (the 12th square root of 2, and $a$ in Equation \ref{eq:equal-temperament-eq} \cite{Suits_1998}). This tuning system is normally tuned relative to the standard pitch of 440 Hz, known as \textit{A440}, signifying that the note $A$ (typically $A_4$, or Concert A) is tuned to 440 Hertz, and all other notes are defined relative to this pitch, as some multiple of semitones away from it, either higher or lower in frequency. Thus,  the modular synthesizer created also begins with a starting pitch of A440, every other pitch is defined relative to it ($f_0$ in Equation \ref{eq:equal-temperament-eq}).
 
-Within the twelve-tone equal temperament system, calculating the intervals for the major third and perfect fifth is some multiplication of the single semitone $\sqrt[12]{2}$. As there are four semitones between the tonic note and its major third, the interval ratio is $2^\frac{4}{12}$, or $\sqrt[\frac{4}{12}]{2}$, and seven semitones between the tonic and perfect fifth, the interval ratio is $2^\frac{7}{12}$, or $\sqrt[\frac{7}{12}]{2} \approx \sqrt[12]{128}$, as in Listing \ref{lst:chord-creation} and Equation \ref{eq:equal-temperament-eq}. 
+To calculate an interval from our base frequency of 440 Hz, we must multiply by some value $\frac{n}{12}$, with $n$ the distance, in semitones, from the base frequency to the interval we want to find. We want to calculate the frequency value of the major third interval and the perfect interval, based on the base frequency value of 440 Hz. We know that the major third interval is four semitones away from the root note, and the perfect fifth is seven semitones away from the root note. To calculate the major third interval, like in Listing \ref{lst:major-chord-module-wave} in which we define the values of variables \texttt{thirdFreq} and \texttt{fifthFreq}, we multiply our base frequency by some multiple of $\sqrt[\frac{n}{12}]{2}$. As the major third interval has a distance of four semitones away from the root note, we set $n = 4$, to calculate $f_n = 440 * 2^{\frac{4}{12}}$. We do the same thing to calculate the perfect fifth interval. This interval has a distance of seven semitones from the root note, so we multiply our base frequency by $\sqrt[\frac{7}{12}]{2}$, resulting in $f_n = 440 * 2^{\frac{7}{12}}$. Through these two calculations, we understand that with a base frequency value of 440 Hz, the values of \texttt{thirdFreq} and \texttt{fifthFreq} of Listing \ref{lst:major-chord-module-wave} to be: 
 
-\begin{listing}
-	\begin{lstlisting}
-		var baseFrequency = 440;
-		var thirdFreq = baseFrequency * (2**(4/12));
-		var fifthFreq = baseFrequency * (2**(7/12));
-	\end{lstlisting}
-	\label{lst:chord-creation}
-	\caption{Creating the major third and perfect fifth intervals}
-\end{listing}
+\begin{verbatim}
+    thirdFreq = 554.37;
+    fifthFreq = 659.25;
+\end{verbatim}
 
 \begin{equation}
-	f_n = f_0 * (a)^n
+	f_n = f_0 * (2)^{\frac{n}{12}}
 	\label{eq:equal-temperament-eq}
 \end{equation}
 
-After calculating the ratio of frequencies, the work on the second part of the module begins. Similar to the work done to create the initial waveform, two additional pure waveforms, and their Synth counterparts, are created (Listing \ref{lst:major-chord-synths}). Then, the only step which remains involves adding the Synths $y$ and $z$ into a variable to play simultaneously (Listing \ref{lst:major-chord-module}) using an array called ``majChord.''
+After calculating the ratio of frequencies, the work on the second part of the module begins. Similar to the work done to create the initial waveform, two additional pure waveforms, and their Synth counterparts, are created (Listing \ref{lst:major-chord-module-wave}). Then, the only step which remains involve adding the Synths $y$ and $z$ into a variable to play simultaneously (Listing \ref{lst:major-chord-module-wave}) using an array called ``majChord.''
 
 \begin{listing}
 	\begin{lstlisting}
+        var baseFrequency = 440;
+		var thirdFreq = baseFrequency * (2**(4/12));
+		var fifthFreq = baseFrequency * (2**(7/12));
+		...
 		SynthDef("sinewave_third", {arg vol=50; Out.ar(0, SinOsc.ar(thirdFreq, 0, vol))}).add;
 		SynthDef("sinewave_fifth", {arg vol=50; Out.ar(0, SinOsc.ar(fifthFreq, 0, vol))}).add;
 		y = Synth("sinewave_third");
 		z = Synth("sinewave_fifth");
-	\end{lstlisting}
-	\label{lst:major-chord-synths}
-	\caption{Creating SynthDefs for the major third and perfect fifth intervals}	
-\end{listing}
-
-\begin{listing}
-	\begin{lstlisting}
+		...
 		majChord = ["sinewave", "sinewave_third", "sinewave_fifth"];
 	\end{lstlisting}
-	\label{lst:major-chord-module}
-	\caption{Combining the three waveform Synths into an array ``majChord''}
+	\label{lst:major-chord-module-wave}
+	\caption{Creating the major third and perfect fifth intervals, and placing the three notes into an array, for playback on the SuperCollider server. The ellipses describe code which is not relevant to show for demonstration purposes.}	
 \end{listing}
 
-The ``majChord'' variable is placed into a button class \textit{Button}, which has two states, depending on the on/off status of the button itself (Listing \ref{lst:major-chord-button}). Once the button's status is changed to on, all three Synths within the ``majChord'' array will sound at once.
+To create the button for a clean and easy-to-use user interface, we use the native SuperCollider class, \textit{Button}, and assign the value of this button to the variable ``majorChord.'' This button has two states, on and off, and the variable \texttt{majChord} of Listing \ref{lst:major-chord-module-wave} is triggered when this button's state is on. Once \texttt{majChord} is triggered, all three pure tones sound at once. For demonstrative purposes, we show that two sine waves are layered on top of the sine wave SynthDef which we began with, to create a major chord.
 
 \begin{listing}
 	\begin{lstlisting}
 		majorChord = Button(awindow, Rect(20, 20, 150, 25)).states_([["Turn Major Chord Off", Color.black, Color.gray], ["Turn Major Chord On", Color.black, Color.yellow]]);	
 	\end{lstlisting}
-	\label{lst:major-chord-button}
+	\label{lst:major-chord-button-wave}
 	\caption{Implementing the major chord module using the \textit{Button} class}
 \end{listing}
 
 \subsection{Delay Slider}
 
-To create the delay slider, which determines the time which the waveform is delayed, we rely on the same native SuperCollider class we did to create the volume slider: \textit{EZSlider}. Like with the volume slider, we are using the same three arguments: controlSpec, action, and initVal. For the control spec of the delay slider, we must make sure these values match those available in the unit circle, so that the valid range of values is between $\frac{\pi}{6}$ to $\frac{11\pi}{6}$. While it is possible to use values greater than $\frac{11\pi}{6}$, or less than $\frac{\pi}{6}$ in theory, in practice it will sound equivalent to values within this range, as the sine wave will be overlaid directly on top of the possible values in this range. 
+Adding delay to a pure tone involves affecting when a waveform will move. Also known as an ``echo'' effect, this effect results in a sound being perceived as earlier or later than it ``should`` have been played. For this module, we create a slider, using the native SuperCollider class \textit{EZSlider}. This module will determine the time the waveform is delayed. Like with the volume slider, we are using the same three arguments: controlSpec, action, and initVal. For the control spec of the delay slider, we must make sure these values match those available in the unit circle, so that the valid range of values is between $\frac{\pi}{6}$ to $\frac{11\pi}{6}$. While it is possible to use values greater than $\frac{11\pi}{6}$, or less than $\frac{\pi}{6}$ in theory, in practice it will sound equivalent to values within this range, as the sine wave will be overlaid directly on top of the possible values in this range. 
 
 \begin{listing}
 	\begin{lstlisting}
@@ -157,7 +150,7 @@ In SuperCollider the time values for delay are calculated in radians, so using t
 
 \subsection{Adding Distortion}
 
-The distortion of a simple pure audio signal involves a SuperCollider class known as \textit{InsideOut}. For this module, both clipping and fuzz are used. As in Listing \ref{lst:distortion-waveforms}, there are two aspects which create the clipping and fuzz effects: a sine wave Unit Generator (UGen), and a \texttt{Pink Noise} UGen. The sine wave UGen allows for the clipping of the sound wave. The \texttt{Pink Noise} UGen is added through the fuzz effect, using the value 30 as the frequency multiplier, and allows us to add a type of colored noise known as ``pink noise.''
+The distortion of a simple, pure audio signal involves a SuperCollider class known as \textit{InsideOut}. For this module, both clipping and fuzz are used. As in Listing \ref{lst:distortion-waveforms}, there are two aspects which create the clipping and fuzz effects: a sine wave Unit Generator (UGen), and a \texttt{Pink Noise} UGen. The sine wave UGen allows for the clipping of the sound wave. The \texttt{Pink Noise} UGen is added through the fuzz effect, using the value 30 as the frequency multiplier, and allows us to add a type of colored noise known as ``pink noise.''
 
 \begin{listing}
 	\begin{lstlisting}
@@ -168,7 +161,7 @@ The distortion of a simple pure audio signal involves a SuperCollider class know
 	\label{lst:distortion-waveforms}
 \end{listing}
 
-Pink noise is used as it is a type of noise which contains all the possible frequencies which a human can hear. Unlike other types of colored noise, pink noise is much less intense. There are multiple types of colored noise, including black, red, blue, brown, and white. However, for music production, the two most popular types of colored noise are white noise and pink noise. White noise operates similarly to white light, encompassing the entire frequency of audible sound from low pitches to high pitches equally. Different frequencies are played randomly across the entire audible range, and normally sounds like radio static \cite{Unison_2021}. When mixing white noise into a pre-existing music mix, white noise fills sonic space similar to how low bass notes fill sonic space in the very low end (refer to Table \ref{tbl:frequency-table-of-human-hearing-general}). Pink noise is very similar to white noise, but constructed differently. It creates equal amplitudes based on the octaves, getting softer and less abrasive-sounding as the pitch rises. Thus, lower frequencies are louder, and higher frequencies are easier to listen to and are softer \cite{Unison_2021}. As it technically has a fundamental frequency, it will sound much more natural than white noise, as natural sounds all have a specific fundamental frequency (defined as the lowest harmonic played).
+Pink noise is a type of noise which contains all the possible frequencies which a human can hear. Unlike other types of colored noise, pink noise is much less intense. There are multiple types of colored noise, including black, red, blue, brown, and white. However, for music production, the two most popular types of colored noise are white noise and pink noise. White noise operates similarly to white light, encompassing the entire frequency of audible sound from low pitches to high pitches equally. Different frequencies are played randomly across the entire audible range, and normally sounds like radio static \cite{Unison_2021}. When mixing white noise into a pre-existing music mix, white noise fills sonic space similar to how low bass notes fill sonic space in the very low end (refer to Table \ref{tbl:frequency-table-of-human-hearing-general}). Pink noise is very similar to white noise, but constructed differently. It creates equal amplitudes based on the octaves, getting softer and less abrasive-sounding as the pitch rises. Thus, lower frequencies are louder, and higher frequencies are easier to listen to and are softer \cite{Unison_2021}. As it technically has a fundamental frequency, it will sound much more natural than white noise, as natural sounds all have a specific fundamental frequency (defined as the lowest harmonic played).
 
 \section{MIDI Input}\label{section:midi-input}
 
@@ -259,7 +252,7 @@ In Listing \ref{lst:midi-amp-slider}, the ``action'' involves altering the input
 
 \subsection{Major Chord Generator}
 
-A major chord generator for MIDI will create a major chord, and sound two additional frequencies on top of a MIDI note which a user plays. This will create a triadic chord, with two intervals from the base MIDI note: the major third, and the perfect fifth. The major third interval spans four degrees of the diatonic scale within equal temperament, and the perfect fifth spans seven. As with the major chord generator which was built for pure sound waveforms, the major chord generator for MIDI involves the same two aspects: calculating the proper interval frequencies for the major third and perfect fifth interval, and pushing these two intervals to the SuperCollider server \textit{scsynth}. Using Equation \ref{eq:equal-temperament-eq} and the code from Listing \ref{lst:chord-creation}, we understand that the interval of a major third will have a frequency of $440 * 2^\frac{4}{12}$ and the perfect fifth a frequency of $440 * 2^\frac{7}{12}$.
+A major chord generator for MIDI will create a major chord, and sound two additional frequencies on top of a MIDI note which a user plays. This will create a triadic chord, with two intervals from the base MIDI note: the major third, and the perfect fifth. The major third interval spans four degrees of the diatonic scale within equal temperament, and the perfect fifth spans seven. As with the major chord generator which was built for pure sound waveforms, the major chord generator for MIDI involves the same two aspects: calculating the proper interval frequencies for the major third and perfect fifth interval, and pushing these two intervals to the SuperCollider server \textit{scsynth}. Using Equation \ref{eq:equal-temperament-eq} and the code from Listing \ref{lst:major-chord-module-wave}, we understand that the interval of a major third will have a frequency of $440 * 2^\frac{4}{12}$ and the perfect fifth a frequency of $440 * 2^\frac{7}{12}$.
 
 Thus, having already created the proper intervals for the module, we then must push the intervals to play on \textit{scsynth}. This is different from creating this module for pure waveforms in that we no longer must put the major third and perfect fifth intervals into an array for playback. The SynthDef for MIDI is contained within an ADSR envelope, which has more modularity and independence than pure sound waveforms. Thus, we wrap both the variable for the major third interval (\texttt{thirdInterval}) and the perfect fifth interval (\texttt{fifthInterval}) into variables titled \texttt{thirdIntervalSynth} and \texttt{fifthIntervalSynth} respectively. These variables utilize similar logic to the implementation of \texttt{MIDIdef.noteOn}, layering the intervals on top of the user input.
 
